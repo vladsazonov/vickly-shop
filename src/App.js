@@ -10,6 +10,7 @@ class App extends Component {
                     <Grid item xs={3}>
                         <Paper>xs=12</Paper>
                     </Grid>
+                    Hello World
                     <Grid item xs={9}>
                         <Paper>xs=12</Paper>
                     </Grid>
