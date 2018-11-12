@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -11,6 +10,8 @@ import InputLabel from '@material-ui/core/InputLabel';
 import LockIcon from '@material-ui/icons/LockOutlined';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
+import {setLoginPending, tryLogin} from "../store/actions/loginActions";
+import {connect} from "react-redux";
 import withStyles from '@material-ui/core/styles/withStyles';
 
 const styles = theme => ({
@@ -45,9 +46,14 @@ const styles = theme => ({
     },
 });
 
-function SignIn(props) {
+function Login(props) {
     const { classes } = props;
-
+    function handleSubmit(e) {
+        e.preventDefault();
+        console.log(e.target.login.value+ "  "+ e.target.password.value);
+        //const { login, password } = this.state;
+        props.onLogin( e.target.login.value, e.target.password.value );
+    }
     return (
         <main className={classes.main}>
             <CssBaseline />
@@ -58,10 +64,10 @@ function SignIn(props) {
                 <Typography component="h1" variant="h5">
                     Sign in
                 </Typography>
-                <form className={classes.form}>
+                <form onSubmit={handleSubmit.bind(this)} className={classes.form}>
                     <FormControl margin="normal" required fullWidth>
                         <InputLabel htmlFor="email">Email Address</InputLabel>
-                        <Input id="email" name="email" autoComplete="email" autoFocus />
+                        <Input  id="email" name="login" autoComplete="email" autoFocus />
                     </FormControl>
                     <FormControl margin="normal" required fullWidth>
                         <InputLabel htmlFor="password">Password</InputLabel>
@@ -86,8 +92,23 @@ function SignIn(props) {
     );
 }
 
-SignIn.propTypes = {
-    classes: PropTypes.object.isRequired,
-};
+function mapStateToProps (state) {
+    return {
+        user: state.user
+    }
+}
 
-export default withStyles(styles)(SignIn);
+const mapDispatchToProps = dispatch => ({
+    onLogin: (user, password) => {
+        dispatch(tryLogin({user,password}));
+    }
+});
+
+const styledLogin = withStyles(styles)(Login);
+
+const LoginContainer = connect(
+    mapStateToProps,
+    mapDispatchToProps)
+(styledLogin);
+
+export default LoginContainer;
