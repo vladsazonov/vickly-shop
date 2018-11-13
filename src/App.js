@@ -11,7 +11,7 @@ class App extends Component {
 
     render() {
         console.log(this.props);
-        if (this.props.user.status) {
+        if (!this.props.user.status) {
             return (
                 <Home/>
             );
