@@ -7,13 +7,6 @@ import allReducers from './store/reducers/rootReducer'
 import thunk from "redux-thunk";
 import Provider from "react-redux/es/components/Provider";
 
-const initialState = {
-    user:{
-        login: false,
-        lol:""
-    }
-};
-
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const store = createStore(

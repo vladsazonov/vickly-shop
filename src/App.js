@@ -3,23 +3,17 @@ import './App.css';
 import {Grid, Paper} from '@material-ui/core';
 import Login from "./components/Login";
 import {connect} from "react-redux";
+import 'simplebar'; // or "import SimpleBar from 'simplebar';" if you want to use it manually.
+import 'simplebar/dist/simplebar.css';
+import Home from "./components/Home";
 
 class App extends Component {
+
     render() {
         console.log(this.props);
         if (this.props.user.status) {
             return (
-                <div>
-                    <Grid container>
-                        <Grid item xs={3}>
-                            <Paper>xs=12</Paper>
-                        </Grid>
-                        Hello World
-                        <Grid item xs={9}>
-                            <Paper>xs=12</Paper>
-                        </Grid>
-                    </Grid>
-                </div>
+                <Home/>
             );
         } else {
             return (
