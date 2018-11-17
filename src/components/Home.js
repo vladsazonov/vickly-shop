@@ -18,6 +18,12 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import Dialog from "./Dialog";
 import ChatWindow from "./ChatWindow"
+import connect from "react-redux/es/connect/connect";
+import Button from "@material-ui/core/Button/Button";
+import {fetchChats} from "../store/actions/mainActions";
+import Workgroup from "./Workgroup";
+import {Scrollbars} from "react-custom-scrollbars";
+import SearchBar from "./SearchBar";
 
 const drawerWidth = 320;
 
@@ -35,8 +41,9 @@ const styles = theme => ({
     appBar: {
         marginLeft: drawerWidth,
         [theme.breakpoints.up('sm')]: {
-            width: `calc(100% - ${drawerWidth}px)`,
+            width: '100%',
         },
+        zIndex: 1500,
     },
     menuButton: {
         marginRight: 20,
@@ -63,32 +70,45 @@ class Home extends React.Component {
         this.setState(state => ({mobileOpen: !state.mobileOpen}));
     };
 
-    render() {
-        const {classes, theme} = this.props;
+    workgroups() {
+        if (this.props.chats.status) {
+            console.log(this.props);
+            return this.props.chats.with_group.map(function (workgroup) {
+                    return (
+                        <Workgroup workgroup={workgroup}/>
+                    )
+                }
+            )
+        } else {
+            return "Empty list"
+        }
+    }
 
-        const drawer = (
-            <div>
-                <div
-                    className={classes.toolbar}/>
-                <List>
+    render() {
+        const {classes, theme, chats} = this.props;
+
+        let drawer;
+
+
+        drawer = (
+            <Scrollbars
+                autoHide
+                renderTrackHorizontal={({style, ...props}) =>
+                    <div {...props} style={{...style, backgroundColor: 'blue'}}/>
+                }>
+                {this.props.children}
+                <div>
+                    <div
+                        className={classes.toolbar}/>
+                    <SearchBar/>
                     <Divider/>
-                    <Dialog/>
-                    <Dialog/>
-                    <Dialog/>
-                    <Dialog/>
-                    <Dialog/>
-                    <Dialog/>
-                    <Dialog/>
-                    <Dialog/>
-                    <Dialog/>
-                    <Dialog/>
-                    <Dialog/>
-                    <Dialog/>
-                    <Dialog/>
-                    <Dialog/>
-                </List>
-            </div>
+                    <List>
+                        {this.workgroups()}
+                    </List>
+                </div>
+            </Scrollbars>
         );
+
 
         return (
             <div className={classes.root}>
@@ -141,19 +161,21 @@ class Home extends React.Component {
                 </nav>
                 <main className={classes.content}>
                     <div className={classes.toolbar}/>
-                    <ChatWindow/>
+                    <ChatWindow changeColor={this.props.changeColor} color={this.props.color}/>
                 </main>
             </div>
         );
     }
 }
 
-Home.propTypes = {
-    classes: PropTypes.object.isRequired,
-    // Injected by the documentation to work in an iframe.
-    // You won't need it on your project.
-    container: PropTypes.object,
-    theme: PropTypes.object.isRequired,
-};
+function mapStateToProps(state) {
+    return {
+        chats: state.chats
+    }
+}
 
-export default withStyles(styles, {withTheme: true})(Home);
+const styledComponent = withStyles(styles, {withTheme: true})(Home);
+
+const HomeContainer = connect(mapStateToProps)(styledComponent);
+
+export default HomeContainer;

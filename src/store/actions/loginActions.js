@@ -1,38 +1,46 @@
+import loginService from "../../services/loginService"
+
 export const LOGIN_STATUS = 'SET_LOGIN_STATUS';
+const api = "http://192.168.0.106:9000/api";
+
 
 export function tryLogin(login, password) {
     return async function (dispatch) {
         try {
-            const response = await fetch('https://reqres.in/api/login', {
+            const response = await fetch(api+"/user/login", {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    "email": "peter@klaven",
-                    "password": "cityslicka"
+                    "login": login,
+                    "password": password
                 })
             });
             if (!response.ok) {
-                dispatch(setLoginStatus({
-                    status:false,
-                    error:response.error()
+                return dispatch(setLoginStatus({
+                    status: false,
+                    error: response.error()
 
                 }));
             }
             const content = await response.json();
-            return dispatch(setLoginStatus({
-                firstname: "Lol",
-                lastname: "Sobaka",
+            let creds = {
+                first_name: content.first_name,
+                last_name: content.last_name,
                 token: content.token,
-                status:true
+            };
+            loginService.saveCreds(creds);
+            return dispatch(setLoginStatus({
+                ...creds,
+                status: true
 
             }));
 
-        } catch (e) {
-            console.log(e);
-            return dispatch(setLoginStatus(e))
+        } catch(err) {
+            console.log(err);
+            return dispatch(setLoginStatus(err))
         }
     }
 }

@@ -6,14 +6,29 @@ import {connect} from "react-redux";
 import 'simplebar'; // or "import SimpleBar from 'simplebar';" if you want to use it manually.
 import 'simplebar/dist/simplebar.css';
 import Home from "./components/Home";
+import {setLoginStatus} from "./store/actions/loginActions";
+import {fetchChats} from "./store/actions/mainActions";
 
 class App extends Component {
 
+
+    componentWillMount() {
+        if (localStorage.getItem("token")) {
+            this.props.setUserInfo({
+                last_name: localStorage.getItem("last_name"),
+                first_name: localStorage.getItem("first_name"),
+                token: localStorage.getItem("token"),
+                status: true
+            });
+            this.props.OnChatsFetch();
+        }
+    }
+
     render() {
         console.log(this.props);
-        if (!this.props.user.status) {
+        if (this.props.user.status) {
             return (
-                <Home/>
+                <Home chats={this.props.chats}/>
             );
         } else {
             return (
@@ -31,13 +46,25 @@ class App extends Component {
 }
 
 
-function mapStateToProps(state){
+function mapStateToProps(state) {
     return {
-        user: state.user
+        user: state.user,
+        chats:state.chats
     }
 }
 
-const AppContainer = connect(mapStateToProps)(App);
+function mapDispatchToProps(dispatch) {
+    return {
+        setUserInfo: function (user) {
+            dispatch(setLoginStatus(user))
+        },
+        OnChatsFetch: () => {
+            dispatch(fetchChats());
+        }
+    }
+}
+
+const AppContainer = connect(mapStateToProps, mapDispatchToProps)(App);
 
 
 export default AppContainer;

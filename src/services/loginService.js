@@ -1,20 +1,22 @@
 class LoginSerice {
-    async login(login = "peter@klaven", password = "cityslicka") {
-        const response = await fetch("https://reqres.in/api/login", {
-            method: "POST",
-            data: JSON.stringify({
-                "email": login,
-                "password": password
-            }),
-            headers: {
-                Accept: 'application/json'
-            }
-        });
-        if (!response.ok) {
-            throw new Error(`RedditService getDefaultSubreddits failed, HTTP status ${response.status}`);
-        }
-        return await response.json();
+    saveCreds(creds) {
+        localStorage.setItem("first_name", creds.first_name);
+        localStorage.setItem("last_name", creds.last_name);
+        localStorage.setItem("token", creds.token);
     }
+
+    getCreds() {
+        return {
+            first_name: localStorage.getItem("first_name"),
+            last_name: localStorage.getItem("last_name"),
+            token: localStorage.getItem("token")
+        }
+    }
+
+    getToken() {
+        return localStorage.getItem("token")
+    }
+
 }
 
 export default new LoginSerice();

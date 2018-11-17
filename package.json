@@ -9,6 +9,7 @@
     "jss": "latest",
     "prop-types": "latest",
     "react": "latest",
+    "react-custom-scrollbars": "^4.2.1",
     "react-dom": "latest",
     "react-jss": "latest",
     "react-redux": "^5.1.0",

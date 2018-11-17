@@ -47,16 +47,12 @@ const styles = theme => ({
 });
 
 function Login(props) {
-    let lol = {
-        lal:"a",
-        lzl:"q"
-    };
     const { classes } = props;
     function handleSubmit(e) {
         e.preventDefault();
         console.log(e.target.login.value+ "  "+ e.target.password.value);
         //const { login, password } = this.state;
-        props.onLogin( e.target.login.value, e.target.password.value );
+        props.onLogin( e.target.login.value, e.target.password.value);
     }
     return (
         <main className={classes.main}>
@@ -104,7 +100,7 @@ function mapStateToProps (state) {
 
 const mapDispatchToProps = dispatch => ({
     onLogin: (user, password) => {
-        dispatch(tryLogin({user,password}));
+        dispatch(tryLogin(user,password));
     }
 });
 
