@@ -1,12 +1,12 @@
-import {BUTTON_ACTION} from "../actions/buttonAction"
+import {SET_CURRENT_CHAT} from "../actions/chatActions";
 
 const initialStore = {
-    color:"#EEEEEE"
+    userId:null
 };
 
-export default function button(state = initialStore, action) {
+export default function currentChat(state = initialStore, action) {
     switch (action.type) {
-        case BUTTON_ACTION:
+        case SET_CURRENT_CHAT:
             return {
                 ...state,
                 ...action

@@ -1,25 +1,12 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import Paper from '@material-ui/core/Paper';
-import { withStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import Avatar from '@material-ui/core/Avatar';
+import {withStyles} from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import 'typeface-roboto';
 import '../css/Dialog.css'
-import ListItem from "@material-ui/core/ListItem/ListItem";
-import TextField from "@material-ui/core/TextField/TextField";
-import Button from "@material-ui/core/Button/Button";
-import Icon from "@material-ui/core/Icon/Icon";
-import SendIcon from '@material-ui/icons/Send'
-import {tryLogin} from "../store/actions/loginActions";
 import connect from "react-redux/es/connect/connect";
-import buttonAction from "../store/actions/buttonAction"
 import SendMessageBar from "./SendMessageBar";
-
-const message = 'Опять на работу сука блять';
-const image = 'https://pp.userapi.com/c604521/v604521198/21993/7DxyyX7M-YY.jpg';
-const name = 'Константин Константинович Константинопольский';
+import MessageList from "./MessageList";
+import ChatBar from "./ChatBar";
 
 const styles = theme => ({
     button: {
@@ -37,59 +24,110 @@ const styles = theme => ({
 });
 
 class ChatWindow extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    componentDidMount() {
+        console.log("props:" + this.props);
+        this.setState({
+            messages: [
+                {
+                    username: "Вася Синичкин",
+                    message: "Ты хуй моржовый, рот твой ебал"
+                },
+                {
+                    username: "Вася Синичкин",
+                    message: "Прости, хуевое настроение было"
+                },
+                {
+                    username: "Я",
+                    message: "Я сам виноват",
+                    fromMe:true
+                },
+                {
+                    username: "Я",
+                    message: "Я сам виноват",
+                    fromMe:true
+                },
+                {
+                    username: "Я",
+                    message: "Я сам виноват",
+                    fromMe:true
+                },
+                {
+                    username: "Вася Синичкин",
+                    message: "Ты хуй моржовый, рот твой ебал"
+                },
+                {
+                    username: "Вася Синичкин",
+                    message: "Прости, хуевое настроение было"
+                },
+                {
+                    username: "Я",
+                    message: "Я сам виноват",
+                    fromMe:true
+                },
+                {
+                    username: "Я",
+                    message: "Я сам виноват",
+                    fromMe:true
+                },
+                {
+                    username: "Я",
+                    message: "Я сам виноват",
+                    fromMe:true
+                },
+                {
+                    username: "Вася Синичкин",
+                    message: "Ты хуй моржовый, рот твой ебал"
+                },
+                {
+                    username: "Вася Синичкин",
+                    message: "Прости, хуевое настроение было"
+                }
+            ]
+        });
+    }
+
+
+    handleSendMessage = (message) => {
+        console.log("send message!!!");
+        this.setState((state) => {
+            state.messages.push(message);
+        })
+    };
 
     render() {
         const {classes} = this.props;
-        return (
-                <div>
-                    <Typography paragraph>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                        incididunt ut labore et dolore magna aliqua. Rhoncus dolor purus non enim praesent
-                        elementum facilisis leo vel. Risus at ultrices mi tempus imperdiet. Semper risus in
-                        hendrerit gravida rutrum quisque non tellus. Convallis convallis tellus id interdum
-                        velit laoreet id donec ultrices. Odio morbi quis commodo odio aenean sed adipiscing.
-                        Amet nisl suscipit adipiscing bibendum est ultricies integer quis. Cursus euismod quis
-                        viverra nibh cras. Metus vulputate eu scelerisque felis imperdiet proin fermentum leo.
-                        Mauris commodo quis imperdiet massa tincidunt. Cras tincidunt lobortis feugiat vivamus
-                        at augue. At augue eget arcu dictum varius duis at consectetur lorem. Velit sed
-                        ullamcorper morbi tincidunt. Lorem donec massa sapien faucibus et molestie ac.
-                    </Typography>
-                    <Typography paragraph>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                        incididunt ut labore et dolore magna aliqua. Rhoncus dolor purus non enim praesent
-                        elementum facilisis leo vel. Risus at ultrices mi tempus imperdiet. Semper risus in
-                        hendrerit gravida rutrum quisque non tellus. Convallis convallis tellus id interdum
-                        velit laoreet id donec ultrices. Odio morbi quis commodo odio aenean sed adipiscing.
-                        Amet nisl suscipit adipiscing bibendum est ultricies integer quis. Cursus euismod quis
-                        viverra nibh cras. Metus vulputate eu scelerisque felis imperdiet proin fermentum leo.
-                        Mauris commodo quis imperdiet massa tincidunt. Cras tincidunt lobortis feugiat vivamus
-                        at augue. At augue eget arcu dictum varius duis at consectetur lorem. Velit sed
-                        ullamcorper morbi tincidunt. Lorem donec massa sapien faucibus et molestie ac.
-                    </Typography>
-                    <SendMessageBar/>
-                </div>
+        return this.props.userId ? (
+            <div>
+                <ChatBar/>
+                {this.props.userId === 4 ? <MessageList messages={this.state.messages}/> : "No message yet..."}
 
+                <SendMessageBar sendMsg={this.handleSendMessage.bind(this)}/>
+            </div>
+        ) : (
+            <div>
+                <Typography paragraph>
+                    Select chat first!
+                </Typography>
+                <SendMessageBar sendMsg={this.handleSendMessage}/>
+            </div>
         );
     }
 }
 
-function mapStateToProps (state) {
-    return {
-        color: state.button.color
-    }
+function mapStateToProps(state) {
+    return {}
 }
 
 
-function mapDispatchToProps(dispatch){
-    return {
-        changeColor: function () {
-            dispatch(buttonAction());
-        }
-    }
+function mapDispatchToProps(dispatch) {
+    return {}
 }
 
-const styledWindow =  withStyles(styles, {withTheme: true})(ChatWindow);
-
+const styledWindow = withStyles(styles, {withTheme: true})(ChatWindow);
 
 
 const ChatWindowsContainer = connect(

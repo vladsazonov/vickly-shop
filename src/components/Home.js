@@ -24,6 +24,7 @@ import {fetchChats} from "../store/actions/mainActions";
 import Workgroup from "./Workgroup";
 import {Scrollbars} from "react-custom-scrollbars";
 import SearchBar from "./SearchBar";
+import ChatBar from "./ChatBar";
 
 const drawerWidth = 320;
 
@@ -31,19 +32,23 @@ const styles = theme => ({
 
     root: {
         display: 'flex',
+        marginLeft: 0,
+        marginRight: 0,
     },
     drawer: {
         [theme.breakpoints.up('sm')]: {
             width: drawerWidth,
             flexShrink: 0,
         },
+        backgroundColor: '#25464c',
+        zIndex: 1500, //TODO: ui bug
     },
     appBar: {
         marginLeft: drawerWidth,
         [theme.breakpoints.up('sm')]: {
             width: '100%',
         },
-        zIndex: 1500,
+        zIndex: 1501,
     },
     menuButton: {
         marginRight: 20,
@@ -57,7 +62,7 @@ const styles = theme => ({
     },
     content: {
         flexGrow: 1,
-        padding: theme.spacing.unit * 3,
+        /*padding: theme.spacing.unit * 3,*/
     },
 });
 
@@ -102,7 +107,7 @@ class Home extends React.Component {
                         className={classes.toolbar}/>
                     <SearchBar/>
                     <Divider/>
-                    <List>
+                    <List style={{marginTop: 49, paddingTop: 0}}>
                         {this.workgroups()}
                     </List>
                 </div>
@@ -114,7 +119,7 @@ class Home extends React.Component {
             <div className={classes.root}>
                 <CssBaseline/>
                 <AppBar position="fixed" className={classes.appBar}>
-                    <Toolbar>
+                    <Toolbar style={{minHeight: 57}}>
                         <IconButton
                             color="inherit"
                             aria-label="Open drawer"
@@ -124,7 +129,7 @@ class Home extends React.Component {
                             <MenuIcon/>
                         </IconButton>
                         <Typography variant="h6" color="inherit" noWrap>
-                            Responsive drawer
+                            Weak messenger
                         </Typography>
                     </Toolbar>
                 </AppBar>
@@ -161,7 +166,7 @@ class Home extends React.Component {
                 </nav>
                 <main className={classes.content}>
                     <div className={classes.toolbar}/>
-                    <ChatWindow changeColor={this.props.changeColor} color={this.props.color}/>
+                    <ChatWindow userId={this.props.currentChat.userId}/>
                 </main>
             </div>
         );
@@ -170,7 +175,8 @@ class Home extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        chats: state.chats
+        chats: state.chats,
+        currentChat:state.currentChat
     }
 }
 

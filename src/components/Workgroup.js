@@ -13,7 +13,9 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 import StarBorder from '@material-ui/icons/StarBorder';
 
 
-const styles = theme => ({});
+const styles = theme => ({
+
+});
 
 class Workgroup extends React.Component {
     state = {
@@ -30,9 +32,6 @@ class Workgroup extends React.Component {
         return (
             <div>
                 <ListItem button onClick={this.handleClick}>
-                    <ListItemIcon>
-                        <InboxIcon/>
-                    </ListItemIcon>
                     <ListItemText inset primary={workgroup.group.name}/>
                     {this.state.open ? <ExpandLess/> : <ExpandMore/>}
                 </ListItem>

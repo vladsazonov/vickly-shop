@@ -1,10 +1,12 @@
 import { combineReducers } from 'redux';
 import user from "./loginReducer"
-import button from "./buttonReducer"
 import chats from "./mainReducer";
+import currentChat from "./chatReducer"
+import messages from "./messageReducer"
 
 export default combineReducers({
     user,
-    button,
-    chats
+    chats,
+    currentChat,
+    messages
 });

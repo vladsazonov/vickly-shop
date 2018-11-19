@@ -1,7 +1,8 @@
 import loginService from "../../services/loginService"
 
 export const LOGIN_STATUS = 'SET_LOGIN_STATUS';
-const api = "http://192.168.0.106:9000/api";
+const host = 'localhost:9000';
+const api = "http://"+host+"/api";
 
 
 export function tryLogin(login, password) {

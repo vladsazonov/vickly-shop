@@ -6,6 +6,7 @@ import InputAdornment from "@material-ui/core/InputAdornment/InputAdornment";
 import SendOutlined from "@material-ui/core/SvgIcon/SvgIcon";
 import IconButton from "@material-ui/core/IconButton/IconButton";
 import Search from "@material-ui/icons/Search"
+import AddCommentOutlined from "@material-ui/icons/AddCommentOutlined"
 
 const styles = theme => ({
     container: {
@@ -15,7 +16,7 @@ const styles = theme => ({
     textField: {
         marginLeft: theme.spacing.unit,
         marginRight: theme.spacing.unit,
-        width: '-webkit-fill-available',
+        width: '79%',
     },
     dense: {
         marginTop: 16,
@@ -33,7 +34,7 @@ class OutlinedTextFields extends React.Component {
         return (
             <div style={{
                 position: "fixed",
-                top: 56,
+                top: 57,
                 left: 0,
                 right: 0,
                 backgroundColor: "#fff",
@@ -43,13 +44,13 @@ class OutlinedTextFields extends React.Component {
                 <form className={classes.container} noValidate autoComplete="off">
 
                     <TextField
-                        id="outlined-search"
+                        id="standard-search"
                         placeholder="Поиск..."
                         type="search"
                         className={classes.textField}
                         margin="normal"
-                        variant="outlined"
                         fullWidth
+                        style={{margin: 'auto',marginLeft: 19,}}
                         InputLabelProps={{
                             shrink: true,
                         }}
@@ -63,6 +64,9 @@ class OutlinedTextFields extends React.Component {
                             ),
                         }}
                     />
+                    <IconButton style={{width: 48, height: 48, marginTop: 13}}>
+                        <AddCommentOutlined/>
+                    </IconButton>
 
                 </form>
             </div>
