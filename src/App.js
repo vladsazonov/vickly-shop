@@ -8,16 +8,18 @@ import 'simplebar/dist/simplebar.css';
 import Home from "./components/Home";
 import {setLoginStatus} from "./store/actions/loginActions";
 import {fetchChats} from "./store/actions/mainActions";
+import loginService from "./services/loginService"
 
 class App extends Component {
 
 
     componentWillMount() {
-        if (localStorage.getItem("token")) {
+        const creds = loginService.getCreds();
+        if (creds.token) {
             this.props.setUserInfo({
-                last_name: localStorage.getItem("last_name"),
-                first_name: localStorage.getItem("first_name"),
-                token: localStorage.getItem("token"),
+                last_name: creds.last_name,
+                first_name: creds.first_name,
+                token: creds.token,
                 status: true
             });
             this.props.OnChatsFetch();

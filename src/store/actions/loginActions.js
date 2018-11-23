@@ -32,9 +32,9 @@ export function tryLogin(login, password) {
                 last_name: content.last_name,
                 token: content.token,
             };
-            loginService.saveCreds(creds);
+            loginService.saveCreds(content);
             return dispatch(setLoginStatus({
-                ...creds,
+                ...content,
                 status: true
 
             }));

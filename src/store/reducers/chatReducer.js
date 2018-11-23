@@ -1,7 +1,8 @@
 import {SET_CURRENT_CHAT} from "../actions/chatActions";
 
 const initialStore = {
-    userId:null
+    userId:null,
+    prevUserId:null
 };
 
 export default function currentChat(state = initialStore, action) {
@@ -9,6 +10,7 @@ export default function currentChat(state = initialStore, action) {
         case SET_CURRENT_CHAT:
             return {
                 ...state,
+                prevUserId:state.userId,
                 ...action
             };
         default:

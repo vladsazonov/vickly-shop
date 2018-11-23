@@ -13,28 +13,59 @@ const styles = theme => ({
         flexWrap: 'wrap',
     },
     position: {
-        position: 'sticky',
         bottom: 0,
         width: '100%',
         backgroundColor: '#fafafa',
         display: 'inline-flex',
         borderTop: '1px solid #ebebeb',
+        overflow: 'hidden',
+        position: 'fixed',
+        right: 0,
+        [theme.breakpoints.up('lg')]: {
+            paddingLeft: 320,
+        },
+        [theme.breakpoints.up('md')]: {
+            paddingLeft: 320,
+        },
+        [theme.breakpoints.up('sm')]: {
+            paddingLeft: 320,
+        },
     },
-    iconButton: {}
+    iconButton: {
+
+    }
 });
 
 class SendMessageBar extends React.Component {
+    state = {
+        messageText: ""
+    };
+
     handleSendButton = () => {
-        this.props.sendMsg({
+        if(!this.state.messageText.trim())
+            return;
+        this.props.handleSendMessage({
             message: this.state.messageText,
             fromMe: true
         });
+        this.setState({
+            messageText: ""
+        })
     };
 
     handleOnTextChange = (e) => {
         this.setState({
             messageText: e.target.value
         });
+    };
+
+    onEnterDown = (event) => {
+        // 'keypress' event misbehaves on mobile so we track 'Enter' key via 'keydown' event
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            event.stopPropagation();
+            this.handleSendButton();
+        }
     };
 
     render() {
@@ -45,9 +76,11 @@ class SendMessageBar extends React.Component {
             <div className={classes.position}>
                 <TextField
                     id="outlined"
+                    value={this.state.messageText}
                     onChange={this.handleOnTextChange}
                     style={{width: '95%', margin: 8}}
                     placeholder="Введите сообщение..."
+                    onKeyDown={this.onEnterDown}
                     //helperText="Full width!"
                     margin="normal"
                     variant="outlined"
@@ -57,7 +90,7 @@ class SendMessageBar extends React.Component {
                     InputProps={{
                         endAdornment: (
                             <InputAdornment position="end">
-                                <IconButton onClick={this.handleSendButton}>
+                                <IconButton disabled={!this.state.messageText.trim()} onClick={this.handleSendButton.bind(this)}>
                                     <SendOutlined/>
                                 </IconButton>
                             </InputAdornment>

@@ -89,6 +89,12 @@ class Home extends React.Component {
         }
     }
 
+    componentDidMount(){
+        if (this.props.currentChat.userId !== this.props.currentChat.prevUserId ) {
+            this.handleDrawerToggle();
+        }
+    }
+
     render() {
         const {classes, theme, chats} = this.props;
 
@@ -166,7 +172,9 @@ class Home extends React.Component {
                 </nav>
                 <main className={classes.content}>
                     <div className={classes.toolbar}/>
-                    <ChatWindow userId={this.props.currentChat.userId}/>
+                    <Scrollbars autoHide style={{height: '-webkit-fill-available', zIndex: 1, marginTop: 50}}>
+                    <ChatWindow handleDrawerToggle={this.handleDrawerToggle} userId={this.props.currentChat.userId}/>
+                    </Scrollbars>
                 </main>
             </div>
         );

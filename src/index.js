@@ -6,6 +6,7 @@ import {applyMiddleware, combineReducers, compose, createStore} from "redux";
 import allReducers from './store/reducers/rootReducer'
 import thunk from "redux-thunk";
 import Provider from "react-redux/es/components/Provider";
+import 'semantic-ui-css/semantic.min.css';
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 

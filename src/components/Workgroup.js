@@ -30,8 +30,8 @@ class Workgroup extends React.Component {
         const {classes, theme, workgroup} = this.props;
 
         return (
-            <div>
-                <ListItem button onClick={this.handleClick}>
+            <div style={{backgroundColor: 'rgb(245, 245, 245)', borderBottom: '1px solid #ebebeb'}}>
+                <ListItem button onClick={this.handleClick} style={{paddingTop: 6, paddingBottom: 6}}>
                     <ListItemText inset primary={workgroup.group.name}/>
                     {this.state.open ? <ExpandLess/> : <ExpandMore/>}
                 </ListItem>
@@ -51,13 +51,5 @@ class Workgroup extends React.Component {
         )
     }
 }
-
-Workgroup.propTypes = {
-    classes: PropTypes.object.isRequired,
-    // Injected by the documentation to work in an iframe.
-    // You won't need it on your project.
-    container: PropTypes.object,
-    theme: PropTypes.object.isRequired,
-};
 
 export default withStyles(styles, {withTheme: true})(Workgroup);

@@ -38,7 +38,7 @@ class OutlinedTextFields extends React.Component {
                 left: 0,
                 right: 0,
                 backgroundColor: "#fff",
-                width: 319,
+                width: 318,
                 zIndex: 1499,
             }}>
                 <form className={classes.container} noValidate autoComplete="off">
@@ -50,7 +50,7 @@ class OutlinedTextFields extends React.Component {
                         className={classes.textField}
                         margin="normal"
                         fullWidth
-                        style={{margin: 'auto',marginLeft: 19,}}
+                        style={{margin: 'auto',marginLeft: 19, width: '78%'}}
                         InputLabelProps={{
                             shrink: true,
                         }}
@@ -64,7 +64,7 @@ class OutlinedTextFields extends React.Component {
                             ),
                         }}
                     />
-                    <IconButton style={{width: 48, height: 48, marginTop: 13}}>
+                    <IconButton style={{width: 48, height: 48}}>
                         <AddCommentOutlined/>
                     </IconButton>
 

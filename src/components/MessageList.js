@@ -1,9 +1,36 @@
 import React from 'react';
 import Message from './Message';
+import Chip from "@material-ui/core/Chip/Chip";
+import Avatar from "@material-ui/core/Avatar/Avatar";
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import FaceIcon from '@material-ui/icons/Face';
+import DoneIcon from '@material-ui/icons/Done';
+import ScrollbarSize from "@material-ui/core/es/Tabs/ScrollbarSize";
+import {Scrollbars} from "react-custom-scrollbars";
+import loginService from '../services/loginService'
+
+const styles = theme => ({
+    root: {
+        display: 'flex',
+        justifyContent: 'center',
+        flexWrap: 'wrap'
+
+    },
+    listMessages: {
+        marginLeft: 40,
+        marginBottom: 205,
+        marginTop: 23,
+
+    },
+    chip: {
+        margin: theme.spacing.unit,
+    },
+});
 
 class MessageList extends React.Component {
     constructor(props) {
-        super(props)
+        super(props);
         console.log("messages:"+props.messages)
     }
 
@@ -14,27 +41,27 @@ class MessageList extends React.Component {
     }
 
     render() {
+        const {classes} = this.props;
         // Loop through all the messages in the state and create a Message component
+        const {myUserId} = loginService.getCreds();
+        console.log("myUserId:"+myUserId);
         const messages = this.props.messages.map((message, i) => {
+            let fromMe = message.from == myUserId;
             return (
                 <Message
                     key={i}
-                    username={message.username}
+                    username={"Placeholder"}
                     message={message.message}
-                    fromMe={message.fromMe} />
+                    fromMe={fromMe} />
             );
         });
 
         return (
-            <div className='messages' id='messageList'>
+            <div className={classes.listMessages} id='messageList'>
                 { messages }
             </div>
         );
     }
 }
 
-MessageList.defaultProps = {
-    messages: []
-};
-
-export default MessageList;
+export default withStyles(styles)(MessageList);

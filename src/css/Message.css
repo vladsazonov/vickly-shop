@@ -1,27 +1,44 @@
-.message.from-me .username {
-    display: none;
+.speech-bubble {
+    position: relative;
+    background-color: #99ffc4;
+    border-radius: 9px;
+    margin-left: 10px;
+    width: fit-content;
+    max-width: 40%;
 }
-
-.message.from-me {
-    display: flex;
-    justify-content: flex-end;
-    margin-bottom: 5px;
+.speech-bubble:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 0;
+    height: 0;
+    border: 0.938em solid transparent;
+    border-right-color: #99ffc4;
+    border-left: 0;
+    border-bottom: 0;
+    margin-top: -0.469em;
+    margin-left: -0.937em;
 }
-
-.message.from-me .message-body {
-    background-color: #af9570;
-    color: white;
+.speech-bubblet {
+    position: relative;
+    background-color: #efefef;
+    border-radius: .4em;
+    margin-left: 10px;
+    width: fit-content;
+    max-width: 40%;
 }
-
-.message {
-    margin-bottom: 20px;
-}
-.message-body {
-    max-width: 80%;
-    display: inline-block;
-    padding: 20px;
-    background-color: #eee;
-    border: 1px;
-    border-radius: 5px;
-    padding-right: 50px;
+.speech-bubblet:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 0;
+    height: 0;
+    border: 0.938em solid transparent;
+    border-right-color: #efefef;
+    border-left: 0;
+    border-bottom: 0;
+    margin-top: -0.469em;
+    margin-left: -0.937em;
 }

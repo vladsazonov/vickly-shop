@@ -7,6 +7,7 @@ import connect from "react-redux/es/connect/connect";
 import SendMessageBar from "./SendMessageBar";
 import MessageList from "./MessageList";
 import ChatBar from "./ChatBar";
+import {getAllMessages, postMessage} from "../store/actions/messageActions"
 
 const styles = theme => ({
     button: {
@@ -21,81 +22,53 @@ const styles = theme => ({
     iconSmall: {
         fontSize: 20,
     },
+    emptyChat: {
+        marginTop: 300,
+        marginBottom: 300,
+        textAlign: 'center',
+    },
 });
 
 class ChatWindow extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            messages: []
+        };
+        this.messagesEnd = React.createRef();
     }
 
     componentDidMount() {
+        console.log("componentDidMount chatWindow");
         console.log("props:" + this.props);
-        this.setState({
-            messages: [
-                {
-                    username: "Вася Синичкин",
-                    message: "Ты хуй моржовый, рот твой ебал"
-                },
-                {
-                    username: "Вася Синичкин",
-                    message: "Прости, хуевое настроение было"
-                },
-                {
-                    username: "Я",
-                    message: "Я сам виноват",
-                    fromMe:true
-                },
-                {
-                    username: "Я",
-                    message: "Я сам виноват",
-                    fromMe:true
-                },
-                {
-                    username: "Я",
-                    message: "Я сам виноват",
-                    fromMe:true
-                },
-                {
-                    username: "Вася Синичкин",
-                    message: "Ты хуй моржовый, рот твой ебал"
-                },
-                {
-                    username: "Вася Синичкин",
-                    message: "Прости, хуевое настроение было"
-                },
-                {
-                    username: "Я",
-                    message: "Я сам виноват",
-                    fromMe:true
-                },
-                {
-                    username: "Я",
-                    message: "Я сам виноват",
-                    fromMe:true
-                },
-                {
-                    username: "Я",
-                    message: "Я сам виноват",
-                    fromMe:true
-                },
-                {
-                    username: "Вася Синичкин",
-                    message: "Ты хуй моржовый, рот твой ебал"
-                },
-                {
-                    username: "Вася Синичкин",
-                    message: "Прости, хуевое настроение было"
-                }
-            ]
-        });
+
+        if (this.messagesEnd.current) {
+            this.scrollToBottom();
+        }
     }
 
 
     handleSendMessage = (message) => {
         console.log("send message!!!");
+        this.props.postMessage(message.message, this.props.userId);
         this.setState((state) => {
-            state.messages.push(message);
-        })
+            return state.messages.push(message);
+        });
+
+        this.scrollToBottom();
+    };
+
+    scrollToBottom = () => {
+        this.messagesEnd.current.scrollIntoView({behavior: "smooth"});
+    };
+
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps.userId !== this.props.userId){
+            this.props.getAllMessages(this.props.userId);
+            //this.props.handleDrawerToggle();
+        }
+        //this.scrollToBottom();
     };
 
     render() {
@@ -103,28 +76,40 @@ class ChatWindow extends React.Component {
         return this.props.userId ? (
             <div>
                 <ChatBar/>
-                {this.props.userId === 4 ? <MessageList messages={this.state.messages}/> : "No message yet..."}
-
-                <SendMessageBar sendMsg={this.handleSendMessage.bind(this)}/>
+                {
+                    this.props.chatMessages && this.props.chatMessages.length > 0 ? <MessageList myUserId={this.props.userId} messages={this.props.chatMessages ? this.props.chatMessages : []}/> :
+                    <div className={classes.emptyChat}>
+                        <Typography variant="h5" style={{color: '#bcbcbc'}}>История сообщений пуста...</Typography>
+                        <SendMessageBar sendMsg={this.handleSendMessage}/>
+                    </div>
+                }
+                <div style={{float: "left", clear: "both"}} ref={this.messagesEnd}>
+                </div>
+                <SendMessageBar handleSendMessage={this.handleSendMessage}/>
             </div>
         ) : (
             <div>
-                <Typography paragraph>
-                    Select chat first!
-                </Typography>
-                <SendMessageBar sendMsg={this.handleSendMessage}/>
+                <div className={classes.emptyChat}>
+                    <Typography variant="h5" style={{color: '#bcbcbc'}}>Выберите диалог...</Typography>
+                </div>
             </div>
         );
     }
 }
 
-function mapStateToProps(state) {
-    return {}
+function mapStateToProps(state, ownProps) {
+    return {
+        chatMessages: state.messages[ownProps.userId],
+        currentChat: state.currentChat
+    }
 }
 
 
 function mapDispatchToProps(dispatch) {
-    return {}
+    return {
+        postMessage: (message, toId) => dispatch(postMessage(message, toId)),
+        getAllMessages: (chatId) => dispatch(getAllMessages(chatId))
+    }
 }
 
 const styledWindow = withStyles(styles, {withTheme: true})(ChatWindow);

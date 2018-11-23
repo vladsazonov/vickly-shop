@@ -17,11 +17,12 @@ const date = '22/06/18';
 
 const styles = {
     fixWidth: {
+        backgroundColor: 'white',
         width: '100% !important',
         margin: '0px !important',
-        paddingLeft: 5,
-        paddingTop: 8,
-        paddingBottom: 8,
+        paddingLeft: 2,
+        paddingTop: 3,
+        paddingBottom: 3,
         borderBottom: '1px solid #ebebeb',
     },
     fixPadding: {
@@ -47,8 +48,9 @@ class Dialog extends React.Component {
 
     render() {
         const {classes, dialog} = this.props;
+        const selected = this.props.dialog.id === this.props.currentChat.userId;
         return (
-            <ListItem onClick={this.handleDialogClick} disableGutters={true} button style={{padding: 'unset'}}>
+            <ListItem selected={selected} onClick={this.handleDialogClick} disableGutters={true} button style={{padding: 'unset'}}>
                 <Grid container className={classes.fixWidth} wrap="nowrap" spacing={16}>
                     <Grid item md={16} style={{paddingRight: 1}}>
                         <Avatar style={{width: 50, height: 50}}>
