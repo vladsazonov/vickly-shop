@@ -64,11 +64,12 @@ class ChatWindow extends React.Component {
 
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevProps.userId !== this.props.userId){
+        if (prevProps.userId !== this.props.userId) {
             this.props.getAllMessages(this.props.userId);
+            // this.scrollToBottom();
             //this.props.handleDrawerToggle();
         }
-        //this.scrollToBottom();
+
     };
 
     render() {
@@ -77,11 +78,14 @@ class ChatWindow extends React.Component {
             <div>
                 <ChatBar/>
                 {
-                    this.props.chatMessages && this.props.chatMessages.length > 0 ? <MessageList myUserId={this.props.userId} messages={this.props.chatMessages ? this.props.chatMessages : []}/> :
-                    <div className={classes.emptyChat}>
-                        <Typography variant="h5" style={{color: '#bcbcbc'}}>История сообщений пуста...</Typography>
-                        <SendMessageBar sendMsg={this.handleSendMessage}/>
-                    </div>
+                    this.props.chatMessages && this.props.chatMessages.length > 0 ?
+                        <MessageList userInfo={this.props.currentChat.info} myUserId={this.props.userId}
+                                     messages={this.props.chatMessages ? this.props.chatMessages : []}/>
+                        :
+                        <div className={classes.emptyChat}>
+                            <Typography variant="h5" style={{color: '#bcbcbc'}}>История сообщений пуста...</Typography>
+                            <SendMessageBar sendMsg={this.handleSendMessage}/>
+                        </div>
                 }
                 <div style={{float: "left", clear: "both"}} ref={this.messagesEnd}>
                 </div>

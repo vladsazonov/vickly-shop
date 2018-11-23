@@ -10,14 +10,26 @@ import Typography from "@material-ui/core/Typography/Typography";
 import Avatar from "@material-ui/core/Avatar/Avatar";
 import Grid from "@material-ui/core/Grid/Grid";
 import ButtonBase from "@material-ui/core/ButtonBase/ButtonBase";
+import Search from "@material-ui/icons/Search"
+import MoreVert from '@material-ui/icons/MoreVert'
+import MenuItem from "@material-ui/core/MenuItem/MenuItem";
+import PersonOutline from "@material-ui/core/SvgIcon/SvgIcon";
+import Menu from "@material-ui/core/Menu/Menu";
+import Add from '@material-ui/icons/Add'
+import Group from '@material-ui/icons/Group'
 const styles = theme => ({ //TODO fix themes
     container: {
         display: 'flex',
         flexWrap: 'wrap',
     },
+    textField: {
+        height: '-webkit-fill-available',
+        marginLeft: '5px!important',
+        width: '70%',
+    },
     position: {
         position: 'fixed',
-        top: 57,
+        top: 65,
         width: '100%!important',
         backgroundColor: '#f7f7f7',
         display: '-webkit-inline-box',
@@ -40,26 +52,89 @@ const styles = theme => ({ //TODO fix themes
 });
 
 class ChatBar extends React.Component {
+    state = {
+        auth: true,
+        anchorEl: null,
+    };
+
+    handleChange = event => {
+        this.setState({ auth: event.target.checked });
+    };
+
+    handleMenu = event => {
+        this.setState({ anchorEl: event.currentTarget });
+    };
+
+    handleClose = () => {
+        this.setState({ anchorEl: null });
+    };
     render() {
+        const { auth, anchorEl } = this.state;
+        const open = Boolean(anchorEl);
         const {classes, theme} = this.props;
+
         return (
             <Grid className={classes.position} container spacing={16} >
                 <Grid item xs={4} sm={4} md={4} lg={4} xl={4}>
-                    <Typography>Бухгалтерия</Typography>
+                    <TextField
+                        id="outlined-search"
+                        placeholder="Поиск по сообщениям..."
+                        type="search"
+                        className={classes.textField}
+                        variant="outlined"
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                        InputProps={{
+                            endAdornment: (
+                                <InputAdornment position="end">
+                                    <IconButton style={{padding: 0}}>
+                                        <Search/>
+                                    </IconButton>
+                                </InputAdornment>
+                            ),
+                        }}
+                    />
                 </Grid>
-                <Grid item xs={4} sm={4} md={4} lg={4} xl={4} style={{textAlign: 'center'}}>
+                <Grid item xs={4} sm={4} md={4} lg={4} xl={4} style={{textAlign: 'center', display: '-webkit-inline-box'}}>
                     <Typography variant="h6">Бухгалтерия</Typography>
+                    <IconButton  style={{padding: 4, marginLeft: 4, borderRadius: '10%', width: '-webkit-fill-available', height: '-webkit-fill-available',}}>
+                        <Group/>
+                        <Typography>12</Typography>
+                    </IconButton>
                 </Grid>
-                <Grid item xs={4} sm={4} md={4} lg={4} xl={4}>
-                    <IconButton style={{width: 48, height: 48}}>
-                        <AttachFile/>
+                <Grid item xs={4} sm={4} md={4} lg={4} xl={4} style={{textAlign: 'end', margin: 'auto'}}>
+                    <IconButton style={{padding: 0, marginRight:25}}>
+                        <Add/>
                     </IconButton>
-                    <IconButton style={{width: 48, height: 48}}>
-                        <AttachFile/>
+                    <IconButton
+                        style={{padding: 0}}
+                        aria-owns={open ? 'menu-appbar' : undefined}
+                        aria-haspopup="true"
+                        onClick={this.handleMenu}
+                        color="inherit">
+                        <MoreVert/>
                     </IconButton>
-                    <IconButton style={{width: 48, height: 48}}>
-                        <AttachFile/>
-                    </IconButton>
+                    <Menu
+                        style={{zIndex: 2000}}
+                        id="menu-appbar"
+                        anchorEl={anchorEl}
+                        anchorOrigin={{
+                            vertical: 'top',
+                            horizontal: 'right',
+                        }}
+                        transformOrigin={{
+                            vertical: 'top',
+                            horizontal: 'right',
+                        }}
+                        open={open}
+                        onClose={this.handleClose}
+                    >
+                        <MenuItem onClick={this.handleClose}>Информация о чате</MenuItem>
+                        <MenuItem onClick={this.handleClose}>Вложения</MenuItem>
+                        <MenuItem onClick={this.handleClose}>Заглушить уведомления</MenuItem>
+                        <MenuItem onClick={this.handleClose}>Выйти</MenuItem>
+                    </Menu>
                 </Grid>
             </Grid>
         )

@@ -1,8 +1,8 @@
 import loginService from "../../services/loginService"
+import {BACKEND_URL} from "../../common";
 
 export const LOGIN_STATUS = 'SET_LOGIN_STATUS';
-const host = 'localhost:9000';
-const api = "http://"+host+"/api";
+const api = "http://"+BACKEND_URL+"/api";
 
 
 export function tryLogin(login, password) {

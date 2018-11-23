@@ -40,7 +40,7 @@ class Workgroup extends React.Component {
                         {
                             workgroup.users.map(
                                 function (user) {
-                                    return <Dialog dialog={user}/>
+                                    return <Dialog key={user.user.id} unread={user.unread} lastMsg={user.last} dialog={user.user}/>
                                 }
                             )
                         }

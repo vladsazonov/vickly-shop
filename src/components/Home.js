@@ -25,6 +25,8 @@ import Workgroup from "./Workgroup";
 import {Scrollbars} from "react-custom-scrollbars";
 import SearchBar from "./SearchBar";
 import ChatBar from "./ChatBar";
+import ProfileIco from "./ProfileIco";
+import InviteIco from "./InviteIco";
 
 const drawerWidth = 320;
 
@@ -34,6 +36,7 @@ const styles = theme => ({
         display: 'flex',
         marginLeft: 0,
         marginRight: 0,
+        flexGrow: 1,
     },
     drawer: {
         [theme.breakpoints.up('sm')]: {
@@ -134,9 +137,11 @@ class Home extends React.Component {
                         >
                             <MenuIcon/>
                         </IconButton>
-                        <Typography variant="h6" color="inherit" noWrap>
+                        <Typography variant="h6" color="inherit" noWrap style={{flexGrow: 1}}>
                             Weak messenger
                         </Typography>
+                        <InviteIco/>
+                        <ProfileIco/>
                     </Toolbar>
                 </AppBar>
                 <nav className={classes.drawer}>

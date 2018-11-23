@@ -13,6 +13,15 @@ const styles = theme => ({
         display: 'flex',
         flexWrap: 'wrap',
     },
+    position: {
+        position: "fixed",
+        top: 65,
+        left: 0,
+        right: 0,
+        backgroundColor: "#fff",
+        width: 318,
+        zIndex: 1499,
+    },
     textField: {
         marginLeft: theme.spacing.unit,
         marginRight: theme.spacing.unit,
@@ -32,15 +41,7 @@ class OutlinedTextFields extends React.Component {
         const { classes } = this.props;
 
         return (
-            <div style={{
-                position: "fixed",
-                top: 57,
-                left: 0,
-                right: 0,
-                backgroundColor: "#fff",
-                width: 318,
-                zIndex: 1499,
-            }}>
+            <div className={classes.position}>
                 <form className={classes.container} noValidate autoComplete="off">
 
                     <TextField
@@ -57,7 +58,7 @@ class OutlinedTextFields extends React.Component {
                         InputProps={{
                             endAdornment: (
                                 <InputAdornment position="end">
-                                    <IconButton>
+                                    <IconButton style={{padding: 0}}>
                                         <Search/>
                                     </IconButton>
                                 </InputAdornment>

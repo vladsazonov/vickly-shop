@@ -50,8 +50,10 @@ class MessageList extends React.Component {
             return (
                 <Message
                     key={i}
+                    userInfo={this.props.userInfo}
                     username={"Placeholder"}
                     message={message.message}
+                    messageInfo={message}
                     fromMe={fromMe} />
             );
         });

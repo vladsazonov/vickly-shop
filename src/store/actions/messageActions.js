@@ -1,10 +1,13 @@
 import loginService from "../../services/loginService"
 import {setChatList} from "./mainActions";
+import {BACKEND_URL} from "../../common";
 
 export const SEND_MESSAGE = 'SEND_MESSAGE';
 export const FETCH_ALL_MESSAGES = 'FETCH_ALL_MESSAGES';
-const host = 'localhost:9000';
-const api = "http://" + host + "/api";
+export const ADD_MESSAGE = "ADD_MESSAGE";
+
+
+const api = "http://" + BACKEND_URL + "/api";
 
 
 export function postMessage(message, toId) {

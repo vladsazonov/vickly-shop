@@ -1,15 +1,16 @@
 import loginService from "../../services/loginService";
+import {BACKEND_URL} from "../../common";
 
 
 export const SET_CURRENT_CHAT = 'SET_CURRENT_CHAT';
-const host = '192.168.0.106:9000';
-const api = "http://"+host+"/api";
+const api = "http://"+BACKEND_URL+"/api";
 
 
-export function setCurrentChat(userId) {
+export function setCurrentChat(userId, user) {
     return {
         type: SET_CURRENT_CHAT,
-        userId
+        userId,
+        info:user
     };
 }
 

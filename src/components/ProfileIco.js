@@ -12,14 +12,13 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormGroup from '@material-ui/core/FormGroup';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
+import ExitToApp from '@material-ui/icons/ExitToApp'
+import PersonOutline from '@material-ui/icons/PersonOutline'
+import Settings from '@material-ui/icons/Settings'
+import PersonAdd from '@material-ui/icons/PersonAddOutlined'
+
 
 const styles = {
-    root: {
-        flexGrow: 1,
-    },
-    grow: {
-        flexGrow: 1,
-    },
     menuButton: {
         marginLeft: -12,
         marginRight: 20,
@@ -51,53 +50,39 @@ class ProfileIco extends React.Component {
 
         return (
             <div className={classes.root}>
-                <FormGroup>
-                    <FormControlLabel
-                        control={
-                            <Switch checked={auth} onChange={this.handleChange} aria-label="LoginSwitch" />
-                        }
-                        label={auth ? 'Logout' : 'Login'}
-                    />
-                </FormGroup>
-                <AppBar position="static">
-                    <Toolbar>
-                        <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
-                            <MenuIcon />
-                        </IconButton>
-                        <Typography variant="h6" color="inherit" className={classes.grow}>
-                            Photos
-                        </Typography>
-                        {auth && (
-                            <div>
-                                <IconButton
-                                    aria-owns={open ? 'menu-appbar' : undefined}
-                                    aria-haspopup="true"
-                                    onClick={this.handleMenu}
-                                    color="inherit"
-                                >
-                                    <AccountCircle />
-                                </IconButton>
-                                <Menu
-                                    id="menu-appbar"
-                                    anchorEl={anchorEl}
-                                    anchorOrigin={{
-                                        vertical: 'top',
-                                        horizontal: 'right',
-                                    }}
-                                    transformOrigin={{
-                                        vertical: 'top',
-                                        horizontal: 'right',
-                                    }}
-                                    open={open}
-                                    onClose={this.handleClose}
-                                >
-                                    <MenuItem onClick={this.handleClose}>Profile</MenuItem>
-                                    <MenuItem onClick={this.handleClose}>My account</MenuItem>
-                                </Menu>
-                            </div>
-                        )}
-                    </Toolbar>
-                </AppBar>
+                <Toolbar>
+                    {auth && (
+                        <div>
+                            <IconButton
+                                aria-owns={open ? 'menu-appbar' : undefined}
+                                aria-haspopup="true"
+                                onClick={this.handleMenu}
+                                color="inherit"
+                            >
+                                <AccountCircle />
+                            </IconButton>
+                            <Menu
+                                style={{zIndex: 2000}}
+                                id="menu-appbar"
+                                anchorEl={anchorEl}
+                                anchorOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'right',
+                                }}
+                                transformOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'right',
+                                }}
+                                open={open}
+                                onClose={this.handleClose}
+                            >
+                                <MenuItem onClick={this.handleClose}><PersonOutline/>Профиль</MenuItem>
+                                <MenuItem onClick={this.handleClose}><Settings/>Настройки</MenuItem>
+                                <MenuItem onClick={this.handleClose}><ExitToApp/>Выйти</MenuItem>
+                            </Menu>
+                        </div>
+                    )}
+                </Toolbar>
             </div>
         );
     }

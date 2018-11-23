@@ -1,10 +1,9 @@
 import loginService from "../../services/loginService"
+import {BACKEND_URL} from "../../common";
 
 export const SET_CHAT_LIST = 'SET_CHAT_LIST';
 
-
-const host = 'localhost:9000';
-const api = "http://"+host+"/api";
+const api = "http://"+BACKEND_URL+"/api";
 
 
 export function fetchChats() {

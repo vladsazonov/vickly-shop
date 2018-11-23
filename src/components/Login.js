@@ -13,6 +13,8 @@ import Typography from '@material-ui/core/Typography';
 import {setLoginPending, tryLogin} from "../store/actions/loginActions";
 import {connect} from "react-redux";
 import withStyles from '@material-ui/core/styles/withStyles';
+import LinearProgress from "@material-ui/core/LinearProgress/LinearProgress";
+import Grid from "@material-ui/core/Grid/Grid";
 
 const styles = theme => ({
     main: {
@@ -46,53 +48,120 @@ const styles = theme => ({
     },
 });
 
-function Login(props) {
-    const { classes } = props;
-    function handleSubmit(e) {
-        e.preventDefault();
-        console.log(e.target.login.value+ "  "+ e.target.password.value);
-        //const { login, password } = this.state;
-        props.onLogin( e.target.login.value, e.target.password.value);
+class Login extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            invite: false
+        }
     }
-    return (
-        <main className={classes.main}>
-            <CssBaseline />
-            <Paper className={classes.paper}>
-                <Avatar className={classes.avatar}>
-                    <LockIcon />
-                </Avatar>
-                <Typography component="h1" variant="h5">
-                    Sign in
-                </Typography>
-                <form onSubmit={handleSubmit.bind(this)} className={classes.form}>
-                    <FormControl margin="normal" required fullWidth>
-                        <InputLabel htmlFor="email">Email Address</InputLabel>
-                        <Input  id="email" name="login" autoComplete="email" autoFocus />
-                    </FormControl>
-                    <FormControl margin="normal" required fullWidth>
-                        <InputLabel htmlFor="password">Password</InputLabel>
-                        <Input name="password" type="password" id="password" autoComplete="current-password" />
-                    </FormControl>
-                    <FormControlLabel
-                        control={<Checkbox value="remember" color="primary" />}
-                        label="Remember me"
-                    />
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        color="primary"
-                        className={classes.submit}
-                    >
+
+    handleSubmit = (e) => {
+        e.preventDefault();
+        console.log(e.target.login.value + "  " + e.target.password.value);
+        //const { login, password } = this.state;
+        this.props.onLogin(e.target.login.value, e.target.password.value);
+        this.props.setLoading();
+    };
+
+    handleInviteSignUp = () => {
+        //TODO action
+        this.toInvite(false);
+    };
+
+    toInvite = (isInvite) => {
+        if (this.state.invite === isInvite)
+            return;
+        this.setState({
+            invite: isInvite
+        })
+    };
+
+    render() {
+        const {classes} = this.props;
+        return !this.state.invite ? (
+            <main className={classes.main}>
+                <CssBaseline/>
+                <Paper className={classes.paper}>
+                    <Avatar className={classes.avatar}>
+                        <LockIcon/>
+                    </Avatar>
+                    <Typography component="h1" variant="h5">
                         Sign in
-                    </Button>
-                </form>
-            </Paper>
-        </main>
-    );
+                    </Typography>
+                    <form onSubmit={this.handleSubmit.bind(this)} className={classes.form}>
+                        <FormControl margin="normal" required fullWidth>
+                            <InputLabel htmlFor="login">Login</InputLabel>
+                            <Input id="login" name="login" autoFocus/>
+                        </FormControl>
+                        <FormControl margin="normal" required fullWidth>
+                            <InputLabel htmlFor="password">Password</InputLabel>
+                            <Input name="password" type="password" id="password" autoComplete="current-password"/>
+                        </FormControl>
+                        <FormControlLabel
+                            control={<Checkbox value="remember" color="primary"/>}
+                            label="Remember me"
+                        />
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            color="primary"
+                            className={classes.submit}
+                        >
+                            Sign in
+                        </Button>
+                        <Button fullWidth style={{marginTop: "10px"}} onClick={() => this.toInvite(true)}>
+                            Invite
+                        </Button>
+                    </form>
+                </Paper>
+            </main>
+        ) : (
+            <main className={classes.main}>
+                <CssBaseline/>
+                <Paper className={classes.paper}>
+                    <Avatar className={classes.avatar}>
+                        <LockIcon/>
+                    </Avatar>
+                    <Typography component="h1" variant="h5">
+                        Invite
+                    </Typography>
+                    <form onSubmit={this.handleSubmit.bind(this)} className={classes.form}>
+                        <FormControl margin="normal" required fullWidth>
+                            <InputLabel htmlFor="inviteid">Invite id</InputLabel>
+                            <Input id="inviteid"/>
+                        </FormControl>
+                        <FormControl margin="normal" required fullWidth>
+                            <InputLabel htmlFor="login">Login</InputLabel>
+                            <Input id="login"/>
+                        </FormControl>
+                        <FormControl margin="normal" required fullWidth>
+                            <InputLabel htmlFor="password">Password</InputLabel>
+                            <Input id="password" autoComplete="email"/>
+                        </FormControl>
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            color="primary"
+                            className={classes.submit}
+                        >
+                            Sign up
+                        </Button>
+                        <Button fullWidth style={{marginTop: "10px"}} onClick={() => this.toInvite(false)}>
+                            Sign in
+                        </Button>
+                    </form>
+                </Paper>
+            </main>
+        );
+    }
+
+
 }
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
     return {
         user: state.user
     }
@@ -100,7 +169,7 @@ function mapStateToProps (state) {
 
 const mapDispatchToProps = dispatch => ({
     onLogin: (user, password) => {
-        dispatch(tryLogin(user,password));
+        dispatch(tryLogin(user, password));
     }
 });
 

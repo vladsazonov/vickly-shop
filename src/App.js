@@ -9,8 +9,23 @@ import Home from "./components/Home";
 import {setLoginStatus} from "./store/actions/loginActions";
 import {fetchChats} from "./store/actions/mainActions";
 import loginService from "./services/loginService"
+import LinearProgress from "@material-ui/core/LinearProgress/LinearProgress";
 
 class App extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            loading:false
+        }
+    }
+
+
+    setLoading = () => {
+        this.setState({
+            loading:true
+        })
+    };
 
 
     componentWillMount() {
@@ -26,6 +41,12 @@ class App extends Component {
         }
     }
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if(prevProps.user.status !== this.props.user.status){
+            this.props.OnChatsFetch();
+        }
+    }
+
     render() {
         console.log(this.props);
         if (this.props.user.status) {
@@ -35,11 +56,19 @@ class App extends Component {
         } else {
             return (
                 <Grid container>
-                    <Grid item xs={4}/>
-                    <Grid item xs={4}>
-                        <Login/>
+                    <Grid container>
+                        <Grid item xs={12}>
+                            {this.state.loading && !this.props.user.status && !this.props.user.error ? <LinearProgress variant="query"/> : ""}
+                        </Grid>
                     </Grid>
-                    <Grid item xs={4}/>
+                    <Grid container>
+                        <Grid item xs={1} lg={4}/>
+                        <Grid item xs={10} lg={4}>
+                            <Login setLoading={this.setLoading.bind(this)}/>
+                        </Grid>
+                        <Grid item xs={1} lg={4}/>
+                    </Grid>
+
                 </Grid>
             )
         }
