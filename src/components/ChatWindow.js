@@ -7,7 +7,7 @@ import connect from "react-redux/es/connect/connect";
 import SendMessageBar from "./SendMessageBar";
 import MessageList from "./MessageList";
 import ChatBar from "./ChatBar";
-import {getAllMessages, markAsReadAction, postMessage} from "../store/actions/messageActions"
+import {getAllMessages, markAsRead, markAsReadAction, postMessage} from "../store/actions/messageActions"
 
 const styles = theme => ({
     button: {
@@ -75,9 +75,10 @@ class ChatWindow extends React.Component {
             //this.props.handleDrawerToggle();
         }
         if(this.props.chatMessages){
+            let props = this.props;
             this.props.chatMessages.forEach((msg, i, arr) => {
                 if(!msg.timestamp_read){
-                    this.props.markAsRead(msg.id, this.props.userId);
+                    props.markAsRead(msg.id, this.props.userId);
                 }
             })
         }
@@ -126,7 +127,7 @@ function mapDispatchToProps(dispatch) {
     return {
         postMessage: (message, toId) => dispatch(postMessage(message, toId)),
         getAllMessages: (chatId) => dispatch(getAllMessages(chatId)),
-        markAsRead:(messageId,chatId) => dispatch(markAsReadAction(messageId, chatId)),
+        markAsRead:(messageId,chatId) => dispatch(markAsRead(messageId, chatId)),
     }
 }
 

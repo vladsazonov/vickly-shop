@@ -29,8 +29,9 @@ import ProfileIco from "./ProfileIco";
 import InviteIco from "./InviteIco";
 import {getAllMessages, postMessage} from "../store/actions/messageActions";
 import {userLogout} from "../store/actions/loginActions";
+import Background from  '../images/messagesBackground.jpg'
 
-const drawerWidth = 320;
+const drawerWidth = 450;
 
 const styles = theme => ({
 
@@ -39,22 +40,35 @@ const styles = theme => ({
         marginLeft: 0,
         marginRight: 0,
         flexGrow: 1,
+        color: 'white',
     },
     drawer: {
+        [theme.breakpoints.up('lg')]: {
+            width: '30%',
+            flexShrink: 0,
+        },
+        [theme.breakpoints.up('md')]: {
+            width: '33%',
+            flexShrink: 0,
+        },
         [theme.breakpoints.up('sm')]: {
-            width: drawerWidth,
+            width: '30%',
             flexShrink: 0,
         },
         backgroundColor: '#25464c',
         zIndex: 1500, //TODO: ui bug
+        borderRight: '1px solid #243342',
     },
     appBar: {
         marginLeft: drawerWidth,
         [theme.breakpoints.up('sm')]: {
             width: '100%',
+            height: 50,
         },
+        backgroundColor: '#253340',
         zIndex: 1501,
-        height: 64,
+        height: 50,
+        boxShadow: '0 0 0 rgba(0,0,0,0)',
     },
     menuButton: {
         marginRight: 20,
@@ -62,14 +76,39 @@ const styles = theme => ({
             display: 'none',
         },
     },
-    toolbar: theme.mixins.toolbar,
+    toolbar: {
+        height: 50,
+    },
     drawerPaper: {
-        width: drawerWidth,
-        borderRight: 0,
+        [theme.breakpoints.up('xs')]: {
+            width: '85%',
+        },
+        [theme.breakpoints.up('sm')]: {
+            width: '35%',
+        },
+        [theme.breakpoints.up('md')]: {
+            width: '33%',
+        },
+        [theme.breakpoints.up('lg')]: {
+            width: '30%',
+        },
+        backgroundColor: '#17212b',
+        borderRight: '1px solid #243342',
+    },
+    workG: {
+        [theme.breakpoints.up('xs')]: {
+            marginTop: 49,
+            paddingTop: 0
+        },
+        marginTop: 55,
     },
     content: {
         flexGrow: 1,
         /*padding: theme.spacing.unit * 3,*/
+        [theme.breakpoints.up('lg')]: {
+            left: '33%'
+        },
+        backgroundImage: `url(${Background})`
     },
 });
 
@@ -124,7 +163,7 @@ class Home extends React.Component {
                         className={classes.toolbar}/>
                     <SearchBar/>
                     <Divider/>
-                    <List style={{marginTop: 39}}>
+                    <List className={classes.workG}>
                         {this.workgroups()}
                     </List>
                 </div>
@@ -136,7 +175,7 @@ class Home extends React.Component {
             <div className={classes.root}>
                 <CssBaseline/>
                 <AppBar position="fixed" className={classes.appBar}>
-                    <Toolbar>
+                    <Toolbar style={{minHeight: 'auto'}}>
                         <IconButton
                             color="inherit"
                             aria-label="Open drawer"

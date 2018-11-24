@@ -15,20 +15,23 @@ const styles = theme => ({
     position: {
         bottom: 0,
         width: '100%',
-        backgroundColor: '#fafafa',
+        backgroundColor: '#17212b',
         display: 'inline-flex',
-        borderTop: '1px solid #ebebeb',
         overflow: 'hidden',
         position: 'fixed',
+        color: '#fff',
         right: 0,
-        [theme.breakpoints.up('lg')]: {
-            paddingLeft: 320,
+        [theme.breakpoints.up('sm')]: {
+            left: '35%',
+            width: 'auto!important',
         },
         [theme.breakpoints.up('md')]: {
-            paddingLeft: 320,
+            left: '33%',
+            width: 'auto!important',
         },
-        [theme.breakpoints.up('sm')]: {
-            paddingLeft: 320,
+        [theme.breakpoints.up('lg')]: {
+            left: '30%',
+            width: 'auto!important',
         },
     },
     iconButton: {
@@ -78,11 +81,10 @@ class SendMessageBar extends React.Component {
                     id="outlined"
                     value={this.state.messageText}
                     onChange={this.handleOnTextChange}
-                    style={{width: '95%', margin: 8}}
+                    style={{width: '95%', backgroundColor: '#1d2a36', margin: 6, marginRight: 0}}
                     placeholder="Введите сообщение..."
                     onKeyDown={this.onEnterDown}
                     //helperText="Full width!"
-                    margin="normal"
                     variant="outlined"
                     InputLabelProps={{
                         shrink: true,
@@ -91,14 +93,14 @@ class SendMessageBar extends React.Component {
                         endAdornment: (
                             <InputAdornment position="end">
                                 <IconButton disabled={!this.state.messageText.trim()} onClick={this.handleSendButton.bind(this)}>
-                                    <SendOutlined/>
+                                    <SendOutlined style={{color: '#fff'}}/>
                                 </IconButton>
                             </InputAdornment>
                         ),
                     }}
                 />
-                <IconButton style={{width: 48, height: 48, marginTop: 10}}>
-                    <AttachFile/>
+                <IconButton style={{width: 48, height: 48, margin: 'auto'}}>
+                    <AttachFile style={{color: '#fff'}}/>
                 </IconButton>
             </div>
         )

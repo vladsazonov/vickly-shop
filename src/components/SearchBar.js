@@ -7,6 +7,7 @@ import SendOutlined from "@material-ui/core/SvgIcon/SvgIcon";
 import IconButton from "@material-ui/core/IconButton/IconButton";
 import Search from "@material-ui/icons/Search"
 import AddCommentOutlined from "@material-ui/icons/AddCommentOutlined"
+import "../css/dark.css"
 
 const styles = theme => ({
     container: {
@@ -15,18 +16,42 @@ const styles = theme => ({
     },
     position: {
         position: "fixed",
-        top: 64,
+        top: 50,
         left: 0,
         right: 0,
-        backgroundColor: "#fff",
-        width: 320,
+        backgroundColor: '#17212b',
+        borderRight: '1px solid #243342',
+        [theme.breakpoints.up('xs')]: {
+            width: '100%',
+        },
+        [theme.breakpoints.up('md')]: {
+            width: '30%',
+        },
+        [theme.breakpoints.up('sm')]: {
+            width: '33%',
+        },
+        [theme.breakpoints.up('lg')]: {
+            width: '30%',
+        },
         zIndex: 1499,
     },
     textField: {
         marginLeft: 15,
         marginRight: 0,
-        width: '79%',
+        width: '83%',
+        [theme.breakpoints.up('sm')]: {
+            width: '68%',
+        },
+        [theme.breakpoints.up('md')]: {
+            width: '80%',
+        },
+        [theme.breakpoints.up('lg')]: {
+            width: '83%',
+        },
         margin: 'auto',
+        backgroundColor: '#1d2a36',
+        borderRadius: 8,
+        padding: 4
     },
     dense: {
         marginTop: 16,
@@ -52,7 +77,6 @@ class OutlinedTextFields extends React.Component {
                         className={classes.textField}
                         margin="normal"
                         fullWidth
-                        style={{color: '#fff'}}
                         InputLabelProps={{
                             shrink: true,
                         }}
@@ -60,14 +84,14 @@ class OutlinedTextFields extends React.Component {
                             endAdornment: (
                                 <InputAdornment position="end">
                                     <IconButton style={{padding: 0}}>
-                                        <Search/>
+                                        <Search style={{color: "white"}}/>
                                     </IconButton>
                                 </InputAdornment>
                             ),
                         }}
                     />
                     <IconButton style={{width: 48, height: 48}}>
-                        <AddCommentOutlined/>
+                        <AddCommentOutlined style={{color: "white"}}/>
                     </IconButton>
 
                 </form>

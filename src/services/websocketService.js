@@ -46,7 +46,7 @@ class WebsocketService{
         switch (payload.event) {
             case NEW_MESSAGE:
                 if(payload)
-                this.addMessageHandler();
+                this.addMessageHandler(payload.message.message);
                 break;
             default:
                 break;

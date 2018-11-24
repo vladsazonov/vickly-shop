@@ -11,6 +11,7 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import StarBorder from '@material-ui/icons/StarBorder';
+import loginService from "../services/loginService";
 
 
 const styles = theme => ({
@@ -30,7 +31,7 @@ class Workgroup extends React.Component {
         const {classes, theme, workgroup} = this.props;
 
         return (
-            <div style={{backgroundColor: 'rgb(245, 245, 245)', borderBottom: '1px solid #ebebeb'}}>
+            <div style={{backgroundColor: '#253340', borderBottom: '0.2px solid #1f2c39'}}>
                 <ListItem button onClick={this.handleClick} style={{paddingTop: 0, paddingBottom: 0}}>
                     <ListItem style={{textAlign: 'center'}}>{workgroup.group.name}</ListItem>
                     {this.state.open ? <ExpandLess/> : <ExpandMore/>}
@@ -40,7 +41,10 @@ class Workgroup extends React.Component {
                         {
                             workgroup.users.map(
                                 function (user) {
-                                    return <Dialog key={user.user.id} unread={user.unread} lastMsg={user.last} dialog={user.user}/>
+                                    return user.user.id != loginService.getCreds().myUserId ?
+                                        <Dialog key={user.user.id} unread={user.unread} lastMsg={user.last} dialog={user.user}/>
+                                        :
+                                        null
                                 }
                             )
                         }

@@ -28,27 +28,32 @@ const styles = theme => ({ //TODO fix themes
         height: '-webkit-fill-available',
         marginLeft: '5px!important',
         width: '-webkit-fill-available',
+        backgroundColor: '#1d2a36',
     },
     position: {
         position: 'fixed',
-        top: 64,
-        width: '100%!important',
-        backgroundColor: '#f7f7f7',
+        top: 50,
+        backgroundColor: '#17212b',
         display: '-webkit-inline-box',
-        borderBottom: '1px solid #ebebeb',
-        height: 49,
-        boxShadow: '0px -3px 13px 0px rgba(0, 0, 0, 0.2)',
+        height: 50,
         zIndex: 1,
         margin: '0!important',
         right: 0,
-        [theme.breakpoints.up('lg')]: {
-            paddingLeft: 320,
-        },
-        [theme.breakpoints.up('md')]: {
-            paddingLeft: 320,
+        [theme.breakpoints.up('xs')]: {
+            left: 0,
+            width: 'auto!important',
         },
         [theme.breakpoints.up('sm')]: {
-            paddingLeft: 320,
+            left: '35%',
+            width: 'auto!important',
+        },
+        [theme.breakpoints.up('md')]: {
+            left: '33%',
+            width: 'auto!important',
+        },
+        [theme.breakpoints.up('lg')]: {
+            left: '30%',
+            width: 'auto!important',
         },
     },
 });
@@ -90,8 +95,8 @@ class ChatBar extends React.Component {
                         InputProps={{
                             endAdornment: (
                                 <InputAdornment position="end">
-                                    <IconButton style={{padding: 0}}>
-                                        <Search/>
+                                    <IconButton  style={{padding: 0}}>
+                                        <Search style={{color: 'white'}}/>
                                     </IconButton>
                                 </InputAdornment>
                             ),
@@ -100,25 +105,26 @@ class ChatBar extends React.Component {
                 </Grid>
                 <Grid item xs={3} sm={3} md={4} lg={4} xl={4} style={{textAlign: 'center'}}>
                     <div style={{display: '-webkit-inline-box'}}>
-                        <Typography variant="h6" style={{color: 'rgb(113, 113, 113)'}}>Бухгалтерия</Typography>
+                        <Typography variant="h6" style={{color: '#fff'}}>Бухгалтерия</Typography>
                         <IconButton style={{
                             padding: 4,
                             marginLeft: 4,
                             borderRadius: '10%',
                             width: '-webkit-fill-available',
                             height: '-webkit-fill-available',
+                            color: 'white',
                         }}>
                             <Group/>
-                            <Typography>12</Typography>
+                            <Typography style={{color: 'white'}}>12</Typography>
                         </IconButton>
                     </div>
                 </Grid>
                 <Grid item xs={5} sm={7} md={4} lg={4} xl={4} style={{textAlign: 'end', margin: 'auto'}}>
                     <IconButton style={{padding: 0, marginRight: 25}}>
-                        <Add/>
+                        <Add style={{color: 'white'}}/>
                     </IconButton>
                     <IconButton style={{padding: 0, marginRight: 25}}>
-                        <FavoriteOutlined/>
+                        <FavoriteOutlined style={{color: 'white'}}/>
                     </IconButton>
                     <IconButton
                         style={{padding: 0}}

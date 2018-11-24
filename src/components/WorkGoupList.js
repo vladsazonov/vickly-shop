@@ -98,7 +98,6 @@ const styles = theme => ({
     root: {
         width: '100%',
         maxWidth: '360px',
-        backgroundColor: theme.palette.background.paper,
         overflow: "auto",
         margin: 'auto',
         height: '400px',

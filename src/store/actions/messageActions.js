@@ -45,7 +45,7 @@ export function postMessage(message, toId) {
 export function getAllMessages(chatId) {
     return async function (dispatch) {
         try {
-            const response = await fetch(api + `/message/chat/${chatId}/user`, {
+            const response = await fetch(api + `/message/chat/${chatId}/user/0`, {
                 method: 'GET',
                 headers: {
                     'Authorization': loginService.getToken(),
@@ -72,7 +72,7 @@ export function getAllMessages(chatId) {
 export function markAsRead(messageId, chatId) {
     return async function (dispatch) {
         try {
-            const response = await fetch(api + `message/read`, {
+            const response = await fetch(api + `/message/read`, {
                 method: 'POST',
                 headers: {
                     'Authorization': loginService.getToken(),
@@ -85,7 +85,7 @@ export function markAsRead(messageId, chatId) {
                 })
             });
             if (!response.ok) {
-                alert("fetch messages failed")
+                alert("mark as read failed")
             }
             return dispatch(markAsReadAction(
                 messageId, chatId
@@ -95,6 +95,14 @@ export function markAsRead(messageId, chatId) {
             console.log(err);
             // return dispatch(setChatList(err))
         }
+    }
+}
+
+export function addMessage(message) {
+    return async function (dispatch) {
+        return dispatch(addMessageAction(
+            message
+        ));
     }
 }
 
@@ -113,10 +121,10 @@ export function sendMessage(message) {
     };
 }
 
-export function addMessage(message) {
+export function addMessageAction(message) {
     return {
         type: ADD_MESSAGE,
-        ...message
+        message
     };
 }
 
