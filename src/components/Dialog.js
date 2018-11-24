@@ -11,11 +11,6 @@ import {tryLogin} from "../store/actions/loginActions";
 import {setCurrentChat} from "../store/actions/chatActions";
 import Badge from "@material-ui/core/Badge/Badge";
 
-const message = 'Опять на работу сука блять';
-const image = 'https://pp.userapi.com/c604521/v604521198/21993/7DxyyX7M-YY.jpg';
-const name = 'Константин Константинович Константинопольский';
-const date = '22/06/18';
-
 const styles = theme => ({
     fixWidth: {
         backgroundColor: 'white',
@@ -28,6 +23,13 @@ const styles = theme => ({
     },
     selected: {
         backgroundColor: "#e0e0e0"
+    },
+    inverted: {
+        filter: 'invert(100%)',
+    },
+    margin: {
+        top: '39px!important',
+        right: '17px!important',
     },
     fixPadding: {
         marginRight: 6,
@@ -45,6 +47,15 @@ const styles = theme => ({
 });
 
 class Dialog extends React.Component {
+
+    getRandomColor = () => {
+        var letters = '0123456789ABCDEF';
+        var color = '#';
+        for (var i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    };
 
     handleDialogClick = () => {
         this.props.setCurrentChat(this.props.dialog.id, this.props.dialog);
@@ -70,28 +81,33 @@ class Dialog extends React.Component {
                 <Grid container className={`${classes.fixWidth} ${selected ? classes.selected : ""}`} wrap="nowrap"
                       spacing={16}>
                     <Grid item md={16} style={{paddingRight: 1}}>
-                        {/*{this.props.unread ? (*/}
-                            {/*<Badge color="primary" badgeContent={this.props.unread} className={classes.badge}>*/}
-                                {/*<Avatar style={{width: 50, height: 50}}>*/}
-                                    {/*{dialog.first_name[0].toUpperCase()}*/}
-                                {/*</Avatar>*/}
-                            {/*</Badge>*/}
-                        {/*) : (*/}
-                            {/*<Avatar style={{width: 50, height: 50}}>*/}
-                                {/*{dialog.first_name[0].toUpperCase()}*/}
-                            {/*</Avatar>*/}
-                        {/*)}*/}
-                        <Avatar style={{width: 50, height: 50}}>
+                        <Avatar style={{width: 50, height: 50,backgroundColor:`${this.getRandomColor()}`}}>
                             {dialog.first_name[0].toUpperCase()}
                         </Avatar>
                     </Grid>
                     <Grid item xs zeroMinWidth style={{paddingTop: 14}}>
                         <Typography variant="body2" noWrap>{dialog.first_name + " " + dialog.last_name}</Typography>
-                        <Typography variant="caption" noWrap>{ this.props.lastMsg ? this.props.lastMsg.message : "Нет сообщений"}</Typography>
+                        <Typography variant="caption"
+                                    noWrap>{this.props.lastMsg ? this.props.lastMsg.message : "Нет сообщений"}</Typography>
                     </Grid>
                     <Grid item className={classes.fixPadding} style={{paddingLeft: 1, paddingTop: 15}}>
-                        <Typography variant="caption">{this.props.lastMsg ? this.formatDate(this.props.lastMsg.timestamp_post.timestamp) : ""}</Typography>
+                        <Typography
+                            variant="caption">{this.props.lastMsg ? this.formatDate(this.props.lastMsg.timestamp_post.timestamp) : ""}</Typography>
                     </Grid>
+                    {
+                        this.props.unread ?
+                            (
+                                <div className={classes.margin}>
+                                    <Badge color="primary" badgeContent={this.props.unread} className={classes.margin}>
+                                    </Badge>
+                                </div>
+                            )
+                            :
+                            (
+                                ""
+                            )
+                    }
+
                 </Grid>
             </ListItem>
 

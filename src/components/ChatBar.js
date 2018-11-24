@@ -17,6 +17,8 @@ import PersonOutline from "@material-ui/core/SvgIcon/SvgIcon";
 import Menu from "@material-ui/core/Menu/Menu";
 import Add from '@material-ui/icons/Add'
 import Group from '@material-ui/icons/Group'
+import FavoriteOutlined from '@material-ui/icons/FavoriteBorderOutlined'
+
 const styles = theme => ({ //TODO fix themes
     container: {
         display: 'flex',
@@ -25,11 +27,11 @@ const styles = theme => ({ //TODO fix themes
     textField: {
         height: '-webkit-fill-available',
         marginLeft: '5px!important',
-        width: '70%',
+        width: '-webkit-fill-available',
     },
     position: {
         position: 'fixed',
-        top: 65,
+        top: 64,
         width: '100%!important',
         backgroundColor: '#f7f7f7',
         display: '-webkit-inline-box',
@@ -74,8 +76,8 @@ class ChatBar extends React.Component {
         const {classes, theme} = this.props;
 
         return (
-            <Grid className={classes.position} container spacing={16} >
-                <Grid item xs={4} sm={4} md={4} lg={4} xl={4}>
+            <Grid className={classes.position} container spacing={16}>
+                <Grid item xs={4} sm={2} md={2} lg={4} xl={4}>
                     <TextField
                         id="outlined-search"
                         placeholder="Поиск по сообщениям..."
@@ -96,16 +98,27 @@ class ChatBar extends React.Component {
                         }}
                     />
                 </Grid>
-                <Grid item xs={4} sm={4} md={4} lg={4} xl={4} style={{textAlign: 'center', display: '-webkit-inline-box'}}>
-                    <Typography variant="h6">Бухгалтерия</Typography>
-                    <IconButton  style={{padding: 4, marginLeft: 4, borderRadius: '10%', width: '-webkit-fill-available', height: '-webkit-fill-available',}}>
-                        <Group/>
-                        <Typography>12</Typography>
-                    </IconButton>
+                <Grid item xs={3} sm={3} md={4} lg={4} xl={4} style={{textAlign: 'center'}}>
+                    <div style={{display: '-webkit-inline-box'}}>
+                        <Typography variant="h6" style={{color: 'rgb(113, 113, 113)'}}>Бухгалтерия</Typography>
+                        <IconButton style={{
+                            padding: 4,
+                            marginLeft: 4,
+                            borderRadius: '10%',
+                            width: '-webkit-fill-available',
+                            height: '-webkit-fill-available',
+                        }}>
+                            <Group/>
+                            <Typography>12</Typography>
+                        </IconButton>
+                    </div>
                 </Grid>
-                <Grid item xs={4} sm={4} md={4} lg={4} xl={4} style={{textAlign: 'end', margin: 'auto'}}>
-                    <IconButton style={{padding: 0, marginRight:25}}>
+                <Grid item xs={5} sm={7} md={4} lg={4} xl={4} style={{textAlign: 'end', margin: 'auto'}}>
+                    <IconButton style={{padding: 0, marginRight: 25}}>
                         <Add/>
+                    </IconButton>
+                    <IconButton style={{padding: 0, marginRight: 25}}>
+                        <FavoriteOutlined/>
                     </IconButton>
                     <IconButton
                         style={{padding: 0}}

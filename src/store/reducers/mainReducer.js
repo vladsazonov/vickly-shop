@@ -11,6 +11,8 @@ export default function chats(state = initialStore, action) {
                 ...state,
                 ...action
             };
+        case "USER_LOGOUT":
+            return initialStore;
         default:
             return state;
     }

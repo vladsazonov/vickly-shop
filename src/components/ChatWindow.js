@@ -7,7 +7,7 @@ import connect from "react-redux/es/connect/connect";
 import SendMessageBar from "./SendMessageBar";
 import MessageList from "./MessageList";
 import ChatBar from "./ChatBar";
-import {getAllMessages, postMessage} from "../store/actions/messageActions"
+import {getAllMessages, markAsReadAction, postMessage} from "../store/actions/messageActions"
 
 const styles = theme => ({
     button: {
@@ -32,36 +32,41 @@ const styles = theme => ({
 class ChatWindow extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            messages: []
-        };
         this.messagesEnd = React.createRef();
     }
+
+    equalMessages = (msg1, msg2) => {
+        return msg1.id === msg2.id;
+    };
+
+    equalMsgArrays = (arr1, arr2) => {
+        if (arr1.length !== arr2.length)
+            return false;
+        for (let i = 0; i < arr1.length; i++) {
+            if (arr1[i].id !== arr2[i].id)
+                return false;
+        }
+    };
 
     componentDidMount() {
         console.log("componentDidMount chatWindow");
         console.log("props:" + this.props);
 
-        if (this.messagesEnd.current) {
-            this.scrollToBottom();
-        }
+        // if (this.messagesEnd.current) {
+        //     this.scrollToBottom();
+        // }
     }
 
 
     handleSendMessage = (message) => {
         console.log("send message!!!");
         this.props.postMessage(message.message, this.props.userId);
-        this.setState((state) => {
-            return state.messages.push(message);
-        });
-
-        this.scrollToBottom();
+        //this.scrollToBottom();
     };
 
     scrollToBottom = () => {
         this.messagesEnd.current.scrollIntoView({behavior: "smooth"});
     };
-
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (prevProps.userId !== this.props.userId) {
@@ -69,7 +74,15 @@ class ChatWindow extends React.Component {
             // this.scrollToBottom();
             //this.props.handleDrawerToggle();
         }
+        if(this.props.chatMessages){
+            this.props.chatMessages.forEach((msg, i, arr) => {
+                if(!msg.timestamp_read){
+                    this.props.markAsRead(msg.id, this.props.userId);
+                }
+            })
+        }
 
+        //this.props.getAllMessages(this.props.userId);
     };
 
     render() {
@@ -112,7 +125,8 @@ function mapStateToProps(state, ownProps) {
 function mapDispatchToProps(dispatch) {
     return {
         postMessage: (message, toId) => dispatch(postMessage(message, toId)),
-        getAllMessages: (chatId) => dispatch(getAllMessages(chatId))
+        getAllMessages: (chatId) => dispatch(getAllMessages(chatId)),
+        markAsRead:(messageId,chatId) => dispatch(markAsReadAction(messageId, chatId)),
     }
 }
 

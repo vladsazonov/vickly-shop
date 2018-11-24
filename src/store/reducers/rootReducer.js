@@ -10,3 +10,18 @@ export default combineReducers({
     currentChat,
     messages
 });
+
+const appReducer = combineReducers({
+    user,
+    chats,
+    currentChat,
+    messages
+});
+
+
+const rootReducer = (state, action) => {
+    if (action.type === 'USER_LOGOUT') {
+        state = undefined
+    }
+    return appReducer(state, action);
+};

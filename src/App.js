@@ -10,20 +10,23 @@ import {setLoginStatus} from "./store/actions/loginActions";
 import {fetchChats} from "./store/actions/mainActions";
 import loginService from "./services/loginService"
 import LinearProgress from "@material-ui/core/LinearProgress/LinearProgress";
+import WebsocketService from "./services/websocketService";
+import {addMessage} from "./store/actions/messageActions";
 
 class App extends Component {
+    websocketService;
 
     constructor(props) {
         super(props);
         this.state = {
-            loading:false
+            loading: false
         }
     }
 
 
     setLoading = () => {
         this.setState({
-            loading:true
+            loading: true
         })
     };
 
@@ -38,11 +41,12 @@ class App extends Component {
                 status: true
             });
             this.props.OnChatsFetch();
+            this.websocketService = new WebsocketService(this.props.addMessage);
         }
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if(prevProps.user.status !== this.props.user.status){
+        if (prevProps.user.status !== this.props.user.status) {
             this.props.OnChatsFetch();
         }
     }
@@ -58,7 +62,8 @@ class App extends Component {
                 <Grid container>
                     <Grid container>
                         <Grid item xs={12}>
-                            {this.state.loading && !this.props.user.status && !this.props.user.error ? <LinearProgress variant="query"/> : ""}
+                            {this.state.loading && !this.props.user.status && !this.props.user.error ?
+                                <LinearProgress variant="query"/> : ""}
                         </Grid>
                     </Grid>
                     <Grid container>
@@ -80,7 +85,7 @@ class App extends Component {
 function mapStateToProps(state) {
     return {
         user: state.user,
-        chats:state.chats
+        chats: state.chats
     }
 }
 
@@ -91,6 +96,9 @@ function mapDispatchToProps(dispatch) {
         },
         OnChatsFetch: () => {
             dispatch(fetchChats());
+        },
+        addMessage: (message) => {
+            dispatch(addMessage(message));
         }
     }
 }

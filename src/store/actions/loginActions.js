@@ -2,13 +2,13 @@ import loginService from "../../services/loginService"
 import {BACKEND_URL} from "../../common";
 
 export const LOGIN_STATUS = 'SET_LOGIN_STATUS';
-const api = "http://"+BACKEND_URL+"/api";
+const api = "http://" + BACKEND_URL + "/api";
 
 
 export function tryLogin(login, password) {
     return async function (dispatch) {
         try {
-            const response = await fetch(api+"/user/login", {
+            const response = await fetch(api + "/user/login", {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
@@ -39,10 +39,24 @@ export function tryLogin(login, password) {
 
             }));
 
-        } catch(err) {
+        } catch (err) {
             console.log(err);
-            return dispatch(setLoginStatus(err))
+            return dispatch(setLoginStatus(
+                {
+                    status: false,
+                    error: err
+
+                }
+            ))
         }
+    }
+}
+
+const USER_LOGOUT = "USER_LOGOUT";
+
+export function userLogout() {
+    return {
+        type:USER_LOGOUT
     }
 }
 

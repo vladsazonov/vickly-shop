@@ -24,6 +24,10 @@ class LoginSerice {
         return sessionStorage.getItem("token")
     }
 
+    clearUserInfo() {
+        sessionStorage.clear();
+    }
+
 }
 
 export default new LoginSerice();

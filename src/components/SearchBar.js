@@ -15,17 +15,18 @@ const styles = theme => ({
     },
     position: {
         position: "fixed",
-        top: 65,
+        top: 64,
         left: 0,
         right: 0,
         backgroundColor: "#fff",
-        width: 318,
+        width: 320,
         zIndex: 1499,
     },
     textField: {
-        marginLeft: theme.spacing.unit,
-        marginRight: theme.spacing.unit,
+        marginLeft: 15,
+        marginRight: 0,
         width: '79%',
+        margin: 'auto',
     },
     dense: {
         marginTop: 16,
@@ -51,7 +52,7 @@ class OutlinedTextFields extends React.Component {
                         className={classes.textField}
                         margin="normal"
                         fullWidth
-                        style={{margin: 'auto',marginLeft: 19, width: '78%'}}
+                        style={{color: '#fff'}}
                         InputLabelProps={{
                             shrink: true,
                         }}

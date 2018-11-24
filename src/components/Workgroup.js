@@ -31,8 +31,8 @@ class Workgroup extends React.Component {
 
         return (
             <div style={{backgroundColor: 'rgb(245, 245, 245)', borderBottom: '1px solid #ebebeb'}}>
-                <ListItem button onClick={this.handleClick} style={{paddingTop: 6, paddingBottom: 6}}>
-                    <ListItemText inset primary={workgroup.group.name}/>
+                <ListItem button onClick={this.handleClick} style={{paddingTop: 0, paddingBottom: 0}}>
+                    <ListItem style={{textAlign: 'center'}}>{workgroup.group.name}</ListItem>
                     {this.state.open ? <ExpandLess/> : <ExpandMore/>}
                 </ListItem>
                 <Collapse in={this.state.open} timeout="auto" unmountOnExit>

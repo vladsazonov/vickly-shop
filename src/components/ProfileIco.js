@@ -16,12 +16,13 @@ import ExitToApp from '@material-ui/icons/ExitToApp'
 import PersonOutline from '@material-ui/icons/PersonOutline'
 import Settings from '@material-ui/icons/Settings'
 import PersonAdd from '@material-ui/icons/PersonAddOutlined'
+import loginService from "../services/loginService"
 
 
 const styles = {
     menuButton: {
         marginLeft: -12,
-        marginRight: 20,
+        marginRight: 5,
     },
 };
 
@@ -43,6 +44,11 @@ class ProfileIco extends React.Component {
         this.setState({ anchorEl: null });
     };
 
+    handleLogout = () => {
+        loginService.clearUserInfo();
+
+    };
+
     render() {
         const { classes } = this.props;
         const { auth, anchorEl } = this.state;
@@ -50,7 +56,7 @@ class ProfileIco extends React.Component {
 
         return (
             <div className={classes.root}>
-                <Toolbar>
+                <Toolbar style={{padding: 0}}>
                     {auth && (
                         <div>
                             <IconButton
@@ -59,7 +65,7 @@ class ProfileIco extends React.Component {
                                 onClick={this.handleMenu}
                                 color="inherit"
                             >
-                                <AccountCircle />
+                                <AccountCircle style={{fontSize: 30}} />
                             </IconButton>
                             <Menu
                                 style={{zIndex: 2000}}
@@ -78,7 +84,7 @@ class ProfileIco extends React.Component {
                             >
                                 <MenuItem onClick={this.handleClose}><PersonOutline/>Профиль</MenuItem>
                                 <MenuItem onClick={this.handleClose}><Settings/>Настройки</MenuItem>
-                                <MenuItem onClick={this.handleClose}><ExitToApp/>Выйти</MenuItem>
+                                <MenuItem onClick={this.props.handleLogout}><ExitToApp/>Выйти</MenuItem>
                             </Menu>
                         </div>
                     )}

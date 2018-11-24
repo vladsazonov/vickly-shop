@@ -5,6 +5,7 @@ import {BACKEND_URL} from "../../common";
 export const SEND_MESSAGE = 'SEND_MESSAGE';
 export const FETCH_ALL_MESSAGES = 'FETCH_ALL_MESSAGES';
 export const ADD_MESSAGE = "ADD_MESSAGE";
+export const MARK_AS_READ = 'MARK_AS_READ';
 
 
 const api = "http://" + BACKEND_URL + "/api";
@@ -68,6 +69,43 @@ export function getAllMessages(chatId) {
     }
 }
 
+export function markAsRead(messageId, chatId) {
+    return async function (dispatch) {
+        try {
+            const response = await fetch(api + `message/read`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': loginService.getToken(),
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    "id": messageId,
+                    "chat_id": chatId,
+                    "chat_type": "user"
+                })
+            });
+            if (!response.ok) {
+                alert("fetch messages failed")
+            }
+            return dispatch(markAsReadAction(
+                messageId, chatId
+            ));
+
+        } catch (err) {
+            console.log(err);
+            // return dispatch(setChatList(err))
+        }
+    }
+}
+
+export function markAsReadAction(messageId, chatId) {
+    return {
+        type: MARK_AS_READ,
+        messageId,
+        chatId
+    };
+}
+
 export function sendMessage(message) {
     return {
         type: SEND_MESSAGE,
@@ -75,6 +113,12 @@ export function sendMessage(message) {
     };
 }
 
+export function addMessage(message) {
+    return {
+        type: ADD_MESSAGE,
+        ...message
+    };
+}
 
 
 export function fetchAllMessages(messages) {

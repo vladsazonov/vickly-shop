@@ -27,6 +27,8 @@ import SearchBar from "./SearchBar";
 import ChatBar from "./ChatBar";
 import ProfileIco from "./ProfileIco";
 import InviteIco from "./InviteIco";
+import {getAllMessages, postMessage} from "../store/actions/messageActions";
+import {userLogout} from "../store/actions/loginActions";
 
 const drawerWidth = 320;
 
@@ -52,6 +54,7 @@ const styles = theme => ({
             width: '100%',
         },
         zIndex: 1501,
+        height: 64,
     },
     menuButton: {
         marginRight: 20,
@@ -62,6 +65,7 @@ const styles = theme => ({
     toolbar: theme.mixins.toolbar,
     drawerPaper: {
         width: drawerWidth,
+        borderRight: 0,
     },
     content: {
         flexGrow: 1,
@@ -98,6 +102,10 @@ class Home extends React.Component {
         }
     }
 
+    handleLogout = () => {
+        this.props.handleLogout();
+    };
+
     render() {
         const {classes, theme, chats} = this.props;
 
@@ -116,7 +124,7 @@ class Home extends React.Component {
                         className={classes.toolbar}/>
                     <SearchBar/>
                     <Divider/>
-                    <List style={{marginTop: 49, paddingTop: 0}}>
+                    <List style={{marginTop: 39}}>
                         {this.workgroups()}
                     </List>
                 </div>
@@ -128,7 +136,7 @@ class Home extends React.Component {
             <div className={classes.root}>
                 <CssBaseline/>
                 <AppBar position="fixed" className={classes.appBar}>
-                    <Toolbar style={{minHeight: 57}}>
+                    <Toolbar>
                         <IconButton
                             color="inherit"
                             aria-label="Open drawer"
@@ -140,8 +148,8 @@ class Home extends React.Component {
                         <Typography variant="h6" color="inherit" noWrap style={{flexGrow: 1}}>
                             Weak messenger
                         </Typography>
-                        <InviteIco/>
-                        <ProfileIco/>
+                        <InviteIco chats={this.props.chats}/>
+                        <ProfileIco handleLogout={this.handleLogout.bind(this)}/>
                     </Toolbar>
                 </AppBar>
                 <nav className={classes.drawer}>
@@ -193,8 +201,14 @@ function mapStateToProps(state) {
     }
 }
 
+function mapDispatchToProps(dispatch) {
+    return {
+        handleLogout: () => dispatch(userLogout())
+    }
+}
+
 const styledComponent = withStyles(styles, {withTheme: true})(Home);
 
-const HomeContainer = connect(mapStateToProps)(styledComponent);
+const HomeContainer = connect(mapStateToProps,mapDispatchToProps)(styledComponent);
 
 export default HomeContainer;

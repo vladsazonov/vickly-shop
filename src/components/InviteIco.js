@@ -1,12 +1,16 @@
-
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
+import {withStyles} from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';
 import PersonAdd from '@material-ui/icons/PersonAdd'
 import IconButton from "@material-ui/core/IconButton/IconButton";
+import {userLogout} from "../store/actions/loginActions";
+import connect from "react-redux/es/connect/connect";
+import TextField from "@material-ui/core/TextField/TextField";
+import WorkGroupList from "./WorkGoupList";
+import AccountCircle from "@material-ui/core/SvgIcon/SvgIcon";
 
 
 function getModalStyle() {
@@ -28,6 +32,13 @@ const styles = theme => ({
         boxShadow: theme.shadows[5],
         padding: theme.spacing.unit * 4,
     },
+    textField:{
+        width: '-webkit-fill-available',
+    },
+    container: {
+        display: 'flex',
+        flexWrap: 'wrap',
+    },
 });
 
 class SimpleModal extends React.Component {
@@ -35,23 +46,35 @@ class SimpleModal extends React.Component {
         open: false,
     };
 
+
+    handleChange = name => event => {
+        this.setState({
+            [name]: event.target.value,
+        });
+    };
+    handleChangeSurname = surname => event => {
+        this.setState({
+            [surname]: event.target.value,
+        });
+    };
+
     handleOpen = () => {
-        this.setState({ open: true });
+        this.setState({open: true});
     };
 
     handleClose = () => {
-        this.setState({ open: false });
+        this.setState({open: false});
     };
 
     render() {
-        const { classes } = this.props;
+        const {classes} = this.props;
 
         return (
             <div>
                 <IconButton
                     color="inherit"
                     onClick={this.handleOpen}>
-                    <PersonAdd />
+                    <PersonAdd style={{fontSize: 30}} />
                 </IconButton>
                 <Modal
                     aria-labelledby="simple-modal-title"
@@ -61,13 +84,27 @@ class SimpleModal extends React.Component {
                     style={{zIndex: 5000}}
                 >
                     <div style={getModalStyle()} className={classes.paper}>
-                        <Typography variant="h6" id="modal-title">
-                            Text in a modal
-                        </Typography>
-                        <Typography variant="subtitle1" id="simple-modal-description">
-                            Хуй вагина моча
-                        </Typography>
-                        <Button color="primary" onClick={this.handleClose}>Применить</Button>
+                        <form className={classes.container} noValidate autoComplete="off">
+                            <Typography variant="h5" align="center"> Приглашение нового пользователя</Typography>
+                            <TextField
+                                id="standard-name"
+                                label="Введите имя "
+                                className={classes.textField}
+                                value={this.state.name}
+                                onChange={this.handleChange('name')}
+                                margin="normal"
+                            />
+                            <TextField
+                                id="standard-surname"
+                                label="Введите фамилию "
+                                className={classes.textField}
+                                value={this.state.surname}
+                                onChange={this.handleChangeSurname('surname')}
+                                margin="normal"
+                            />
+                            <WorkGroupList/>
+                        </form>
+                        <Button color="primary" onClick={this.handleClose}>Пригласить</Button>
                         <Button color="secondary" onClick={this.handleClose}>Закрыть</Button>
                     </div>
                 </Modal>
@@ -76,11 +113,8 @@ class SimpleModal extends React.Component {
     }
 }
 
-SimpleModal.propTypes = {
-    classes: PropTypes.object.isRequired,
-};
-
 // We need an intermediary variable for handling the recursive nesting.
 const SimpleModalWrapped = withStyles(styles)(SimpleModal);
+
 
 export default SimpleModalWrapped;
