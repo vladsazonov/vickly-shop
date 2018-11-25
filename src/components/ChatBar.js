@@ -105,7 +105,7 @@ class ChatBar extends React.Component {
                 </Grid>
                 <Grid item xs={3} sm={3} md={4} lg={4} xl={4} style={{textAlign: 'center'}}>
                     <div style={{display: '-webkit-inline-box'}}>
-                        <Typography variant="h6" style={{color: '#fff'}}>Бухгалтерия</Typography>
+                        <Typography variant="h6" style={{color: '#fff'}}>{this.props.userInfo.first_name+" "+this.props.userInfo.last_name}</Typography>
                         <IconButton style={{
                             padding: 4,
                             marginLeft: 4,
@@ -115,7 +115,7 @@ class ChatBar extends React.Component {
                             color: 'white',
                         }}>
                             <Group/>
-                            <Typography style={{color: 'white'}}>12</Typography>
+                            {/*<Typography style={{color: 'white'}}>12</Typography>*/}
                         </IconButton>
                     </div>
                 </Grid>

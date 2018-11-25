@@ -32,7 +32,7 @@ const styles = theme => ({
 class ChatWindow extends React.Component {
     constructor(props) {
         super(props);
-        this.messagesEnd = React.createRef();
+        this.messageList = React.createRef();
     }
 
     equalMessages = (msg1, msg2) => {
@@ -61,10 +61,17 @@ class ChatWindow extends React.Component {
     handleSendMessage = (message) => {
         console.log("send message!!!");
         this.props.postMessage(message.message, this.props.userId);
-        //this.scrollToBottom();
+        this.scrollToBottom();
     };
 
     scrollToBottom = () => {
+        //this.messagesEnd.current.scrollIntoView({behavior: "smooth"});
+        //TODO scroll child
+        //this.messageList.current.scrollToEnd();
+    };
+
+    //Injected func
+    scrollToEnd() {
         this.messagesEnd.current.scrollIntoView({behavior: "smooth"});
     };
 
@@ -90,19 +97,19 @@ class ChatWindow extends React.Component {
         const {classes} = this.props;
         return this.props.userId ? (
             <div>
-                <ChatBar/>
+                <ChatBar userInfo={this.props.currentChat.info}/>
                 {
                     this.props.chatMessages && this.props.chatMessages.length > 0 ?
                         <MessageList userInfo={this.props.currentChat.info} myUserId={this.props.userId}
-                                     messages={this.props.chatMessages ? this.props.chatMessages : []}/>
+                                     messages={this.props.chatMessages ? this.props.chatMessages : []}
+                                     ref={this.messageList}
+                        />
                         :
                         <div className={classes.emptyChat}>
                             <Typography variant="h5" style={{color: '#bcbcbc'}}>История сообщений пуста...</Typography>
                             <SendMessageBar sendMsg={this.handleSendMessage}/>
                         </div>
                 }
-                <div style={{float: "left", clear: "both"}} ref={this.messagesEnd}>
-                </div>
                 <SendMessageBar handleSendMessage={this.handleSendMessage}/>
             </div>
         ) : (

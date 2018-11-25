@@ -9,6 +9,7 @@ import DoneIcon from '@material-ui/icons/Done';
 import ScrollbarSize from "@material-ui/core/es/Tabs/ScrollbarSize";
 import {Scrollbars} from "react-custom-scrollbars";
 import loginService from '../services/loginService'
+import '../css/MessageList.css'
 
 const styles = theme => ({
     root: {
@@ -31,14 +32,20 @@ const styles = theme => ({
 class MessageList extends React.Component {
     constructor(props) {
         super(props);
-        console.log("messages:"+props.messages)
+        //console.log("messages:"+props.messages)
+        this.messagesEnd = React.createRef();
     }
 
     componentDidUpdate() {
         // There is a new message in the state, scroll to bottom of list
-        const objDiv = document.getElementById('messageList');
-        objDiv.scrollTop = objDiv.scrollHeight;
+        // const objDiv = document.getElementById('messageList');
+        // objDiv.scrollTop = objDiv.scrollHeight;
+        this.scrollToEnd();
     }
+
+    scrollToEnd(){
+        this.messagesEnd.current.scrollIntoView({behavior: "smooth"});
+    };
 
     render() {
         const {classes} = this.props;
@@ -59,11 +66,14 @@ class MessageList extends React.Component {
         });
 
         return (
-            <div className={classes.listMessages} id='messageList'>
+            <div className='listMessages' id='messageList'>
                 { messages }
+                <div style={{float: "none", clear: "both", }} ref={this.messagesEnd}/>
             </div>
         );
     }
 }
 
-export default withStyles(styles)(MessageList);
+//export default withStyles(styles)(MessageList);
+
+export default MessageList
