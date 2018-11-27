@@ -6,6 +6,7 @@ export const SEND_MESSAGE = 'SEND_MESSAGE';
 export const FETCH_ALL_MESSAGES = 'FETCH_ALL_MESSAGES';
 export const ADD_MESSAGE = "ADD_MESSAGE";
 export const MARK_AS_READ = 'MARK_AS_READ';
+export const UPDATE_LAST_MESSAGE = "UPDATE_LAST_MESSAGE";
 
 
 const api = "http://" + BACKEND_URL + "/api";
@@ -104,6 +105,21 @@ export function addMessage(message) {
             message
         ));
     }
+}
+
+export function addLastMessageToUser(message) {
+    return async function (dispatch) {
+        return dispatch(updateLastMessage(
+            message
+        ));
+    }
+}
+
+export function updateLastMessage(message) {
+    return {
+        type: UPDATE_LAST_MESSAGE,
+        message
+    };
 }
 
 export function markAsReadAction(messageId, chatId) {

@@ -93,6 +93,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Checkbox from '@material-ui/core/Checkbox';
 import IconButton from '@material-ui/core/IconButton';
 import CommentIcon from '@material-ui/icons/Comment';
+import Typography from "@material-ui/core/Typography/Typography";
 
 const styles = theme => ({
     root: {
@@ -100,7 +101,7 @@ const styles = theme => ({
         maxWidth: '360px',
         overflow: "auto",
         margin: 'auto',
-        height: '400px',
+        height: '150px',
     },
 });
 
@@ -131,14 +132,15 @@ class CheckboxList extends React.Component {
         return (
             <div className={classes.root}>
                 <List>
-                    {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map(value => (
+                    <Typography variant="h6" align="center"> Рабочие группы</Typography>
+                    {['Бухгалтерия', 'Разработка'].map(value => (
                         <ListItem key={value} role={undefined} dense button onClick={this.handleToggle(value)}>
                             <Checkbox
                                 checked={this.state.checked.indexOf(value) !== -1}
                                 tabIndex={-1}
                                 disableRipple
                             />
-                            <ListItemText primary={`Line item ${value + 1}`} />
+                            <ListItemText primary={`${value}`} />
                         </ListItem>
                     ))}
                 </List>

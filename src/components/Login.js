@@ -27,6 +27,11 @@ const styles = theme => ({
             marginLeft: 'auto',
             marginRight: 'auto',
         },
+        [theme.breakpoints.up('xs')]: {
+            width: 400,
+            marginLeft: 'auto',
+            marginRight: 'auto',
+        },
     },
     paper: {
         marginTop: '50%',

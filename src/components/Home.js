@@ -131,7 +131,7 @@ class Home extends React.Component {
                 }
             )
         } else {
-            return "Empty list"
+            return ""
         }
     }
 

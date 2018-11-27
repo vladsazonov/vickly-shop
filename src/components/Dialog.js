@@ -21,6 +21,11 @@ const styles = theme => ({
         paddingBottom: 3,
         borderBottom: '1px solid #1f2c39',
     },
+    white: {
+        [theme.breakpoints.up('xs')]: {
+            color: "white",
+        },
+    },
     selected: {
         backgroundColor: "rgba(255, 255, 255, 0.18)"
     },
@@ -48,13 +53,22 @@ const styles = theme => ({
 
 class Dialog extends React.Component {
 
-    getRandomColor = () => {
+    getRandomColor = (letter) => {
+        let col = this.colorMap[letter];
+        if (col) return col;
         var letters = '0123456789ABCDEF';
         var color = '#';
         for (var i = 0; i < 6; i++) {
             color += letters[Math.floor(Math.random() * 16)];
         }
         return color;
+    };
+
+    colorMap = {
+        "Р":"#2ab49b",
+        "А":"#d15c17",
+        "И":"#9e72cf"
+
     };
 
     handleDialogClick = () => {
@@ -65,10 +79,11 @@ class Dialog extends React.Component {
         const now = new Date(Date.now());
         let date = new Date(timestamp);
         const today = now.toDateString() == date.toDateString();
+        const  mins = date.getMinutes()<10 ? "0"+date.getMinutes() : date.getMinutes();
         if (today) {
-            return date.getHours() + ":" + date.getMinutes();
+            return date.getHours() + ":" + mins;
         } else {
-            return date.getHours() + ":" + date.getMinutes() + " " + date.getDay() + "/" + date.getMonth() + "/" + (date.getFullYear() - 2000);
+            return date.getHours() + ":" +mins + " " + date.getDay() + "/" + date.getMonth() + "/" + (date.getFullYear() - 2000);
         }
     };
 
@@ -81,19 +96,22 @@ class Dialog extends React.Component {
                 <Grid container className={`${classes.fixWidth} ${selected ? classes.selected : ""}`} wrap="nowrap"
                       spacing={16}>
                     <Grid item md={16} style={{paddingRight: 1}}>
-                        <Avatar style={{width: 50, height: 50, backgroundColor: `${this.getRandomColor()}`}}>
-                            {dialog.first_name[0].toUpperCase()}
+                        <Avatar style={{width: 50, height: 50, backgroundColor: `${this.getRandomColor(dialog.first_name[0])}`}}>
+                            {dialog.first_name[0].toUpperCase()+dialog.last_name[0].toUpperCase()}
                         </Avatar>
                     </Grid>
                     <Grid item xs zeroMinWidth style={{paddingTop: 14}}>
                         <Typography variant="body2" color="inherit"
+                                    className={classes.white}
                                     noWrap>{dialog.first_name + " " + dialog.last_name}</Typography>
                         <Typography variant="caption" color="inherit"
+                                    className={classes.white}
                                     noWrap>{this.props.lastMsg ? this.props.lastMsg.message : "Нет сообщений"}</Typography>
                     </Grid>
                     <Grid item className={classes.fixPadding} style={{paddingLeft: 1, paddingTop: 15}}>
                         <Typography
                             variant="caption"
+                            className={classes.white}
                             color="inherit">{this.props.lastMsg ? this.formatDate(this.props.lastMsg.timestamp_post.timestamp) : ""}</Typography>
                     </Grid>
                     {

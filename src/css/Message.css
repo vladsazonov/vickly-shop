@@ -24,10 +24,11 @@
 .speech-bubblet {
     position: relative;
     background-color: #efefef;
-    border-radius: .4em;
+    border-radius: 9px;
     margin-left: 10px;
     width: fit-content;
     max-width: 40%;
+    min-width: 90px;
 }
 .speech-bubblet:after {
     content: '';
@@ -42,5 +43,4 @@
     border-bottom: 0;
     margin-top: -0.469em;
     margin-left: -0.937em;
-    min-width: 90px;
 }

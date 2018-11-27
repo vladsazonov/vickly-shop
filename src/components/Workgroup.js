@@ -15,7 +15,11 @@ import loginService from "../services/loginService";
 
 
 const styles = theme => ({
-
+    white: {
+        [theme.breakpoints.up('xs')]: {
+            color: "white",
+        },
+    },
 });
 
 class Workgroup extends React.Component {
@@ -33,7 +37,7 @@ class Workgroup extends React.Component {
         return (
             <div style={{backgroundColor: '#253340', borderBottom: '0.2px solid #1f2c39'}}>
                 <ListItem button onClick={this.handleClick} style={{paddingTop: 0, paddingBottom: 0}}>
-                    <ListItem style={{textAlign: 'center'}}>{workgroup.group.name}</ListItem>
+                    <ListItem style={{textAlign: 'center'}} className={classes.white}>{workgroup.group.name}</ListItem>
                     {this.state.open ? <ExpandLess/> : <ExpandMore/>}
                 </ListItem>
                 <Collapse in={this.state.open} timeout="auto" unmountOnExit>

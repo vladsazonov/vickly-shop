@@ -30,6 +30,11 @@ const styles = theme => ({ //TODO fix themes
         width: '-webkit-fill-available',
         backgroundColor: '#1d2a36',
     },
+    wid: {
+        [theme.breakpoints.up('xs')]: {
+            width: '0',
+        },
+    },
     position: {
         position: 'fixed',
         top: 50,
@@ -82,7 +87,7 @@ class ChatBar extends React.Component {
 
         return (
             <Grid className={classes.position} container spacing={16}>
-                <Grid item xs={4} sm={2} md={2} lg={4} xl={4}>
+                <Grid item xs={3} sm={2} md={2} lg={4} xl={4}>
                     <TextField
                         id="outlined-search"
                         placeholder="Поиск по сообщениям..."
@@ -103,9 +108,9 @@ class ChatBar extends React.Component {
                         }}
                     />
                 </Grid>
-                <Grid item xs={3} sm={3} md={4} lg={4} xl={4} style={{textAlign: 'center'}}>
+                <Grid item xs={3} sm={3} md={4} lg={4} xl={4} style={{textAlign: 'center'}} className={classes.wid}>
                     <div style={{display: '-webkit-inline-box'}}>
-                        <Typography variant="h6" style={{color: '#fff'}}>{this.props.userInfo.first_name+" "+this.props.userInfo.last_name}</Typography>
+                        <Typography variant="h6" style={{color: '#fff'}}>{this.props.userInfo.first_name}</Typography>
                         <IconButton style={{
                             padding: 4,
                             marginLeft: 4,
@@ -119,7 +124,7 @@ class ChatBar extends React.Component {
                         </IconButton>
                     </div>
                 </Grid>
-                <Grid item xs={5} sm={7} md={4} lg={4} xl={4} style={{textAlign: 'end', margin: 'auto'}}>
+                <Grid item xs={6} sm={7} md={4} lg={4} xl={4} style={{textAlign: 'end', margin: 'auto'}}>
                     <IconButton style={{padding: 0, marginRight: 25}}>
                         <Add style={{color: 'white'}}/>
                     </IconButton>

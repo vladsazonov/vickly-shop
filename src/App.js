@@ -11,7 +11,7 @@ import {fetchChats} from "./store/actions/mainActions";
 import loginService from "./services/loginService"
 import LinearProgress from "@material-ui/core/LinearProgress/LinearProgress";
 import WebsocketService from "./services/websocketService";
-import {addMessage} from "./store/actions/messageActions";
+import {addLastMessageToUser, addMessage} from "./store/actions/messageActions";
 
 class App extends Component {
     websocketService;
@@ -30,6 +30,11 @@ class App extends Component {
         })
     };
 
+    addMessage(message) {
+        this.props.updateLastMessageInUser(message);
+        this.props.addMessage(message);
+    }
+
 
     componentWillMount() {
         const creds = loginService.getCreds();
@@ -41,7 +46,7 @@ class App extends Component {
                 status: true
             });
             this.props.OnChatsFetch();
-            this.websocketService = new WebsocketService(this.props.addMessage);
+            this.websocketService = new WebsocketService(this.addMessage.bind(this));
         }
     }
 
@@ -99,6 +104,9 @@ function mapDispatchToProps(dispatch) {
         },
         addMessage: (message) => {
             dispatch(addMessage(message));
+        },
+        updateLastMessageInUser:(message) => {
+            dispatch(addLastMessageToUser(message));
         }
     }
 }

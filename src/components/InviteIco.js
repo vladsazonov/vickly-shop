@@ -27,6 +27,18 @@ function getModalStyle() {
 const styles = theme => ({
     paper: {
         position: 'absolute',
+        [theme.breakpoints.up('xs')]: {
+            width: '96%',
+        },
+        [theme.breakpoints.up('sm')]: {
+            width: '55%',
+        },
+        [theme.breakpoints.up('md')]: {
+            width: '50%',
+        },
+        [theme.breakpoints.up('lg')]: {
+            width: '29%',
+        },
         width: 'auto',
         backgroundColor: theme.palette.background.paper,
         boxShadow: theme.shadows[5],
