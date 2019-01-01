@@ -85,82 +85,109 @@ class Login extends React.Component {
     render() {
         const {classes} = this.props;
         return !this.state.invite ? (
-            <main className={classes.main}>
-                <CssBaseline/>
-                <Paper className={classes.paper}>
-                    <Avatar className={classes.avatar}>
-                        <LockIcon/>
-                    </Avatar>
-                    <Typography component="h1" variant="h5">
-                        Sign in
-                    </Typography>
-                    <form onSubmit={this.handleSubmit.bind(this)} className={classes.form}>
-                        <FormControl margin="normal" required fullWidth>
-                            <InputLabel htmlFor="login">Login</InputLabel>
-                            <Input id="login" name="login" autoFocus/>
-                        </FormControl>
-                        <FormControl margin="normal" required fullWidth>
-                            <InputLabel htmlFor="password">Password</InputLabel>
-                            <Input name="password" type="password" id="password" autoComplete="current-password"/>
-                        </FormControl>
-                        <FormControlLabel
-                            control={<Checkbox value="remember" color="primary"/>}
-                            label="Remember me"
-                        />
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            color="primary"
-                            className={classes.submit}
-                        >
-                            Sign in
-                        </Button>
-                        <Button fullWidth style={{marginTop: "10px"}} onClick={() => this.toInvite(true)}>
+                <Grid container>
+                    <Grid item xs={1} lg={4}/>
+                    <Grid item xs={10} lg={4}>
+                        <main className={classes.main}>
+                            <CssBaseline/>
+                            <Paper
+                                className={classes.paper}>
+                                < Avatar
+                                    className={classes.avatar}>
+                                    <LockIcon/>
+                                </Avatar>
+                                <Typography component="h1" variant="h5">
+                                    Sign in
+                                </Typography>
+                                <form
+                                    onSubmit={this.handleSubmit.bind(this)}
+                                    className={classes.form}>
+                                    <FormControl
+                                        margin="normal"
+                                        required
+                                        fullWidth>
+                                        <InputLabel
+                                            htmlFor="login"> Login </InputLabel>
+                                        <Input id="login" name="login" autoFocus/>
+                                    </FormControl>
+                                    <FormControl margin="normal" required fullWidth>
+                                        <InputLabel htmlFor="password">Password</InputLabel>
+                                        <Input name="password" type="password" id="password"
+                                               autoComplete="current-password"/>
+                                    </FormControl>
+                                    <FormControlLabel
+                                        control={
+                                            <Checkbox value="remember" color="primary"/>
+                                        }
+                                        label="Remember me"/>
+                                    < Button
+                                        type="submit"
+                                        fullWidth
+                                        variant="contained"
+                                        color="primary"
+                                        className={classes.submit}
+                                    >
+                                        Sign in
+                                    </Button>
+                                    <
+                                        Button
+                                        fullWidth
+                                        style={
+                                            {
+                                                marginTop: "10px"
+                                            }
+                                        }
+                                        onClick={() =>
+                                            this.toInvite(true)
+                                        }>
+                                        Invite
+                                    </Button>
+                                </form>
+                            </Paper>
+                        </main>
+                    </Grid>
+                    <Grid item xs={1} lg={4}/>
+                </Grid>
+            ) :
+            (
+                <main className={classes.main}>
+                    <CssBaseline/>
+                    <Paper className={classes.paper}>
+                        <Avatar className={classes.avatar}>
+                            <LockIcon/>
+                        </Avatar>
+                        <Typography component="h1" variant="h5">
                             Invite
-                        </Button>
-                    </form>
-                </Paper>
-            </main>
-        ) : (
-            <main className={classes.main}>
-                <CssBaseline/>
-                <Paper className={classes.paper}>
-                    <Avatar className={classes.avatar}>
-                        <LockIcon/>
-                    </Avatar>
-                    <Typography component="h1" variant="h5">
-                        Invite
-                    </Typography>
-                    <form onSubmit={this.handleSubmit.bind(this)} className={classes.form}>
-                        <FormControl margin="normal" required fullWidth>
-                            <InputLabel htmlFor="inviteid">Invite id</InputLabel>
-                            <Input id="inviteid"/>
-                        </FormControl>
-                        <FormControl margin="normal" required fullWidth>
-                            <InputLabel htmlFor="login">Login</InputLabel>
-                            <Input id="login"/>
-                        </FormControl>
-                        <FormControl margin="normal" required fullWidth>
-                            <InputLabel htmlFor="password">Password</InputLabel>
-                            <Input id="password" autoComplete="email"/>
-                        </FormControl>
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            color="primary"
-                            className={classes.submit}
-                        >
-                            Sign up
-                        </Button>
-                        <Button fullWidth style={{marginTop: "10px"}} onClick={() => this.toInvite(false)}>
-                            Sign in
-                        </Button>
-                    </form>
-                </Paper>
-            </main>
-        );
+                        </Typography>
+                        <form onSubmit={this.handleSubmit.bind(this)} className={classes.form}>
+                            <FormControl margin="normal" required fullWidth>
+                                <InputLabel htmlFor="inviteid">Invite id</InputLabel>
+                                <Input id="inviteid"/>
+                            </FormControl>
+                            <FormControl margin="normal" required fullWidth>
+                                <InputLabel htmlFor="login">Login</InputLabel>
+                                <Input id="login"/>
+                            </FormControl>
+                            <FormControl margin="normal" required fullWidth>
+                                <InputLabel htmlFor="password">Password</InputLabel>
+                                <Input id="password" autoComplete="email"/>
+                            </FormControl>
+                            <Button
+                                type="submit"
+                                fullWidth
+                                variant="contained"
+                                color="primary"
+                                className={classes.submit}
+                            >
+                                Sign up
+                            </Button>
+                            <Button fullWidth style={{marginTop: "10px"}} onClick={() => this.toInvite(false)}>
+                                Sign in
+                            </Button>
+                        </form>
+                    </Paper>
+                </main>
+            );
     }
 
 

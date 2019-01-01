@@ -12,6 +12,8 @@ import loginService from "./services/loginService"
 import LinearProgress from "@material-ui/core/LinearProgress/LinearProgress";
 import WebsocketService from "./services/websocketService";
 import {addLastMessageToUser, addMessage} from "./store/actions/messageActions";
+import {Switch ,Route, BrowserRouter as Router} from "react-router-dom";
+import {PropsRoute, PublicRoute, PrivateRoute} from 'react-router-with-props';
 
 class App extends Component {
     websocketService;
@@ -58,30 +60,15 @@ class App extends Component {
 
     render() {
         console.log(this.props);
-        if (this.props.user.status) {
-            return (
-                <Home chats={this.props.chats}/>
-            );
-        } else {
-            return (
-                <Grid container>
-                    <Grid container>
-                        <Grid item xs={12}>
-                            {this.state.loading && !this.props.user.status && !this.props.user.error ?
-                                <LinearProgress variant="query"/> : ""}
-                        </Grid>
-                    </Grid>
-                    <Grid container>
-                        <Grid item xs={1} lg={4}/>
-                        <Grid item xs={10} lg={4}>
-                            <Login setLoading={this.setLoading.bind(this)}/>
-                        </Grid>
-                        <Grid item xs={1} lg={4}/>
-                    </Grid>
-
-                </Grid>
-            )
-        }
+        return (
+            <Router>
+                <Switch>
+                    <PrivateRoute exact path="/" component={Home} authed={this.props.user.status} redirectTo="/login"
+                                  chats={this.props.chats}/>
+                    <Route path="/login" component={Login}/>
+                </Switch>
+            </Router>
+        )
 
     }
 }
@@ -105,7 +92,7 @@ function mapDispatchToProps(dispatch) {
         addMessage: (message) => {
             dispatch(addMessage(message));
         },
-        updateLastMessageInUser:(message) => {
+        updateLastMessageInUser: (message) => {
             dispatch(addLastMessageToUser(message));
         }
     }
