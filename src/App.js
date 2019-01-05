@@ -12,9 +12,14 @@ import loginService from "./services/loginService"
 import LinearProgress from "@material-ui/core/LinearProgress/LinearProgress";
 import WebsocketService from "./services/websocketService";
 import {addLastMessageToUser, addMessage} from "./store/actions/messageActions";
-import {Switch ,Route, BrowserRouter as Router} from "react-router-dom";
+import {Switch, Route, BrowserRouter, Redirect} from "react-router-dom";
 import {PropsRoute, PublicRoute, PrivateRoute} from 'react-router-with-props';
+import accountStore from "./store/AccountStore";
+import {observer} from "mobx-react";
+import DevTools from "mobx-react-devtools";
+import InviteForm from "./components/InviteForm";
 
+@observer
 class App extends Component {
     websocketService;
 
@@ -61,13 +66,19 @@ class App extends Component {
     render() {
         console.log(this.props);
         return (
-            <Router>
-                <Switch>
-                    <PrivateRoute exact path="/" component={Home} authed={this.props.user.status} redirectTo="/login"
-                                  chats={this.props.chats}/>
-                    <Route path="/login" component={Login}/>
-                </Switch>
-            </Router>
+            <div>
+                <BrowserRouter>
+                    <Switch>
+                        <PrivateRoute exact path="/" component={Home} authed={this.props.user.status}
+                                      redirectTo="/login"
+                                      chats={this.props.chats}/>
+                        <Route path="/login" component={Login}/>
+                        <Route path="/invite/:invite_id" component={InviteForm}/>
+                        <Route render={() => <Redirect to="/"/>}/>
+                    </Switch>
+                </BrowserRouter>
+                <DevTools/>
+            </div>
         )
 
     }
