@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import './App.css';
 import {Grid, Paper} from '@material-ui/core';
-import Login from "./components/Login";
+import Login from "./components/login/LoginForm";
 import {connect} from "react-redux";
 import 'simplebar'; // or "import SimpleBar from 'simplebar';" if you want to use it manually.
 import 'simplebar/dist/simplebar.css';
@@ -14,10 +14,12 @@ import WebsocketService from "./services/websocketService";
 import {addLastMessageToUser, addMessage} from "./store/actions/messageActions";
 import {Switch, Route, BrowserRouter, Redirect} from "react-router-dom";
 import {PropsRoute, PublicRoute, PrivateRoute} from 'react-router-with-props';
-import accountStore from "./store/AccountStore";
 import {observer} from "mobx-react";
 import DevTools from "mobx-react-devtools";
-import InviteForm from "./components/InviteForm";
+import InviteForm from "./components/login/InviteForm";
+import {accountStore} from "./store/AccountStore";
+import chatsStore from "./store/ChatsStore";
+
 
 @observer
 class App extends Component {
@@ -30,46 +32,36 @@ class App extends Component {
         }
     }
 
-
     setLoading = () => {
         this.setState({
             loading: true
         })
     };
 
-    addMessage(message) {
-        this.props.updateLastMessageInUser(message);
-        this.props.addMessage(message);
-    }
-
-
-    componentWillMount() {
-        const creds = loginService.getCreds();
-        if (creds.token) {
-            this.props.setUserInfo({
-                last_name: creds.last_name,
-                first_name: creds.first_name,
-                token: creds.token,
-                status: true
-            });
-            this.props.OnChatsFetch();
-            this.websocketService = new WebsocketService(this.addMessage.bind(this));
-        }
-    }
-
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevProps.user.status !== this.props.user.status) {
-            this.props.OnChatsFetch();
-        }
-    }
+    // componentWillMount() {
+    //     this.websocketService = new WebsocketService(this.addMessage.bind(this));
+    // }
+    //
+    // componentDidUpdate(prevProps, prevState, snapshot) {
+    //     if (accountStore.status === "authed") {
+    //         chatsStore.fetchChats()
+    //     }
+    // }
 
     render() {
         console.log(this.props);
+        if (accountStore.status === "unauthed") {
+            console.log("XUY");
+        }
+        let lol = accountStore;
+        const login = accountStore.status === "authed";
         return (
             <div>
                 <BrowserRouter>
                     <Switch>
-                        <PrivateRoute exact path="/" component={Home} authed={this.props.user.status}
+                        <PrivateRoute exact path="/"
+                                      component={Home}
+                                      authed={login}
                                       redirectTo="/login"
                                       chats={this.props.chats}/>
                         <Route path="/login" component={Login}/>
@@ -84,32 +76,4 @@ class App extends Component {
     }
 }
 
-
-function mapStateToProps(state) {
-    return {
-        user: state.user,
-        chats: state.chats
-    }
-}
-
-function mapDispatchToProps(dispatch) {
-    return {
-        setUserInfo: function (user) {
-            dispatch(setLoginStatus(user))
-        },
-        OnChatsFetch: () => {
-            dispatch(fetchChats());
-        },
-        addMessage: (message) => {
-            dispatch(addMessage(message));
-        },
-        updateLastMessageInUser: (message) => {
-            dispatch(addLastMessageToUser(message));
-        }
-    }
-}
-
-const AppContainer = connect(mapStateToProps, mapDispatchToProps)(App);
-
-
-export default AppContainer;
+export default App;

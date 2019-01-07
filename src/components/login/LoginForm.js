@@ -10,13 +10,11 @@ import InputLabel from '@material-ui/core/InputLabel';
 import LockIcon from '@material-ui/icons/LockOutlined';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import {setLoginPending, tryLogin} from "../store/actions/loginActions";
-import {connect} from "react-redux";
 import withStyles from '@material-ui/core/styles/withStyles';
-import LinearProgress from "@material-ui/core/LinearProgress/LinearProgress";
 import Grid from "@material-ui/core/Grid/Grid";
 import {observer} from "mobx-react";
-import accountStore from "../store/AccountStore";
+import {accountStore} from "../../store/AccountStore";
+
 
 const styles = theme => ({
     main: {
@@ -56,11 +54,7 @@ const styles = theme => ({
 });
 
 @observer
-class Login extends React.Component {
-
-    constructor(props) {
-        super(props);
-    }
+class LoginForm extends React.Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
@@ -80,7 +74,7 @@ class Login extends React.Component {
                         <CssBaseline/>
                         <Paper
                             className={classes.paper}>
-                            < Avatar
+                            <Avatar
                                 className={classes.avatar}>
                                 <LockIcon/>
                             </Avatar>
@@ -104,9 +98,7 @@ class Login extends React.Component {
                                            autoComplete="current-password"/>
                                 </FormControl>
                                 <FormControlLabel
-                                    control={
-                                        <Checkbox value="remember" color="primary"/>
-                                    }
+                                    control={<Checkbox value="remember" color="primary"/>}
                                     label="Remember me"/>
                                 <Button
                                     type="submit"
@@ -124,8 +116,6 @@ class Login extends React.Component {
             </Grid>
         );
     }
-
-
 }
 
-export default withStyles(styles)(Login);
+export default withStyles(styles)(LoginForm);

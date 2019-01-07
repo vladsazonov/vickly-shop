@@ -4,19 +4,15 @@ import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import LockIcon from '@material-ui/icons/LockOutlined';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import {setLoginPending, tryLogin} from "../store/actions/loginActions";
-import {connect} from "react-redux";
 import withStyles from '@material-ui/core/styles/withStyles';
-import LinearProgress from "@material-ui/core/LinearProgress/LinearProgress";
 import Grid from "@material-ui/core/Grid/Grid";
 import {observer} from "mobx-react";
-import accountStore from "../store/AccountStore";
+import accountStore from "../../store/AccountStore";
 
 const styles = theme => ({
     main: {
@@ -56,10 +52,7 @@ const styles = theme => ({
 });
 
 @observer
-class Login extends React.Component {
-    constructor(props) {
-        super(props);
-    }
+class InviteForm extends React.Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
@@ -116,4 +109,4 @@ class Login extends React.Component {
 
 }
 
-export default withStyles(styles)(Login);
+export default withStyles(styles)(InviteForm);

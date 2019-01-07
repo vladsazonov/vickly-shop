@@ -1,6 +1,4 @@
 import {computed, observable, action, runInAction} from "mobx";
-import loginService from "../services/loginService";
-import {setLoginStatus} from "./actions/loginActions";
 import {BACKEND_URL} from "../common";
 
 class AccountStore {
@@ -32,10 +30,10 @@ class AccountStore {
             }
             const content = await response.json();
             runInAction("Auth success", () => {
-                this.fullname.set(content.first_name + " " + content.last_name);
-                this.token.set(content.token);
-                this.login.set(login);
-                this.status.set("authed");
+                this.fullname = content.first_name + " " + content.last_name;
+                this.token = content.token;
+                this.login = login;
+                this.status = "authed";
             });
         } catch (err) {
             console.log(err);
@@ -55,6 +53,7 @@ class AccountStore {
     }
 }
 
-const store = new AccountStore();
+export let lol = 5;
 
-export default store;
+export const accountStore = new AccountStore();
+

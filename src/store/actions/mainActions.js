@@ -19,7 +19,7 @@ export function fetchChats() {
             // const groupChatsResponse =  await fetch(api + "/user/list", {
             //     method: 'GET',
             //     headers: {
-            //         'Authorization': loginService.getToken(),
+            //         'Authorization': accountStore.getToken(),
             //     }
             // });
             if (!userResponse.ok) {

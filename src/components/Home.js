@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
@@ -16,20 +15,18 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
-import Dialog from "./Dialog";
 import ChatWindow from "./ChatWindow"
 import connect from "react-redux/es/connect/connect";
 import Button from "@material-ui/core/Button/Button";
-import {fetchChats} from "../store/actions/mainActions";
 import Workgroup from "./Workgroup";
 import {Scrollbars} from "react-custom-scrollbars";
 import SearchBar from "./SearchBar";
 import ChatBar from "./ChatBar";
 import ProfileIco from "./ProfileIco";
 import InviteIco from "./InviteIco";
-import {getAllMessages, postMessage} from "../store/actions/messageActions";
-import {userLogout} from "../store/actions/loginActions";
-import Background from  '../images/messagesBackground.jpg'
+import Background from '../images/messagesBackground.jpg'
+import accountStore from "../store/AccountStore";
+import chatsStore from "../store/ChatsStore";
 
 const drawerWidth = 450;
 
@@ -122,24 +119,23 @@ class Home extends React.Component {
     };
 
     workgroups() {
-        if (this.props.chats.status) {
-            console.log(this.props);
-            return this.props.chats.with_group.map(function (workgroup) {
-                    return (
-                        <Workgroup workgroup={workgroup}/>
-                    )
-                }
-            )
-        } else {
-            return ""
-        }
+        return this.props.chats.with_group.map(function (workgroup) {
+                return (
+                    <Workgroup workgroup={workgroup}/>
+                )
+            }
+        )
     }
 
-    componentDidMount(){
-        if (this.props.currentChat.userId !== this.props.currentChat.prevUserId ) {
+    componentDidMount() {
+        if (this.props.currentChat.userId !== this.props.currentChat.prevUserId) {
             this.handleDrawerToggle();
         }
     }
+
+    componentWillMount() {
+        chatsStore.fetchChats()
+    };
 
     handleLogout = () => {
         this.props.handleLogout();
@@ -225,7 +221,8 @@ class Home extends React.Component {
                 <main className={classes.content}>
                     <div className={classes.toolbar}/>
                     <Scrollbars autoHide style={{height: '-webkit-fill-available', zIndex: 1, marginTop: 50}}>
-                    <ChatWindow handleDrawerToggle={this.handleDrawerToggle} userId={this.props.currentChat.userId}/>
+                        <ChatWindow handleDrawerToggle={this.handleDrawerToggle}
+                                    userId={this.props.currentChat.userId}/>
                     </Scrollbars>
                 </main>
             </div>
@@ -233,21 +230,4 @@ class Home extends React.Component {
     }
 }
 
-function mapStateToProps(state) {
-    return {
-        chats: state.chats,
-        currentChat:state.currentChat
-    }
-}
-
-function mapDispatchToProps(dispatch) {
-    return {
-        handleLogout: () => dispatch(userLogout())
-    }
-}
-
-const styledComponent = withStyles(styles, {withTheme: true})(Home);
-
-const HomeContainer = connect(mapStateToProps,mapDispatchToProps)(styledComponent);
-
-export default HomeContainer;
+export default withStyles(styles, {withTheme: true})(Home);
