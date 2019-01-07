@@ -13,6 +13,7 @@
     "mobx-react-devtools": "^6.0.3",
     "prop-types": "latest",
     "react": "latest",
+    "react-contexify": "^4.0.1",
     "react-custom-scrollbars": "^4.2.1",
     "react-dom": "latest",
     "react-jss": "latest",

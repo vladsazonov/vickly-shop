@@ -13,7 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from "@material-ui/core/Grid/Grid";
 import {observer} from "mobx-react";
-import {accountStore} from "../../store/AccountStore";
+import accountStore from "../../store/AccountStore";
 
 
 const styles = theme => ({

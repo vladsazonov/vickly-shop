@@ -2,12 +2,24 @@ import {computed, observable, action, runInAction} from "mobx";
 import {BACKEND_URL} from "../common";
 
 class AccountStore {
-    @observable fullname = "";
+    @observable fullName = "";
     @observable token = "";
     @observable login = "";
+    userId = null;
+    groupId = null;
     @observable status = "unauthed";
     err_message = "";
 
+    constructor() {
+        this.fullName = sessionStorage.getItem("fullName");
+        this.token = sessionStorage.getItem("token");
+        this.userId = sessionStorage.getItem("userId");
+        this.groupId = sessionStorage.getItem("groupId");
+        this.login = sessionStorage.getItem("login");
+        if (this.token) {
+            this.status = "authed";
+        }
+    }
 
     async loginUser(login, password) {
         try {
@@ -30,10 +42,11 @@ class AccountStore {
             }
             const content = await response.json();
             runInAction("Auth success", () => {
-                this.fullname = content.first_name + " " + content.last_name;
+                this.fullName = content.first_name + " " + content.last_name;
                 this.token = content.token;
                 this.login = login;
                 this.status = "authed";
+                this.saveInLocalStorage(this.fullName, this.token, null, null, this.login);
             });
         } catch (err) {
             console.log(err);
@@ -44,16 +57,24 @@ class AccountStore {
         }
     };
 
+    saveInLocalStorage(fullName, token, userId, groupId, login) {
+        sessionStorage.setItem("fullName", fullName);
+        sessionStorage.setItem("token", token);
+        sessionStorage.setItem("userId", userId);
+        sessionStorage.setItem("groupId",groupId);
+        sessionStorage.setItem("login",login);
+    }
+
     @action
     unauth() {
-        this.fullname.set(null);
-        this.token.set(null);
-        this.login.set(null);
-        this.status.set("unauthed");
+        this.fullName = null;
+        this.token = null;
+        this.login = null;
+        this.status = "unauthed";
     }
 }
 
 export let lol = 5;
 
-export const accountStore = new AccountStore();
+export default new AccountStore();
 

@@ -1,24 +1,15 @@
 import React, {Component} from 'react';
 import './App.css';
-import {Grid, Paper} from '@material-ui/core';
 import Login from "./components/login/LoginForm";
-import {connect} from "react-redux";
 import 'simplebar'; // or "import SimpleBar from 'simplebar';" if you want to use it manually.
 import 'simplebar/dist/simplebar.css';
 import Home from "./components/Home";
-import {setLoginStatus} from "./store/actions/loginActions";
-import {fetchChats} from "./store/actions/mainActions";
-import loginService from "./services/loginService"
-import LinearProgress from "@material-ui/core/LinearProgress/LinearProgress";
-import WebsocketService from "./services/websocketService";
-import {addLastMessageToUser, addMessage} from "./store/actions/messageActions";
 import {Switch, Route, BrowserRouter, Redirect} from "react-router-dom";
-import {PropsRoute, PublicRoute, PrivateRoute} from 'react-router-with-props';
+import {PrivateRoute} from 'react-router-with-props';
 import {observer} from "mobx-react";
 import DevTools from "mobx-react-devtools";
 import InviteForm from "./components/login/InviteForm";
-import {accountStore} from "./store/AccountStore";
-import chatsStore from "./store/ChatsStore";
+import accountStore from "./store/AccountStore";
 
 
 @observer
@@ -61,11 +52,13 @@ class App extends Component {
                     <Switch>
                         <PrivateRoute exact path="/"
                                       component={Home}
-                                      authed={login}
                                       redirectTo="/login"
-                                      chats={this.props.chats}/>
-                        <Route path="/login" component={Login}/>
-                        <Route path="/invite/:invite_id" component={InviteForm}/>
+                                      authed={login}/>
+                        <PrivateRoute exact path="/login"
+                                      component={Login}
+                                      redirectTo="/"
+                                      authed={!login}/>
+                        <Route exact path="/invite/:invite_id" component={InviteForm}/>
                         <Route render={() => <Redirect to="/"/>}/>
                     </Switch>
                 </BrowserRouter>

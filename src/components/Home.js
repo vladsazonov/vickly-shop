@@ -27,6 +27,7 @@ import InviteIco from "./InviteIco";
 import Background from '../images/messagesBackground.jpg'
 import accountStore from "../store/AccountStore";
 import chatsStore from "../store/ChatsStore";
+import {observer} from "mobx-react";
 
 const drawerWidth = 450;
 
@@ -109,7 +110,15 @@ const styles = theme => ({
     },
 });
 
+@observer
 class Home extends React.Component {
+
+    constructor(props){
+        super(props);
+        this.accountStore = accountStore;
+        this.chatsStore = chatsStore;
+    }
+
     state = {
         mobileOpen: false,
     };
@@ -119,26 +128,24 @@ class Home extends React.Component {
     };
 
     workgroups() {
-        return this.props.chats.with_group.map(function (workgroup) {
-                return (
-                    <Workgroup workgroup={workgroup}/>
-                )
-            }
-        )
-    }
-
-    componentDidMount() {
-        if (this.props.currentChat.userId !== this.props.currentChat.prevUserId) {
-            this.handleDrawerToggle();
+        if (this.chatsStore.userChats.with_group) {
+            return this.chatsStore.userChats.with_group.map(function (workgroup) {
+                    return (
+                        <Workgroup workgroup={workgroup}/>
+                    )
+                }
+            )
         }
     }
 
+    // componentDidMount() {
+    //     if (this.props.currentChat.userId !== this.props.currentChat.prevUserId) {
+    //         this.handleDrawerToggle();
+    //     }
+    // }
+
     componentWillMount() {
         chatsStore.fetchChats()
-    };
-
-    handleLogout = () => {
-        this.props.handleLogout();
     };
 
     render() {
@@ -184,7 +191,7 @@ class Home extends React.Component {
                             Weak messenger
                         </Typography>
                         <InviteIco chats={this.props.chats}/>
-                        <ProfileIco handleLogout={this.handleLogout.bind(this)}/>
+                        <ProfileIco handleLogout={this.accountStore.unauth.bind(accountStore)}/>
                     </Toolbar>
                 </AppBar>
                 <nav className={classes.drawer}>
@@ -222,7 +229,7 @@ class Home extends React.Component {
                     <div className={classes.toolbar}/>
                     <Scrollbars autoHide style={{height: '-webkit-fill-available', zIndex: 1, marginTop: 50}}>
                         <ChatWindow handleDrawerToggle={this.handleDrawerToggle}
-                                    userId={this.props.currentChat.userId}/>
+                                    userId={/*this.props.currentChat.userId*/null}/>
                     </Scrollbars>
                 </main>
             </div>
