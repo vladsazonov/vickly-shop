@@ -71,6 +71,7 @@ class AccountStore {
         this.token = null;
         this.login = null;
         this.status = "unauthed";
+        sessionStorage.clear();
     }
 }
 
