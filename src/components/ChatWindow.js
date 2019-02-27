@@ -3,11 +3,14 @@ import {withStyles} from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import 'typeface-roboto';
 import '../css/Dialog.css'
-import connect from "react-redux/es/connect/connect";
 import SendMessageBar from "./SendMessageBar";
 import MessageList from "./MessageList";
 import ChatBar from "./ChatBar";
-import {getAllMessages, markAsRead, markAsReadAction, postMessage} from "../store/actions/messageActions"
+import Test from './test.js'
+import chatsStore from "../store/ChatsStore";
+import messagesStore from "../store/MessagesStore"
+import {observer} from "mobx-react";
+
 
 const styles = theme => ({
     button: {
@@ -29,9 +32,12 @@ const styles = theme => ({
     },
 });
 
+@observer
 class ChatWindow extends React.Component {
     constructor(props) {
         super(props);
+        this.chatsStore = chatsStore;
+        this.messagesStore = messagesStore;
         this.messageList = React.createRef();
     }
 
@@ -60,7 +66,7 @@ class ChatWindow extends React.Component {
 
     handleSendMessage = (message) => {
         console.log("send message!!!");
-        this.props.postMessage(message.message, this.props.userId);
+        this.messagesStore.postMessage(message.message, this.chatsStore.currentChatId);
         this.scrollToBottom();
     };
 
@@ -75,75 +81,53 @@ class ChatWindow extends React.Component {
         this.messagesEnd.current.scrollIntoView({behavior: "smooth"});
     };
 
+
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevProps.userId !== this.props.userId) {
-            this.props.getAllMessages(this.props.userId);
-            // this.scrollToBottom();
-            //this.props.handleDrawerToggle();
-        }
-        if(this.props.chatMessages){
-            let props = this.props;
-            this.props.chatMessages.forEach((msg, i, arr) => {
-                if(!msg.timestamp_read){
-                    props.markAsRead(msg.id, this.props.userId);
-                }
-            })
-        }
+
+        messagesStore.getAllMessagesByChatId(this.chatsStore.currentChatId);
+
+        // if(this.props.chatMessages){
+        //     let props = this.props;
+        //     this.props.chatMessages.forEach((msg, i, arr) => {
+        //         if(!msg.timestamp_read){
+        //             props.markAsRead(msg.id, this.props.userId);
+        //         }
+        //     })
+        // }
 
         //this.props.getAllMessages(this.props.userId);
     };
 
     render() {
         const {classes} = this.props;
-        return this.props.userId ? (
+        return this.chatsStore.currentChatId ? (
             <div>
-                <ChatBar userInfo={this.props.currentChat.info}/>
+                <ChatBar/>
                 {
                     this.props.chatMessages && this.props.chatMessages.length > 0 ?
-                        <MessageList userInfo={this.props.currentChat.info} myUserId={this.props.userId}
-                                     messages={this.props.chatMessages ? this.props.chatMessages : []}
+                        <MessageList userInfo={this.props.currentChatId.info} myUserId={this.props.userId}
+                                     messages={this.messagesStore.messages}
                                      ref={this.messageList}
                         />
                         :
                         <div className={classes.emptyChat}>
-                            <Typography variant="h5" style={{color: '#bcbcbc'}}>История сообщений пуста...</Typography>
+                            <Typography variant="h5">История сообщений пуста...</Typography>
                             <SendMessageBar sendMsg={this.handleSendMessage}/>
                         </div>
                 }
-                <SendMessageBar handleSendMessage={this.handleSendMessage}/>
+                <SendMessageBar handleSendMessage={this.handleSendMessage.bind(this)}/>
             </div>
         ) : (
             <div>
+                <Test/>
                 <div className={classes.emptyChat}>
-                    <Typography variant="h5" style={{color: '#bcbcbc'}}>Выберите диалог...</Typography>
+                    <Typography variant="h5">Выберите диалог...</Typography>
                 </div>
             </div>
         );
     }
 }
 
-function mapStateToProps(state, ownProps) {
-    return {
-        chatMessages: state.messages[ownProps.userId],
-        currentChat: state.currentChat
-    }
-}
-
-
-function mapDispatchToProps(dispatch) {
-    return {
-        postMessage: (message, toId) => dispatch(postMessage(message, toId)),
-        getAllMessages: (chatId) => dispatch(getAllMessages(chatId)),
-        markAsRead:(messageId,chatId) => dispatch(markAsRead(messageId, chatId)),
-    }
-}
-
 const styledWindow = withStyles(styles, {withTheme: true})(ChatWindow);
 
-
-const ChatWindowsContainer = connect(
-    mapStateToProps,
-    mapDispatchToProps)
-(styledWindow);
-
-export default ChatWindowsContainer
+export default styledWindow;

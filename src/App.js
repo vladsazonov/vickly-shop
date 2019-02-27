@@ -4,7 +4,7 @@ import Login from "./components/login/LoginForm";
 import 'simplebar'; // or "import SimpleBar from 'simplebar';" if you want to use it manually.
 import 'simplebar/dist/simplebar.css';
 import Home from "./components/Home";
-import {Switch, Route, BrowserRouter, Redirect} from "react-router-dom";
+import {BrowserRouter, Redirect, Route, Switch} from "react-router-dom";
 import {PrivateRoute} from 'react-router-with-props';
 import {observer} from "mobx-react";
 import DevTools from "mobx-react-devtools";
@@ -50,16 +50,16 @@ class App extends Component {
             <div>
                 <BrowserRouter>
                     <Switch>
-                        <PrivateRoute exact path="/"
+                        <PrivateRoute path="/home"
                                       component={Home}
                                       redirectTo="/login"
                                       authed={login}/>
                         <PrivateRoute exact path="/login"
                                       component={Login}
-                                      redirectTo="/"
+                                      redirectTo="/home"
                                       authed={!login}/>
                         <Route exact path="/invite/:invite_id" component={InviteForm}/>
-                        <Route render={() => <Redirect to="/"/>}/>
+                        <Route render={() => <Redirect to="/home"/>}/>
                     </Switch>
                 </BrowserRouter>
                 <DevTools/>

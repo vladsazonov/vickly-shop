@@ -15,11 +15,9 @@ const styles = theme => ({
     position: {
         bottom: 0,
         width: '100%',
-        backgroundColor: '#17212b',
         display: 'inline-flex',
         overflow: 'hidden',
         position: 'fixed',
-        color: '#fff',
         right: 0,
         [theme.breakpoints.up('sm')]: {
             left: '35%',
@@ -81,7 +79,7 @@ class SendMessageBar extends React.Component {
                     id="outlined"
                     value={this.state.messageText}
                     onChange={this.handleOnTextChange}
-                    style={{width: '95%', backgroundColor: '#1d2a36', margin: 6, marginRight: 0}}
+                    style={{width: '95%', margin: 6, marginRight: 0}}
                     placeholder="Введите сообщение..."
                     onKeyDown={this.onEnterDown}
                     //helperText="Full width!"
@@ -93,14 +91,14 @@ class SendMessageBar extends React.Component {
                         endAdornment: (
                             <InputAdornment position="end">
                                 <IconButton disabled={!this.state.messageText.trim()} onClick={this.handleSendButton.bind(this)}>
-                                    <SendOutlined style={{color: '#fff'}}/>
+                                    <SendOutlined/>
                                 </IconButton>
                             </InputAdornment>
                         ),
                     }}
                 />
                 <IconButton style={{width: 48, height: 48, margin: 'auto'}}>
-                    <AttachFile style={{color: '#fff'}}/>
+                    <AttachFile/>
                 </IconButton>
             </div>
         )

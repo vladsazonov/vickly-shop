@@ -1,6 +1,5 @@
 import {getAllMessages} from "../store/actions/messageActions";
 import {fetchChats} from "../store/actions/mainActions";
-import {BACKEND_URL} from "../common";
 import loginService from "./loginService";
 
 const NEW_MESSAGE = 0;
@@ -46,7 +45,7 @@ class WebsocketService{
         switch (payload.event) {
             case NEW_MESSAGE:
                 if(payload)
-                this.addMessageHandler(payload.message.message);
+                    this.addMessageHandler(payload.message.message);
                 break;
             default:
                 break;

@@ -1,13 +1,5 @@
 import React from 'react';
 import Message from './Message';
-import Chip from "@material-ui/core/Chip/Chip";
-import Avatar from "@material-ui/core/Avatar/Avatar";
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import FaceIcon from '@material-ui/icons/Face';
-import DoneIcon from '@material-ui/icons/Done';
-import ScrollbarSize from "@material-ui/core/es/Tabs/ScrollbarSize";
-import {Scrollbars} from "react-custom-scrollbars";
 import loginService from '../services/loginService'
 import '../css/MessageList.css'
 
@@ -66,7 +58,7 @@ class MessageList extends React.Component {
         });
 
         return (
-            <div className='listMessages' id='messageList'>
+            <div id='messageList'>
                 { messages }
                 <div style={{float: "none", clear: "both", }} ref={this.messagesEnd}/>
             </div>

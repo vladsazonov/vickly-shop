@@ -1,25 +1,22 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import Dialog from "./Dialog";
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
 import Collapse from '@material-ui/core/Collapse';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
-import StarBorder from '@material-ui/icons/StarBorder';
 import loginService from "../services/loginService";
 import {Item, Menu, MenuProvider} from "react-contexify";
+import Typography from "@material-ui/core/Typography";
 
 
 const styles = theme => ({
-    white: {
-        [theme.breakpoints.up('xs')]: {
-            color: "white",
-        },
+    active: {},
+    groupName: {
+        backgroundColor: theme.palette.active.backgroundColor,
+        paddingTop: 0,
+        paddingBottom: 0,
     },
 });
 
@@ -44,23 +41,26 @@ class Workgroup extends React.Component {
         const {classes, theme, workgroup} = this.props;
 
         return (
-            <div style={{backgroundColor: '#253340', borderBottom: '0.2px solid #1f2c39'}}>
+            <div>
                 <MenuProvider id="menu_id">
                     <MyAwesomeMenu/>
-                    <ListItem button onClick={this.handleClick} style={{paddingTop: 0, paddingBottom: 0}}>
-                        <ListItem style={{textAlign: 'center'}}
-                                  className={classes.white}>{workgroup.group.name}</ListItem>
+                    <ListItem button onClick={this.handleClick} className={classes.groupName} style={{}}>
+                        <ListItem>
+                            <Typography variant='h6'>
+                                {workgroup.group.name}
+                            </Typography>
+                        </ListItem>
                         {this.state.open ? <ExpandLess/> : <ExpandMore/>}
                     </ListItem>
                 </MenuProvider>
                 <Collapse in={this.state.open} timeout="auto" unmountOnExit>
 
-                    <List component="div" disablePadding>
+                    <List component="div" disablePadding className={classes.active}>
                         {
                             workgroup.users.map(
                                 function (user) {
-                                    return user.user.id != loginService.getCreds().myUserId ?
-                                        <Dialog key={user.user.id} unread={user.unread} lastMsg={user.last}
+                                    return user.user.id !== loginService.getCreds().myUserId ?
+                                        <Dialog chatId={user.user.id} unread={user.unread} lastMsg={user.last}
                                                 dialog={user.user}/>
                                         :
                                         null

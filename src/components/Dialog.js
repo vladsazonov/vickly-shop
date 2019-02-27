@@ -4,33 +4,27 @@ import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import 'typeface-roboto';
 import ListItem from "@material-ui/core/ListItem/ListItem";
-import PropTypes from "prop-types";
 import withStyles from "@material-ui/core/es/styles/withStyles";
-import {connect} from "react-redux";
-import {tryLogin} from "../store/actions/loginActions";
-import {setCurrentChat} from "../store/actions/chatActions";
 import Badge from "@material-ui/core/Badge/Badge";
+import chatsStore from "../store/ChatsStore";
+import {observer} from "mobx-react";
+import {withRouter} from "react-router-dom";
 
 const styles = theme => ({
     fixWidth: {
-        backgroundColor: '#17212b',
         width: '100% !important',
         margin: '0px !important',
         paddingLeft: 2,
         paddingTop: 3,
         paddingBottom: 3,
-        borderBottom: '1px solid #1f2c39',
+        borderBottom: '1px solid #ececec',
     },
-    white: {
-        [theme.breakpoints.up('xs')]: {
-            color: "white",
-        },
+    avatar: {
+        width: 50,
+        height: 50,
     },
-    selected: {
-        backgroundColor: "rgba(255, 255, 255, 0.18)"
-    },
-    inverted: {
-        filter: 'invert(100%)',
+    listItemPadding: {
+        padding: 'unset'
     },
     margin: {
         top: '39px!important',
@@ -51,7 +45,13 @@ const styles = theme => ({
     },
 });
 
+@observer
 class Dialog extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.chatsStore = chatsStore;
+    }
 
     getRandomColor = (letter) => {
         let col = this.colorMap[letter];
@@ -65,54 +65,58 @@ class Dialog extends React.Component {
     };
 
     colorMap = {
-        "Р":"#2ab49b",
-        "А":"#d15c17",
-        "И":"#9e72cf"
+        "Р": "#2ab49b",
+        "А": "#d15c17",
+        "И": "#9e72cf"
 
     };
 
     handleDialogClick = () => {
-        this.props.setCurrentChat(this.props.dialog.id, this.props.dialog);
+        this.props.history.push(`/home/chat/${this.props.chatId}`);
+        this.chatsStore.currentChatId = this.props.chatId;
     };
 
     formatDate = (timestamp) => {
         const now = new Date(Date.now());
         let date = new Date(timestamp);
         const today = now.toDateString() == date.toDateString();
-        const  mins = date.getMinutes()<10 ? "0"+date.getMinutes() : date.getMinutes();
+        const mins = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
         if (today) {
             return date.getHours() + ":" + mins;
         } else {
-            return date.getHours() + ":" +mins + " " + date.getDay() + "/" + date.getMonth() + "/" + (date.getFullYear() - 2000);
+            return date.getHours() + ":" + mins + " " + date.getDay() + "/" + date.getMonth() + "/" + (date.getFullYear() - 2000);
         }
     };
 
     render() {
         const {classes, dialog} = this.props;
-        const selected = this.props.dialog.id === this.props.currentChat.userId;
+        const selected = this.props.chatId === this.chatsStore.currentChatId;
         return (
-            <ListItem selected={selected} onClick={this.handleDialogClick} disableGutters={true} button
-                      style={{padding: 'unset'}}>
+            <ListItem
+                selected={selected}
+                onClick={this.handleDialogClick.bind(this)}
+                disableGutters={true}
+
+                className={classes.listItemPadding}>
                 <Grid container className={`${classes.fixWidth} ${selected ? classes.selected : ""}`} wrap="nowrap"
                       spacing={16}>
-                    <Grid item md={16} style={{paddingRight: 1}}>
-                        <Avatar style={{width: 50, height: 50, backgroundColor: `${this.getRandomColor(dialog.first_name[0])}`}}>
-                            {dialog.first_name[0].toUpperCase()+dialog.last_name[0].toUpperCase()}
+                    <Grid item md={16}>
+                        <Avatar className={classes.avatar} style={{backgroundColor: `${this.getRandomColor()}`}}>
+                            {dialog.first_name[0].toUpperCase() + dialog.last_name[0].toUpperCase()}
                         </Avatar>
                     </Grid>
                     <Grid item xs zeroMinWidth style={{paddingTop: 14}}>
-                        <Typography variant="body2" color="inherit"
+                        <Typography variant="body2"
                                     className={classes.white}
                                     noWrap>{dialog.first_name + " " + dialog.last_name}</Typography>
-                        <Typography variant="caption" color="inherit"
+                        <Typography variant="caption"
                                     className={classes.white}
                                     noWrap>{this.props.lastMsg ? this.props.lastMsg.message : "Нет сообщений"}</Typography>
                     </Grid>
                     <Grid item className={classes.fixPadding} style={{paddingLeft: 1, paddingTop: 15}}>
                         <Typography
                             variant="caption"
-                            className={classes.white}
-                            color="inherit">{this.props.lastMsg ? this.formatDate(this.props.lastMsg.timestamp_post.timestamp) : ""}</Typography>
+                            className={classes.white}>{this.props.lastMsg ? this.formatDate(this.props.lastMsg.timestamp_post.timestamp) : ""}</Typography>
                     </Grid>
                     {
                         this.props.unread ?
@@ -135,19 +139,6 @@ class Dialog extends React.Component {
     }
 }
 
+const styledComponent = withStyles(styles, {withTheme: true})(withRouter(Dialog));
 
-function mapStateToProps(state) {
-    return {
-        currentChat: state.currentChat
-    }
-}
-
-const mapDispatchToProps = dispatch => ({
-    setCurrentChat: (chatId, user) => {
-        dispatch(setCurrentChat(chatId, user));
-    }
-});
-
-const styledComponent = withStyles(styles, {withTheme: true})(Dialog);
-
-export default connect(mapStateToProps, mapDispatchToProps)(styledComponent);
+export default styledComponent;

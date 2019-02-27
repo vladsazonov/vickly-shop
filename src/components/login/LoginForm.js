@@ -14,27 +14,29 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from "@material-ui/core/Grid/Grid";
 import {observer} from "mobx-react";
 import accountStore from "../../store/AccountStore";
+import Background from "../../images/loginBack.jpg"
 
 
 const styles = theme => ({
+    backg: {
+        backgroundImage: `url(${Background})`,
+        height: '-webkit-fill-available'
+    },
     main: {
         width: 'auto',
         display: 'block', // Fix IE 11 issue.
-        marginLeft: theme.spacing.unit * 3,
-        marginRight: theme.spacing.unit * 3,
+        [theme.breakpoints.down('xs')]: {
+            width: 300,
+            margin: 'auto',
+            marginTop: '30%'
+        },
         [theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
             width: 400,
-            marginLeft: 'auto',
-            marginRight: 'auto',
-        },
-        [theme.breakpoints.up('xs')]: {
-            width: 400,
-            marginLeft: 'auto',
-            marginRight: 'auto',
+            margin: 'auto',
+            marginTop: '40%',
         },
     },
     paper: {
-        marginTop: '50%',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -67,7 +69,7 @@ class LoginForm extends React.Component {
     render() {
         const {classes} = this.props;
         return (
-            <Grid container>
+            <Grid container className={classes.backg}>
                 <Grid item xs={1} lg={4}/>
                 <Grid item xs={10} lg={4}>
                     <main className={classes.main}>
@@ -79,7 +81,7 @@ class LoginForm extends React.Component {
                                 <LockIcon/>
                             </Avatar>
                             <Typography component="h1" variant="h5">
-                                Sign in
+                                Вход в систему Vicly
                             </Typography>
                             <form
                                 onSubmit={this.handleSubmit.bind(this)}
@@ -89,24 +91,24 @@ class LoginForm extends React.Component {
                                     required
                                     fullWidth>
                                     <InputLabel
-                                        htmlFor="login"> Login </InputLabel>
+                                        htmlFor="login"> Логин </InputLabel>
                                     <Input id="login" name="login" autoFocus/>
                                 </FormControl>
                                 <FormControl margin="normal" required fullWidth>
-                                    <InputLabel htmlFor="password">Password</InputLabel>
+                                    <InputLabel htmlFor="password">Пароль</InputLabel>
                                     <Input name="password" type="password" id="password"
                                            autoComplete="current-password"/>
                                 </FormControl>
                                 <FormControlLabel
                                     control={<Checkbox value="remember" color="primary"/>}
-                                    label="Remember me"/>
+                                    label="Запомнить меня"/>
                                 <Button
                                     type="submit"
                                     fullWidth
                                     variant="contained"
                                     color="primary"
                                     className={classes.submit}>
-                                    Sign in
+                                    Войти
                                 </Button>
                             </form>
                         </Paper>

@@ -3,31 +3,21 @@ import {withStyles} from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import List from '@material-ui/core/List';
-import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import Hidden from '@material-ui/core/Hidden';
 import Divider from '@material-ui/core/Divider';
 import MenuIcon from '@material-ui/icons/Menu';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
 import ChatWindow from "./ChatWindow"
-import connect from "react-redux/es/connect/connect";
-import Button from "@material-ui/core/Button/Button";
 import Workgroup from "./Workgroup";
 import {Scrollbars} from "react-custom-scrollbars";
 import SearchBar from "./SearchBar";
-import ChatBar from "./ChatBar";
 import ProfileIco from "./ProfileIco";
 import InviteIco from "./InviteIco";
-import Background from '../images/messagesBackground.jpg'
 import accountStore from "../store/AccountStore";
 import chatsStore from "../store/ChatsStore";
 import {observer} from "mobx-react";
+import {Route} from "react-router-dom";
 
 const drawerWidth = 450;
 
@@ -38,7 +28,7 @@ const styles = theme => ({
         marginLeft: 0,
         marginRight: 0,
         flexGrow: 1,
-        color: 'white',
+        top: 0,
     },
     drawer: {
         [theme.breakpoints.up('lg')]: {
@@ -53,20 +43,24 @@ const styles = theme => ({
             width: '30%',
             flexShrink: 0,
         },
-        backgroundColor: '#25464c',
-        zIndex: 1500, //TODO: ui bug
-        borderRight: '1px solid #243342',
+        zIndex: 1500,
     },
     appBar: {
-        marginLeft: drawerWidth,
-        [theme.breakpoints.up('sm')]: {
+        [theme.breakpoints.up('xs')]: {
             width: '100%',
-            height: 50,
         },
-        backgroundColor: '#253340',
+        [theme.breakpoints.up('sm')]: {
+            width: '65%',
+        },
+        [theme.breakpoints.up('md')]: {
+            width: '70%',
+        },
+        [theme.breakpoints.up('lg')]: {
+            width: '70%',
+        },
+        borderBottom: '1px solid #e2e2e2',
         zIndex: 1501,
-        height: 50,
-        boxShadow: '0 0 0 rgba(0,0,0,0)',
+        height: 55,
     },
     menuButton: {
         marginRight: 20,
@@ -85,13 +79,12 @@ const styles = theme => ({
             width: '35%',
         },
         [theme.breakpoints.up('md')]: {
-            width: '33%',
+            width: '30%',
         },
         [theme.breakpoints.up('lg')]: {
             width: '30%',
         },
-        backgroundColor: '#17212b',
-        borderRight: '1px solid #243342',
+        backgroundColor: theme.background
     },
     workG: {
         [theme.breakpoints.up('xs')]: {
@@ -106,14 +99,34 @@ const styles = theme => ({
         [theme.breakpoints.up('lg')]: {
             left: '33%'
         },
-        backgroundImage: `url(${Background})`
+        /*backgroundImage: `url(${Background})`*/
+    },
+    logo: {
+        width: 150,
+        marginRight: 'auto',
+    },
+    logoDiv: {
+        flexGrow: 1
+    },
+    container: {
+        display: 'flex',
+        flexWrap: 'wrap',
+        backgroundColor: theme.palette.primary.dark,
+        height: 50,
+        [theme.breakpoints.down('xs')]: {
+            width: '100%',
+        },
+        position: 'fixed',
+        top: 0,
+
+        zIndex: 1000
     },
 });
 
 @observer
 class Home extends React.Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
         this.accountStore = accountStore;
         this.chatsStore = chatsStore;
@@ -139,7 +152,7 @@ class Home extends React.Component {
     }
 
     // componentDidMount() {
-    //     if (this.props.currentChat.userId !== this.props.currentChat.prevUserId) {
+    //     if (this.props.currentChatId.userId !== this.props.currentChatId.prevUserId) {
     //         this.handleDrawerToggle();
     //     }
     // }
@@ -156,15 +169,19 @@ class Home extends React.Component {
 
         drawer = (
             <Scrollbars
-                autoHide
-                renderTrackHorizontal={({style, ...props}) =>
-                    <div {...props} style={{...style, backgroundColor: 'blue'}}/>
-                }>
+                autoHide>
                 {this.props.children}
                 <div>
-                    <div
-                        className={classes.toolbar}/>
+                    <div/>
+                    {/*<div className={classes.container}>
+                        <img src={logo} alt="logo" className={classes.logo}/>
+                        <IconButton>
+                            <MenuIcon/>
+                        </IconButton>
+                    </div>*/}
+
                     <SearchBar/>
+
                     <Divider/>
                     <List className={classes.workG}>
                         {this.workgroups()}
@@ -176,7 +193,6 @@ class Home extends React.Component {
 
         return (
             <div className={classes.root}>
-                <CssBaseline/>
                 <AppBar position="fixed" className={classes.appBar}>
                     <Toolbar style={{minHeight: 'auto'}}>
                         <IconButton
@@ -187,9 +203,7 @@ class Home extends React.Component {
                         >
                             <MenuIcon/>
                         </IconButton>
-                        <Typography variant="h6" color="inherit" noWrap style={{flexGrow: 1}}>
-                            Weak messenger
-                        </Typography>
+                        <div className={classes.logoDiv}></div>
                         <InviteIco chats={this.props.chats}/>
                         <ProfileIco handleLogout={this.accountStore.unauth.bind(accountStore)}/>
                     </Toolbar>
@@ -228,8 +242,11 @@ class Home extends React.Component {
                 <main className={classes.content}>
                     <div className={classes.toolbar}/>
                     <Scrollbars autoHide style={{height: '-webkit-fill-available', zIndex: 1, marginTop: 50}}>
-                        <ChatWindow handleDrawerToggle={this.handleDrawerToggle}
-                                    userId={/*this.props.currentChat.userId*/null}/>
+                        <Route path="/home/chat/:chat_id"
+                               render={(routeProps) => <ChatWindow {...routeProps}
+                                                                   handleDrawerToggle={this.handleDrawerToggle}
+                               />}/>
+
                     </Scrollbars>
                 </main>
             </div>

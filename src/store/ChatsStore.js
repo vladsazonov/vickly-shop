@@ -1,4 +1,4 @@
-import {computed, observable, action, runInAction} from "mobx";
+import {observable, runInAction} from "mobx";
 import {BACKEND_URL} from "../common";
 import accountStore from "./AccountStore";
 
@@ -6,6 +6,7 @@ class ChatsStore {
     @observable userChats = {};
     @observable groupChats = {};
     @observable fetchFail =  false;
+    @observable currentChatId = null;
     err_message = "";
 
     async fetchChats() {
