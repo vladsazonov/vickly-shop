@@ -6,7 +6,19 @@ import accountStore from "./AccountStore";
 class MessagesStore {
     @observable messages = [];
 
-    async getAllMessagesByChatId(chatId) {
+    loadMessagesByChatId(chatId){
+        if (this.messages.find((elem) => elem.chatId === chatId)) {
+            console.log("Chatid " + chatId + " already loaded! need to resolve only inreaded messages");
+        } else {
+            this.getAllMessagesByChatId(chatId)
+        }
+    }
+
+    addMessageToEnd(message){
+        //TODO for websocket push
+    }
+
+    async getAllMessagesByChatId(chatId, chat_type) {
         try {
             const response = await fetch(BACKEND_URL + `/message/chat/${chatId}/user/0`, {
                 method: 'GET',
@@ -20,13 +32,20 @@ class MessagesStore {
             }
             const messages = await response.json();
             runInAction("getAllMessagesById", () => {
-                this.messages = messages;
+                let chatMessages = {
+                    chatId:chatId,
+                    chat_type:chat_type,
+                    messages:messages
+                };
+                this.messages.push(chatMessages);
+                //this.messages = messages;
             })
         } catch (err) {
             console.log(err);
             // return dispatch(setChatList(err))
         }
     }
+
 
     async postMessage(message, toId) {
         try {
@@ -44,6 +63,72 @@ class MessagesStore {
             });
             if (!response.ok) {
                 alert("post message failed")
+            }
+            //const content = await response.json();
+            //console.log(content);
+            // return dispatch(sendMessage({
+            //     message: message,
+            //     status: 'ok'
+            //  }));
+            // runInAction("postMessage", () => {
+            //
+            // })
+
+        } catch (err) {
+            console.log(err);
+            // return dispatch(setChatList(err))
+        }
+    }
+
+    async deliveryMessage(messageId, chatId, chatType) {
+        try {
+            const response = await fetch(BACKEND_URL + "/message/delivery", {
+                method: 'POST',
+                headers: {
+                    'Authorization': accountStore.token,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    "id": messageId,
+                    "chat_id": chatId,
+                    "chat_type": 'user'
+                })
+            });
+            if (!response.ok) {
+                console.log("mark delivered message failed")
+            }
+            //const content = await response.json();
+            //console.log(content);
+            // return dispatch(sendMessage({
+            //     message: message,
+            //     status: 'ok'
+            //  }));
+            // runInAction("postMessage", () => {
+            //
+            // })
+
+        } catch (err) {
+            console.log(err);
+            // return dispatch(setChatList(err))
+        }
+    }
+
+    async readMessage(messageId, chatId, chatType) {
+        try {
+            const response = await fetch(BACKEND_URL + "/message/read", {
+                method: 'POST',
+                headers: {
+                    'Authorization': accountStore.token,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    "id": messageId,
+                    "chat_id": chatId,
+                    "chat_type": 'user'
+                })
+            });
+            if (!response.ok) {
+                console.log("mark delivered message failed")
             }
             //const content = await response.json();
             //console.log(content);

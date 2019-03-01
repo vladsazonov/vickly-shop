@@ -1,37 +1,52 @@
 import {getAllMessages} from "../store/actions/messageActions";
 import {fetchChats} from "../store/actions/mainActions";
-import loginService from "./loginService";
+import accountStore from "../store/AccountStore";
+import messageStore from "../store/MessagesStore";
 
 const NEW_MESSAGE = 0;
 const USER_ACTIVITY = 10;
 
-let websocket_url ="ws://192.168.2.14:9000/ws/";
+let websocket_url ="ws://80.241.209.42/ws/";
 
 class WebsocketService{
     socket;
-    addMessageHandler;
-    constructor(addMsgHnd) {
-        console.log("ws construct");
-        this.addMessageHandler = addMsgHnd;
-        websocket_url += loginService.getToken();
+
+    run(){
+        if (!accountStore.token) {
+            throw Error("Cannot create websocket connection in unath session");
+        }
+        websocket_url += accountStore.token;
         this.socket = new WebSocket(websocket_url);
         this.socket.onmessage = this.onMessage;
         this.socket.onerror = (err)=> {
             console.log("websocket error:"+err);
         };
         this.socket.onopen = () => {
-            setInterval(() => {
-                this.socket.send(JSON.stringify({}));
+            let interval = setInterval(() => {
+
+                switch (this.socket.readyState) {
+                    //if open - pong
+                    case 1:
+                        this.socket.send(JSON.stringify({}));
+                        break;
+                    case 2:
+                    case 3:
+                        clearInterval(interval);
+
+                }
             }, 30000);
         };
 
-        this.socket.onclose = function(event) {
+        this.socket.onclose = (event) => {
             if (event.wasClean) {
                 alert('Соединение закрыто чисто');
             } else {
                 alert('Обрыв соединения');
             }
             alert('Код: ' + event.code + ' причина: ' + event.reason);
+            if (accountStore.token) {
+                this.run();
+            }
         };
     }
 
@@ -45,7 +60,7 @@ class WebsocketService{
         switch (payload.event) {
             case NEW_MESSAGE:
                 if(payload)
-                    this.addMessageHandler(payload.message.message);
+                    messageStore.addMessageToEnd(payload.message.message);
                 break;
             default:
                 break;
@@ -66,4 +81,4 @@ class WebsocketService{
 
 }
 
-export default WebsocketService;
+export default new WebsocketService();

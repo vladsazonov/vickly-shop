@@ -1,5 +1,6 @@
 import {computed, observable, action, runInAction} from "mobx";
 import {BACKEND_URL} from "../common";
+import WebSocketService from "../services/websocketService";
 
 class AccountStore {
     @observable fullName = "";
@@ -41,13 +42,17 @@ class AccountStore {
                 });
             }
             const content = await response.json();
+
             runInAction("Auth success", () => {
                 this.fullName = content.first_name + " " + content.last_name;
                 this.token = content.token;
                 this.login = login;
                 this.status = "authed";
-                this.saveInLocalStorage(this.fullName, this.token, null, null, this.login);
+                this.userId = content.id;
+                this.groupId = content.group_id;
+                this.saveInLocalStorage(this.fullName, this.token, this.userId, this.groupId, this.login);
             });
+            WebSocketService.run()
         } catch (err) {
             console.log(err);
             runInAction("Auth failed", () => {

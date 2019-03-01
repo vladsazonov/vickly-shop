@@ -5,9 +5,10 @@ import 'typeface-roboto';
 import '../css/Dialog.css'
 import SendMessageBar from "./SendMessageBar";
 import MessageList from "./MessageList";
-import ChatBar from "./ChatBar";
-import Test from './test.js'
+import ChatBar from "./ChatBar"
+//..import Test from './test.js'
 import chatsStore from "../store/ChatsStore";
+import accountStore from "../store/AccountStore"
 import messagesStore from "../store/MessagesStore"
 import {observer} from "mobx-react";
 
@@ -38,6 +39,7 @@ class ChatWindow extends React.Component {
         super(props);
         this.chatsStore = chatsStore;
         this.messagesStore = messagesStore;
+        this.accountStore = accountStore;
         this.messageList = React.createRef();
     }
 
@@ -82,9 +84,27 @@ class ChatWindow extends React.Component {
     };
 
 
+    componentWillMount() {
+        //this.messagesStore.getAllMessagesByChatId(this.chatsStore.currentChatId);
+    }
+
     componentDidUpdate(prevProps, prevState, snapshot) {
 
-        messagesStore.getAllMessagesByChatId(this.chatsStore.currentChatId);
+
+        this.messagesStore.loadMessagesByChatId(this.chatsStore.currentChatId);
+        let messages = this.messagesStore.messages.find((elem) => elem.chatId === this.chatsStore.currentChatId);
+        if (messages){
+            messages.messages.forEach((elem)=>{
+                if(!elem.timestamp_delivery){
+                    this.messagesStore.deliveryMessage(elem.id,1,'user');
+
+                }
+                if(!elem.timestamp_read){
+                    this.messagesStore.readMessage(elem.id,1,'user');
+
+                }
+            })
+        }
 
         // if(this.props.chatMessages){
         //     let props = this.props;
@@ -98,15 +118,32 @@ class ChatWindow extends React.Component {
         //this.props.getAllMessages(this.props.userId);
     };
 
+
+    testUser = {
+        "_id": "5c55d1c12cf1d52f70fb15d9",
+        "id": 3,
+        "first_name": "test_user_invite",
+        "last_name": "test_user_invite",
+        "group_id": 2,
+        "login": "test_user_invite",
+        "is_active": true,
+        "join_time": 1542552311,
+        "last_activity": 0,
+        "archive": false,
+        "avatar": "",
+        "role_id": 0
+    };
+
     render() {
         const {classes} = this.props;
+        let messages = this.messagesStore.messages.find((elem) => elem.chatId === this.chatsStore.currentChatId);
         return this.chatsStore.currentChatId ? (
             <div>
                 <ChatBar/>
                 {
-                    this.props.chatMessages && this.props.chatMessages.length > 0 ?
-                        <MessageList userInfo={this.props.currentChatId.info} myUserId={this.props.userId}
-                                     messages={this.messagesStore.messages}
+                    messages && messages.messages.length > 0 ?
+                        <MessageList userInfo={this.testUser} myUserId={this.props.userId}
+                                     messages={messages}
                                      ref={this.messageList}
                         />
                         :
@@ -119,7 +156,7 @@ class ChatWindow extends React.Component {
             </div>
         ) : (
             <div>
-                <Test/>
+                {/*<Test/>*/}
                 <div className={classes.emptyChat}>
                     <Typography variant="h5">Выберите диалог...</Typography>
                 </div>

@@ -1,6 +1,6 @@
 import React from 'react';
 import Message from './Message';
-import loginService from '../services/loginService'
+import accountStore from '../store/AccountStore'
 import '../css/MessageList.css'
 
 const styles = theme => ({
@@ -26,6 +26,7 @@ class MessageList extends React.Component {
         super(props);
         //console.log("messages:"+props.messages)
         this.messagesEnd = React.createRef();
+        this.accountStore = accountStore;
     }
 
     componentDidUpdate() {
@@ -42,9 +43,9 @@ class MessageList extends React.Component {
     render() {
         const {classes} = this.props;
         // Loop through all the messages in the state and create a Message component
-        const {myUserId} = loginService.getCreds();
+        const {myUserId} = this.accountStore.userId;
         console.log("myUserId:"+myUserId);
-        const messages = this.props.messages.map((message, i) => {
+        const messages = this.props.messages.messages.map((message, i) => {
             let fromMe = message.from == myUserId;
             return (
                 <Message

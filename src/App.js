@@ -10,6 +10,8 @@ import {observer} from "mobx-react";
 import DevTools from "mobx-react-devtools";
 import InviteForm from "./components/login/InviteForm";
 import accountStore from "./store/AccountStore";
+import {ToastContainer} from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 
 @observer
@@ -41,9 +43,6 @@ class App extends Component {
 
     render() {
         console.log(this.props);
-        if (accountStore.status === "unauthed") {
-            console.log("XUY");
-        }
         let lol = accountStore;
         const login = accountStore.status === "authed";
         return (
@@ -62,6 +61,7 @@ class App extends Component {
                         <Route render={() => <Redirect to="/home"/>}/>
                     </Switch>
                 </BrowserRouter>
+                <ToastContainer  position="bottom-right"/>
                 <DevTools/>
             </div>
         )
