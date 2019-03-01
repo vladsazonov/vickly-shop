@@ -1,11 +1,12 @@
-import {observable, runInAction} from "mobx";
+import {observable, reaction, runInAction} from "mobx";
 import {BACKEND_URL} from "../common";
 import accountStore from "./AccountStore";
+import messagesStore from "./MessagesStore";
 
 class ChatsStore {
     @observable userChats = {};
     @observable groupChats = {};
-    @observable fetchFail =  false;
+    @observable fetchFail = false;
     @observable currentChatId = null;
     err_message = "";
 
@@ -33,7 +34,7 @@ class ChatsStore {
             }
             const content = await userListResponse.json();
             runInAction("Update users info", () => {
-               this.userChats = content;
+                this.userChats = content;
             });
         } catch (err) {
             console.log(err);

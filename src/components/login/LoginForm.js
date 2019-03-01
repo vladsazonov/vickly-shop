@@ -14,12 +14,12 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from "@material-ui/core/Grid/Grid";
 import {observer} from "mobx-react";
 import accountStore from "../../store/AccountStore";
-import Background from "../../images/loginBack.jpg"
+// import Background from "../../images/loginBack.jpg"
 
 
 const styles = theme => ({
     backg: {
-        backgroundImage: `url(${Background})`,
+        // backgroundImage: `url(${Background})`,
         height: '-webkit-fill-available'
     },
     main: {

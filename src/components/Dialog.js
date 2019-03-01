@@ -9,6 +9,7 @@ import Badge from "@material-ui/core/Badge/Badge";
 import chatsStore from "../store/ChatsStore";
 import {observer} from "mobx-react";
 import {withRouter} from "react-router-dom";
+import ToastService from '../services/toastService'
 
 const styles = theme => ({
     fixWidth: {
@@ -74,6 +75,7 @@ class Dialog extends React.Component {
     handleDialogClick = () => {
         this.props.history.push(`/home/chat/${this.props.chatId}`);
         this.chatsStore.currentChatId = this.props.chatId;
+        ToastService.makeToast("selected chat:"+this.props.chatId);
     };
 
     formatDate = (timestamp) => {

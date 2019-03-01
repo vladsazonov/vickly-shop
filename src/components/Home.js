@@ -142,12 +142,9 @@ class Home extends React.Component {
 
     workgroups() {
         if (this.chatsStore.userChats.with_group) {
-            return this.chatsStore.userChats.with_group.map(function (workgroup) {
-                    return (
-                        <Workgroup workgroup={workgroup}/>
-                    )
-                }
-            )
+            return this.chatsStore.userChats.with_group.map(
+                workgroup => <Workgroup workgroup={workgroup}/>
+                )
         }
     }
 
