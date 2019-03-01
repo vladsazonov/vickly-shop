@@ -7,26 +7,25 @@ import Collapse from '@material-ui/core/Collapse';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import loginService from "../services/loginService";
-import {Item, Menu, MenuProvider} from "react-contexify";
+import {MenuProvider} from "react-contexify";
 import Typography from "@material-ui/core/Typography";
 
 
 const styles = theme => ({
     active: {},
     groupName: {
-        backgroundColor: theme.palette.active.backgroundColor,
         paddingTop: 0,
         paddingBottom: 0,
     },
 });
 
-const MyAwesomeMenu = () => (
+/*const MyAwesomeMenu = () => (
     <Menu id='menu_id'>
         <Item onClick={() => alert("ТЫ ХУЙ")}>ХУЙ</Item>
         <Item onClick={() => alert("ТЫ ХУЙ")}>ХУЙ</Item>
         <Item onClick={() => alert("ТЫ МОЧА")}>МОЧА</Item>
     </Menu>
-);
+);*/
 
 class Workgroup extends React.Component {
     state = {
@@ -43,8 +42,7 @@ class Workgroup extends React.Component {
         return (
             <div>
                 <MenuProvider id="menu_id">
-                    <MyAwesomeMenu/>
-                    <ListItem button onClick={this.handleClick} className={classes.groupName} style={{}}>
+                    <ListItem button onClick={this.handleClick} className={classes.groupName}>
                         <ListItem>
                             <Typography variant='h6'>
                                 {workgroup.group.name}

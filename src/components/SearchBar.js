@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from "@material-ui/core/InputAdornment/InputAdornment";
@@ -39,7 +38,6 @@ const styles = theme => ({
     },
     button: {
         marginTop: 5,
-        color: '#fff'
 
     },
 });
@@ -62,7 +60,7 @@ class OutlinedTextFields extends React.Component {
                         }}
                         InputProps={{
                             endAdornment: (
-                                <InputAdornment position="start">
+                                <InputAdornment position="end">
                                     <IconButton>
                                         <Search/>
                                     </IconButton>
@@ -78,9 +76,5 @@ class OutlinedTextFields extends React.Component {
         );
     }
 }
-
-OutlinedTextFields.propTypes = {
-    classes: PropTypes.object.isRequired,
-};
 
 export default withStyles(styles)(OutlinedTextFields);

@@ -61,6 +61,7 @@ const styles = theme => ({
         borderBottom: '1px solid #e2e2e2',
         zIndex: 1501,
         height: 55,
+        boxShadow: theme.shadows[0],
     },
     menuButton: {
         marginRight: 20,
@@ -69,10 +70,10 @@ const styles = theme => ({
         },
     },
     toolbar: {
-        height: 50,
+        height: 55,
     },
     drawerPaper: {
-        [theme.breakpoints.up('xs')]: {
+        [theme.breakpoints.down('xs')]: {
             width: '85%',
         },
         [theme.breakpoints.up('sm')]: {
@@ -87,11 +88,11 @@ const styles = theme => ({
         backgroundColor: theme.background
     },
     workG: {
-        [theme.breakpoints.up('xs')]: {
-            marginTop: 49,
+        [theme.breakpoints.down('xs')]: {
+            marginTop: 109,
             paddingTop: 0
         },
-        marginTop: 55,
+        marginTop: 46,
     },
     content: {
         flexGrow: 1,

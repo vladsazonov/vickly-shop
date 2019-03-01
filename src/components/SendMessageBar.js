@@ -1,6 +1,5 @@
 import React from 'react';
 import TextField from "@material-ui/core/TextField/TextField";
-import PropTypes from "prop-types";
 import withStyles from "@material-ui/core/es/styles/withStyles";
 import SendOutlined from '@material-ui/icons/SendOutlined';
 import AttachFile from '@material-ui/icons/AttachFile';
@@ -8,32 +7,37 @@ import InputAdornment from "@material-ui/core/InputAdornment/InputAdornment";
 import IconButton from "@material-ui/core/IconButton/IconButton";
 
 const styles = theme => ({
-    container: {
-        display: 'flex',
-        flexWrap: 'wrap',
+    textField: {
+        width: 'calc(100% - 48px)',
+        margin: 6,
+        marginRight: 0,
+        height: 41,
     },
     position: {
+        backgroundColor: theme.palette.primary.main,
         bottom: 0,
-        width: '100%',
         display: 'inline-flex',
-        overflow: 'hidden',
         position: 'fixed',
         right: 0,
+        [theme.breakpoints.down('xs')]: {
+            width: '100%',
+        },
         [theme.breakpoints.up('sm')]: {
             left: '35%',
-            width: 'auto!important',
         },
         [theme.breakpoints.up('md')]: {
-            left: '33%',
-            width: 'auto!important',
+            left: '30%',
         },
         [theme.breakpoints.up('lg')]: {
             left: '30%',
-            width: 'auto!important',
         },
+        borderTop: '1px solid #e2e2e2',
+
     },
     iconButton: {
-
+        width: 48,
+        height: 48,
+        alignSelf: 'center'
     }
 });
 
@@ -43,7 +47,7 @@ class SendMessageBar extends React.Component {
     };
 
     handleSendButton = () => {
-        if(!this.state.messageText.trim())
+        if (!this.state.messageText.trim())
             return;
         this.props.handleSendMessage({
             message: this.state.messageText,
@@ -79,38 +83,30 @@ class SendMessageBar extends React.Component {
                     id="outlined"
                     value={this.state.messageText}
                     onChange={this.handleOnTextChange}
-                    style={{width: '95%', margin: 6, marginRight: 0}}
+                    className={classes.textField}
                     placeholder="Введите сообщение..."
-                    onKeyDown={this.onEnterDown}
-                    //helperText="Full width!"
                     variant="outlined"
+                    onKeyDown={this.onEnterDown}
                     InputLabelProps={{
                         shrink: true,
                     }}
                     InputProps={{
                         endAdornment: (
-                            <InputAdornment position="end">
-                                <IconButton disabled={!this.state.messageText.trim()} onClick={this.handleSendButton.bind(this)}>
+                            <InputAdornment position="end" color="secondary">
+                                <IconButton disabled={!this.state.messageText.trim()}
+                                            onClick={this.handleSendButton.bind(this)}>
                                     <SendOutlined/>
                                 </IconButton>
                             </InputAdornment>
                         ),
                     }}
                 />
-                <IconButton style={{width: 48, height: 48, margin: 'auto'}}>
+                <IconButton className={classes.iconButton}>
                     <AttachFile/>
                 </IconButton>
             </div>
         )
     }
 }
-
-SendMessageBar.propTypes = {
-    classes: PropTypes.object.isRequired,
-    // Injected by the documentation to work in an iframe.
-    // You won't need it on your project.
-    container: PropTypes.object,
-    theme: PropTypes.object.isRequired,
-};
 
 export default withStyles(styles, {withTheme: true})(SendMessageBar);

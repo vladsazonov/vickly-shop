@@ -1,21 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
+import {withStyles} from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import Switch from '@material-ui/core/Switch';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormGroup from '@material-ui/core/FormGroup';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import ExitToApp from '@material-ui/icons/ExitToApp'
 import PersonOutline from '@material-ui/icons/PersonOutline'
 import Settings from '@material-ui/icons/Settings'
-import PersonAdd from '@material-ui/icons/PersonAddOutlined'
 import loginService from "../services/loginService"
 
 
@@ -63,9 +56,8 @@ class ProfileIco extends React.Component {
                                 aria-owns={open ? 'menu-appbar' : undefined}
                                 aria-haspopup="true"
                                 onClick={this.handleMenu}
-                                color="inherit"
                             >
-                                <AccountCircle style={{fontSize: 30}} />
+                                <AccountCircle/>
                             </IconButton>
                             <Menu
                                 style={{zIndex: 2000}}

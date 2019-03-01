@@ -5,12 +5,12 @@ import 'typeface-roboto';
 import '../css/Dialog.css'
 import SendMessageBar from "./SendMessageBar";
 import MessageList from "./MessageList";
-import ChatBar from "./ChatBar"
-//..import Test from './test.js'
+import ChatBar from "./ChatBar";
+import Test from './test.js'
 import chatsStore from "../store/ChatsStore";
-import accountStore from "../store/AccountStore"
 import messagesStore from "../store/MessagesStore"
 import {observer} from "mobx-react";
+import accountStore from "../store/AccountStore"
 
 
 const styles = theme => ({
@@ -156,7 +156,7 @@ class ChatWindow extends React.Component {
             </div>
         ) : (
             <div>
-                {/*<Test/>*/}
+                <Test/>
                 <div className={classes.emptyChat}>
                     <Typography variant="h5">Выберите диалог...</Typography>
                 </div>

@@ -1,58 +1,52 @@
 import React from 'react';
 import TextField from "@material-ui/core/TextField/TextField";
-import PropTypes from "prop-types";
 import withStyles from "@material-ui/core/es/styles/withStyles";
 import InputAdornment from "@material-ui/core/InputAdornment/InputAdornment";
 import IconButton from "@material-ui/core/IconButton/IconButton";
 import Typography from "@material-ui/core/Typography/Typography";
-import Grid from "@material-ui/core/Grid/Grid";
+import div from "@material-ui/core/Grid/Grid";
 import Search from "@material-ui/icons/Search"
 import MoreVert from '@material-ui/icons/MoreVert'
 import MenuItem from "@material-ui/core/MenuItem/MenuItem";
 import Menu from "@material-ui/core/Menu/Menu";
-import Add from '@material-ui/icons/Add'
 import Group from '@material-ui/icons/Group'
-import FavoriteOutlined from '@material-ui/icons/FavoriteBorderOutlined'
 import accountStore from "../store/AccountStore";
 
-const styles = theme => ({ //TODO fix themes
-    container: {
-        display: 'flex',
-        flexWrap: 'wrap',
-    },
-    textField: {
-        height: '-webkit-fill-available',
-        marginLeft: '5px!important',
-        width: '-webkit-fill-available',
-    },
-    wid: {
-        [theme.breakpoints.up('xs')]: {
-            width: '0',
-        },
-    },
+const styles = theme => ({
     position: {
         position: 'fixed',
-        top: 50,
-        display: '-webkit-inline-box',
+        top: 55,
+        right: 0,
+        display: 'inline-flex',
+        justifyContent: 'space-between',
         height: 50,
         zIndex: 1,
-        margin: '0!important',
-        right: 0,
-        [theme.breakpoints.down('xs')]: {
-            left: 0,
-            width: 'auto!important',
-        },
+        borderBottom: '1px solid #e2e2e2',
+        backgroundColor: theme.palette.primary.main,
         [theme.breakpoints.up('sm')]: {
             left: '35%',
-            width: 'auto!important',
         },
         [theme.breakpoints.up('md')]: {
-            left: '33%',
-            width: 'auto!important',
+            left: '30%',
         },
         [theme.breakpoints.up('lg')]: {
             left: '30%',
-            width: 'auto!important',
+        },
+        [theme.breakpoints.down('xs')]: {
+            width: '100%',
+        },
+    },
+    namePosition: {
+        display: 'inline-flex',
+        alignItems: 'center',
+        maxWidth: '40%'
+    },
+    searchField: {
+        height: 40,
+        margin: 5,
+        marginRight: 0,
+        [theme.breakpoints.down('xs')]: {
+            maxWidth: '90%',
         },
     },
 });
@@ -69,29 +63,31 @@ class ChatBar extends React.Component {
     }
 
     handleChange = event => {
-        this.setState({ auth: event.target.checked });
+        this.setState({auth: event.target.checked});
     };
 
     handleMenu = event => {
-        this.setState({ anchorEl: event.currentTarget });
+        this.setState({anchorEl: event.currentTarget});
     };
 
     handleClose = () => {
-        this.setState({ anchorEl: null });
+        this.setState({anchorEl: null});
     };
+
     render() {
-        const { auth, anchorEl } = this.state;
+        const {auth, anchorEl} = this.state;
         const open = Boolean(anchorEl);
         const {classes, theme} = this.props;
 
         return (
-            <Grid className={classes.position} container spacing={16}>
-                <Grid item xs={3} sm={2} md={2} lg={4} xl={4}>
+            <div className={classes.position}>
+
+                <div>
                     <TextField
                         id="outlined-search"
                         placeholder="Поиск по сообщениям..."
                         type="search"
-                        className={classes.textField}
+                        className={classes.searchField}
                         variant="outlined"
                         InputLabelProps={{
                             shrink: true,
@@ -106,23 +102,16 @@ class ChatBar extends React.Component {
                             ),
                         }}
                     />
-                </Grid>
-                <Grid item xs={3} sm={3} md={4} lg={4} xl={4} style={{textAlign: 'center'}} className={classes.wid}>
-                    <div>
-                        <Typography variant="h6">{this.accountStore.fullName}</Typography>
-                        <IconButton>
-                            <Group/>
-                            {/*<Typography style={{color: 'white'}}>12</Typography>*/}
-                        </IconButton>
-                    </div>
-                </Grid>
-                <Grid item xs={6} sm={7} md={4} lg={4} xl={4}>
-                    <IconButton>
-                        <Add/>
+                </div>
+
+                <div className={classes.namePosition}>
+                    <Typography variant="h6" noWrap>{this.accountStore.fullName}</Typography>
+                    <IconButton color="secondary">
+                        <Group/>
                     </IconButton>
-                    <IconButton>
-                        <FavoriteOutlined/>
-                    </IconButton>
+                </div>
+
+                <div>
                     <IconButton
                         aria-owns={open ? 'menu-appbar' : undefined}
                         aria-haspopup="true"
@@ -150,14 +139,10 @@ class ChatBar extends React.Component {
                         <MenuItem onClick={this.handleClose}>Заглушить уведомления</MenuItem>
                         <MenuItem onClick={this.handleClose}>Выйти</MenuItem>
                     </Menu>
-                </Grid>
-            </Grid>
+                </div>
+            </div>
         )
     }
 }
 
-
-ChatBar.propTypes = {
-    classes: PropTypes.object.isRequired,
-};
 export default withStyles(styles)(ChatBar);

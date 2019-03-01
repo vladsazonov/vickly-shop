@@ -18,7 +18,7 @@ const styles = theme => ({
         paddingLeft: 2,
         paddingTop: 3,
         paddingBottom: 3,
-        borderBottom: '1px solid #ececec',
+        // borderBottom: '1px solid #ececec',
     },
     avatar: {
         width: 50,
@@ -98,27 +98,28 @@ class Dialog extends React.Component {
                 selected={selected}
                 onClick={this.handleDialogClick.bind(this)}
                 disableGutters={true}
-
+                button
                 className={classes.listItemPadding}>
                 <Grid container className={`${classes.fixWidth} ${selected ? classes.selected : ""}`} wrap="nowrap"
                       spacing={16}>
                     <Grid item md={16}>
-                        <Avatar className={classes.avatar} style={{backgroundColor: `${this.getRandomColor()}`}}>
+                        <Avatar className={classes.avatar} /*style={{backgroundColor: `${this.getRandomColor()}`}}*/>
                             {dialog.first_name[0].toUpperCase() + dialog.last_name[0].toUpperCase()}
                         </Avatar>
                     </Grid>
                     <Grid item xs zeroMinWidth style={{paddingTop: 14}}>
                         <Typography variant="body2"
-                                    className={classes.white}
+                                    color="textPrimary"
                                     noWrap>{dialog.first_name + " " + dialog.last_name}</Typography>
                         <Typography variant="caption"
-                                    className={classes.white}
+                                    color="textPrimary"
                                     noWrap>{this.props.lastMsg ? this.props.lastMsg.message : "Нет сообщений"}</Typography>
                     </Grid>
                     <Grid item className={classes.fixPadding} style={{paddingLeft: 1, paddingTop: 15}}>
                         <Typography
                             variant="caption"
-                            className={classes.white}>{this.props.lastMsg ? this.formatDate(this.props.lastMsg.timestamp_post.timestamp) : ""}</Typography>
+                            color="textPrimary"
+                        >{this.props.lastMsg ? this.formatDate(this.props.lastMsg.timestamp_post.timestamp) : ""}</Typography>
                     </Grid>
                     {
                         this.props.unread ?

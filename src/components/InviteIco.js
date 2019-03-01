@@ -1,16 +1,12 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';
 import PersonAdd from '@material-ui/icons/PersonAdd'
 import IconButton from "@material-ui/core/IconButton/IconButton";
-import {userLogout} from "../store/actions/loginActions";
-import connect from "react-redux/es/connect/connect";
 import TextField from "@material-ui/core/TextField/TextField";
 import WorkGroupList from "./WorkGoupList";
-import AccountCircle from "@material-ui/core/SvgIcon/SvgIcon";
 
 
 function getModalStyle() {
@@ -84,9 +80,8 @@ class SimpleModal extends React.Component {
         return (
             <div>
                 <IconButton
-                    color="inherit"
                     onClick={this.handleOpen}>
-                    <PersonAdd style={{fontSize: 30}} />
+                    <PersonAdd/>
                 </IconButton>
                 <Modal
                     aria-labelledby="simple-modal-title"
