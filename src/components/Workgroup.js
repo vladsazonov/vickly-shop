@@ -9,10 +9,10 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 import loginService from "../services/loginService";
 import {MenuProvider} from "react-contexify";
 import Typography from "@material-ui/core/Typography";
+import Divider from "@material-ui/core/es/Divider/Divider";
 
 
 const styles = theme => ({
-    active: {},
     groupName: {
         paddingTop: 0,
         paddingBottom: 0,
@@ -52,7 +52,6 @@ class Workgroup extends React.Component {
                     </ListItem>
                 </MenuProvider>
                 <Collapse in={this.state.open} timeout="auto" unmountOnExit>
-
                     <List component="div" disablePadding className={classes.active}>
                         {
                             workgroup.users.map(
@@ -65,10 +64,9 @@ class Workgroup extends React.Component {
                                 }
                             )
                         }
-
                     </List>
-
                 </Collapse>
+                <Divider/>
             </div>
 
         )

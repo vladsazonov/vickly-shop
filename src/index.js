@@ -19,34 +19,34 @@ const store = createStore(
 const theme = createMuiTheme({
     palette: {
         primary: {
-            light: "#7986cb",
-            main: "#2c3137", //аппбар и серчбар
-            dark: "#00fff4",
+            light: "#f9f9f9",
+            main: "#363b41", //аппбар и серчбар
+            dark: "#5ab2ff",
             contrastText: "#fff",
 
         },
         secondary: {
-            light: "#ffffff",
-            main: "#37474f", //иконки
-            dark: "#c51162",
-            contrastText: "#fff",
+            light: "#d1d1d1",
+            main: "#ffffff", //иконки
+            dark: "#798bc5",
+            contrastText: "#000000",
         },
         text: {
-            primary: "#fff",
+            primary: "#1d1c28",
             secondary: "rgba(0, 0, 0, 0.54)",
             disabled: "rgba(0, 0, 0, 0.38)",
             hint: "rgba(0, 0, 0, 0.38)",
         },
         background: {
-            paper: "#2c3137",
-            default: "#0018ff",
+            paper: "#f7f7f7",
+            default: "#fcfcfc",
         },
         action: {
-            active: "#ffffff",
-            hover: "#46ff1c",
+            active: "rgb(72, 170, 210)",
+            hover: "rgba(58, 167, 183, 0.17)",
             hoverOpacity: 0.08,
-            selected: "#ff1b00",
-            disabled: "rgba(255, 255, 255, 0.15)",
+            selected: "rgba(58, 167, 183, 0.41)",
+            disabled: "rgba(158, 158, 158, 0.68)",
             disabledBackground: "rgba(0, 0, 0, 0.12)",
         },
     },

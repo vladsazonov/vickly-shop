@@ -7,7 +7,6 @@ import Home from "./components/Home";
 import {BrowserRouter, Redirect, Route, Switch} from "react-router-dom";
 import {PrivateRoute} from 'react-router-with-props';
 import {observer} from "mobx-react";
-import DevTools from "mobx-react-devtools";
 import InviteForm from "./components/login/InviteForm";
 import accountStore from "./store/AccountStore";
 import {ToastContainer} from "react-toastify";
@@ -62,7 +61,7 @@ class App extends Component {
                     </Switch>
                 </BrowserRouter>
                 <ToastContainer  position="bottom-right"/>
-                <DevTools/>
+
             </div>
         )
 

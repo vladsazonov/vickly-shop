@@ -33,12 +33,12 @@ class MessageList extends React.Component {
         // There is a new message in the state, scroll to bottom of list
         // const objDiv = document.getElementById('messageList');
         // objDiv.scrollTop = objDiv.scrollHeight;
-        this.scrollToEnd();
+        /*this.scrollToEnd();*/
     }
 
-    scrollToEnd(){
-        this.messagesEnd.current.scrollIntoView({behavior: "smooth"});
-    };
+    /*  scrollToEnd(){
+          this.messagesEnd.current.scrollIntoView({behavior: "smooth"});
+      };*/
 
     render() {
         const {classes} = this.props;
@@ -61,7 +61,6 @@ class MessageList extends React.Component {
         return (
             <div id='messageList'>
                 { messages }
-                <div style={{float: "none", clear: "both", }} ref={this.messagesEnd}/>
             </div>
         );
     }

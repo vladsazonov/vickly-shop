@@ -15,25 +15,18 @@ import accountStore from "../store/AccountStore";
 const styles = theme => ({
     position: {
         position: 'fixed',
-        top: 55,
+        top: 40,
         right: 0,
         display: 'inline-flex',
         justifyContent: 'space-between',
-        height: 50,
+        height: 55,
         zIndex: 1,
         borderBottom: '1px solid #e2e2e2',
-        backgroundColor: theme.palette.primary.main,
-        [theme.breakpoints.up('sm')]: {
-            left: '35%',
-        },
-        [theme.breakpoints.up('md')]: {
-            left: '30%',
-        },
-        [theme.breakpoints.up('lg')]: {
-            left: '30%',
-        },
+        borderLeft: '1px solid #e2e2e2',
+        backgroundColor: theme.palette.primary.light,
+        left: '30%',
         [theme.breakpoints.down('xs')]: {
-            width: '100%',
+            left: 0,
         },
     },
     namePosition: {
@@ -42,12 +35,19 @@ const styles = theme => ({
         maxWidth: '40%'
     },
     searchField: {
-        height: 40,
-        margin: 5,
+        height: 33,
+        margin: 10,
         marginRight: 0,
+        backgroundColor: '#ffffff',
         [theme.breakpoints.down('xs')]: {
             maxWidth: '90%',
         },
+    },
+    searchIco: {
+        color: theme.palette.secondary.light
+    },
+    dialogIco: {
+        color: theme.palette.secondary.dark,
     },
 });
 
@@ -95,7 +95,7 @@ class ChatBar extends React.Component {
                         InputProps={{
                             endAdornment: (
                                 <InputAdornment position="end">
-                                    <IconButton>
+                                    <IconButton className={classes.searchIco}>
                                         <Search/>
                                     </IconButton>
                                 </InputAdornment>
@@ -106,7 +106,7 @@ class ChatBar extends React.Component {
 
                 <div className={classes.namePosition}>
                     <Typography variant="h6" noWrap>{this.accountStore.fullName}</Typography>
-                    <IconButton color="secondary">
+                    <IconButton className={classes.dialogIco}>
                         <Group/>
                     </IconButton>
                 </div>

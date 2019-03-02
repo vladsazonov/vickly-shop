@@ -12,32 +12,28 @@ const styles = theme => ({
         margin: 6,
         marginRight: 0,
         height: 41,
+        backgroundColor: '#fff',
     },
     position: {
-        backgroundColor: theme.palette.primary.main,
+        height: 54,
+        backgroundColor: theme.palette.primary.light,
         bottom: 0,
         display: 'inline-flex',
         position: 'fixed',
         right: 0,
         [theme.breakpoints.down('xs')]: {
             width: '100%',
+            left: 0,
         },
-        [theme.breakpoints.up('sm')]: {
-            left: '35%',
-        },
-        [theme.breakpoints.up('md')]: {
             left: '30%',
-        },
-        [theme.breakpoints.up('lg')]: {
-            left: '30%',
-        },
         borderTop: '1px solid #e2e2e2',
-
+        borderLeft: '1px solid #e2e2e2',
     },
     iconButton: {
         width: 48,
         height: 48,
-        alignSelf: 'center'
+        alignSelf: 'center',
+        color: theme.palette.secondary.dark
     }
 });
 
@@ -80,7 +76,8 @@ class SendMessageBar extends React.Component {
         return (
             <div className={classes.position}>
                 <TextField
-                    id="outlined"
+
+                    type="text"
                     value={this.state.messageText}
                     onChange={this.handleOnTextChange}
                     className={classes.textField}

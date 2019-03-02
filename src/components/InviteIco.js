@@ -80,7 +80,8 @@ class SimpleModal extends React.Component {
         return (
             <div>
                 <IconButton
-                    onClick={this.handleOpen}>
+                    onClick={this.handleOpen}
+                    color="secondary">
                     <PersonAdd/>
                 </IconButton>
                 <Modal

@@ -9,36 +9,32 @@ import AddCommentOutlined from "@material-ui/icons/AddCommentOutlined"
 const styles = theme => ({
     position: {
         position: "fixed",
-        backgroundColor: theme.palette.primary.main,
+        backgroundColor: theme.palette.primary.light,
         height: 55,
-        borderRight: '1px solid #e2e2e2',
-        borderBottom: '1px solid #e2e2e2',
+        top: 40,
+        // borderRight: '1px solid #e2e2e2',
+        // borderBottom: '1px solid #e2e2e2',
         [theme.breakpoints.down('xs')]: {
             width: '100%',
-            marginTop: 55
+            position: "sticky",
         },
-        [theme.breakpoints.up('sm')]: {
-            width: '35%',
-        },
-        [theme.breakpoints.up('md')]: {
             width: '30%',
-        },
-        [theme.breakpoints.up('lg')]: {
-            width: '30%',
-        },
         zIndex: 1499,
     },
     textField: {
-        width: 'calc(100% - 54px)',
-        margin: 6,
+        width: 'calc(100% - 56px)',
+        margin: 8,
         marginRight: 0,
-        height: 42,
+        height: 38,
         backgroundColor: '#ffffff',
         borderRadius: 4,
     },
     button: {
         marginTop: 5,
-
+        color: theme.palette.secondary.dark
+    },
+    searchIco: {
+        color: theme.palette.secondary.light
     },
 });
 
@@ -61,7 +57,7 @@ class OutlinedTextFields extends React.Component {
                         InputProps={{
                             endAdornment: (
                                 <InputAdornment position="end">
-                                    <IconButton>
+                                    <IconButton className={classes.searchIco}>
                                         <Search/>
                                     </IconButton>
                                 </InputAdornment>

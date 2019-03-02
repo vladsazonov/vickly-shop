@@ -56,6 +56,7 @@ class ProfileIco extends React.Component {
                                 aria-owns={open ? 'menu-appbar' : undefined}
                                 aria-haspopup="true"
                                 onClick={this.handleMenu}
+                                color="secondary"
                             >
                                 <AccountCircle/>
                             </IconButton>

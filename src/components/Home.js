@@ -6,7 +6,6 @@ import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
 import IconButton from '@material-ui/core/IconButton';
 import Hidden from '@material-ui/core/Hidden';
-import Divider from '@material-ui/core/Divider';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChatWindow from "./ChatWindow"
 import Workgroup from "./Workgroup";
@@ -25,10 +24,11 @@ const styles = theme => ({
 
     root: {
         display: 'flex',
-        marginLeft: 0,
-        marginRight: 0,
-        flexGrow: 1,
         top: 0,
+        bottom: 0,
+        left: 100,
+        right: 100,
+        flexGrow: 1,
     },
     drawer: {
         [theme.breakpoints.up('lg')]: {
@@ -46,21 +46,21 @@ const styles = theme => ({
         zIndex: 1500,
     },
     appBar: {
-        [theme.breakpoints.up('xs')]: {
-            width: '100%',
-        },
-        [theme.breakpoints.up('sm')]: {
-            width: '65%',
-        },
-        [theme.breakpoints.up('md')]: {
-            width: '70%',
-        },
-        [theme.breakpoints.up('lg')]: {
-            width: '70%',
-        },
-        borderBottom: '1px solid #e2e2e2',
+        /*  [theme.breakpoints.up('xs')]: {
+              width: '100%',
+          },
+          [theme.breakpoints.up('sm')]: {
+              width: '65%',
+          },
+          [theme.breakpoints.up('md')]: {
+              width: '70%',
+          },
+          [theme.breakpoints.up('lg')]: {
+              width: '70%',
+          },*/
+        /* borderBottom: '1px solid #e2e2e2',*/
         zIndex: 1501,
-        height: 55,
+        height: 40,
         boxShadow: theme.shadows[0],
     },
     menuButton: {
@@ -70,37 +70,25 @@ const styles = theme => ({
         },
     },
     toolbar: {
-        height: 55,
+        height: 40,
     },
     drawerPaper: {
         [theme.breakpoints.down('xs')]: {
             width: '85%',
         },
-        [theme.breakpoints.up('sm')]: {
-            width: '35%',
-        },
-        [theme.breakpoints.up('md')]: {
             width: '30%',
-        },
-        [theme.breakpoints.up('lg')]: {
-            width: '30%',
-        },
-        backgroundColor: theme.background
+        backgroundColor: theme.background,
+        borderRight: '0px',
     },
     workG: {
         [theme.breakpoints.down('xs')]: {
-            marginTop: 109,
-            paddingTop: 0
+            marginTop: 40,
         },
-        marginTop: 46,
+        marginTop: 96,
+        padding: 0,
     },
     content: {
         flexGrow: 1,
-        /*padding: theme.spacing.unit * 3,*/
-        [theme.breakpoints.up('lg')]: {
-            left: '33%'
-        },
-        /*backgroundImage: `url(${Background})`*/
     },
     logo: {
         width: 150,
@@ -145,7 +133,7 @@ class Home extends React.Component {
         if (this.chatsStore.userChats.with_group) {
             return this.chatsStore.userChats.with_group.map(
                 workgroup => <Workgroup workgroup={workgroup}/>
-                )
+            )
         }
     }
 
@@ -177,10 +165,7 @@ class Home extends React.Component {
                             <MenuIcon/>
                         </IconButton>
                     </div>*/}
-
                     <SearchBar/>
-
-                    <Divider/>
                     <List className={classes.workG}>
                         {this.workgroups()}
                     </List>
@@ -201,7 +186,7 @@ class Home extends React.Component {
                         >
                             <MenuIcon/>
                         </IconButton>
-                        <div className={classes.logoDiv}></div>
+                        <div className={classes.logoDiv}>Vicly messenger</div>
                         <InviteIco chats={this.props.chats}/>
                         <ProfileIco handleLogout={this.accountStore.unauth.bind(accountStore)}/>
                     </Toolbar>
@@ -237,15 +222,13 @@ class Home extends React.Component {
                         </Drawer>
                     </Hidden>
                 </nav>
+
                 <main className={classes.content}>
                     <div className={classes.toolbar}/>
-                    <Scrollbars autoHide style={{height: '-webkit-fill-available', zIndex: 1, marginTop: 50}}>
                         <Route path="/home/chat/:chat_id"
                                render={(routeProps) => <ChatWindow {...routeProps}
                                                                    handleDrawerToggle={this.handleDrawerToggle}
                                />}/>
-
-                    </Scrollbars>
                 </main>
             </div>
         );

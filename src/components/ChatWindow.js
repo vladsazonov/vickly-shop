@@ -2,11 +2,9 @@ import React from 'react';
 import {withStyles} from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import 'typeface-roboto';
-import '../css/Dialog.css'
 import SendMessageBar from "./SendMessageBar";
 import MessageList from "./MessageList";
 import ChatBar from "./ChatBar";
-import Test from './test.js'
 import chatsStore from "../store/ChatsStore";
 import messagesStore from "../store/MessagesStore"
 import {observer} from "mobx-react";
@@ -27,10 +25,25 @@ const styles = theme => ({
         fontSize: 20,
     },
     emptyChat: {
-        marginTop: 300,
-        marginBottom: 300,
-        textAlign: 'center',
+        top: 40,
+        bottom: 0,
+        right: 0,
+        [theme.breakpoints.down('xs')]: {
+            left: 0,
+        },
+        left: '30%',
+        position: 'fixed',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
     },
+    empty: {},
+    list: {
+        backgroundColor: '#fff',
+        paddingTop: 60,
+        paddingBottom: 55,
+    },
+
 });
 
 @observer
@@ -93,14 +106,14 @@ class ChatWindow extends React.Component {
 
         this.messagesStore.loadMessagesByChatId(this.chatsStore.currentChatId);
         let messages = this.messagesStore.messages.find((elem) => elem.chatId === this.chatsStore.currentChatId);
-        if (messages){
-            messages.messages.forEach((elem)=>{
-                if(!elem.timestamp_delivery){
-                    this.messagesStore.deliveryMessage(elem.id,1,'user');
+        if (messages) {
+            messages.messages.forEach((elem) => {
+                if (!elem.timestamp_delivery) {
+                    this.messagesStore.deliveryMessage(elem.id, 1, 'user');
 
                 }
-                if(!elem.timestamp_read){
-                    this.messagesStore.readMessage(elem.id,1,'user');
+                if (!elem.timestamp_read) {
+                    this.messagesStore.readMessage(elem.id, 1, 'user');
 
                 }
             })
@@ -138,26 +151,27 @@ class ChatWindow extends React.Component {
         const {classes} = this.props;
         let messages = this.messagesStore.messages.find((elem) => elem.chatId === this.chatsStore.currentChatId);
         return this.chatsStore.currentChatId ? (
-            <div>
+            <div className={classes.chat}>
                 <ChatBar/>
                 {
                     messages && messages.messages.length > 0 ?
-                        <MessageList userInfo={this.testUser} myUserId={this.props.userId}
-                                     messages={messages}
-                                     ref={this.messageList}
-                        />
+                        <div className={classes.list}>
+                            <MessageList userInfo={this.testUser}
+                                         myUserId={this.props.userId}
+                                         messages={messages}
+                                         ref={this.messageList}/>
+                        </div>
                         :
                         <div className={classes.emptyChat}>
                             <Typography variant="h5">История сообщений пуста...</Typography>
-                            <SendMessageBar sendMsg={this.handleSendMessage}/>
+                            {/* <SendMessageBar sendMsg={this.handleSendMessage}/>*/}
                         </div>
                 }
                 <SendMessageBar handleSendMessage={this.handleSendMessage.bind(this)}/>
             </div>
         ) : (
-            <div>
-                <Test/>
-                <div className={classes.emptyChat}>
+            <div className={classes.emptyChat}>
+                <div className={classes.empty}>
                     <Typography variant="h5">Выберите диалог...</Typography>
                 </div>
             </div>
