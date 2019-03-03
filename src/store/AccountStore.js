@@ -52,7 +52,7 @@ class AccountStore {
                 this.groupId = content.group_id;
                 this.saveInLocalStorage(this.fullName, this.token, this.userId, this.groupId, this.login);
             });
-            WebSocketService.run()
+            new WebSocketService().run()
         } catch (err) {
             console.log(err);
             runInAction("Auth failed", () => {

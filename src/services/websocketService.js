@@ -2,20 +2,24 @@ import {getAllMessages} from "../store/actions/messageActions";
 import {fetchChats} from "../store/actions/mainActions";
 import accountStore from "../store/AccountStore";
 import messageStore from "../store/MessagesStore";
+import {IP} from "../common";
 
 const NEW_MESSAGE = 0;
 const USER_ACTIVITY = 10;
 
-let websocket_url ="ws://80.241.209.42/ws/";
+let websocket_url =`ws://${IP}/ws/`;
 
 class WebsocketService{
     socket;
+    constructor(){
+        websocket_url += accountStore.token;
+    }
 
     run(){
         if (!accountStore.token) {
             throw Error("Cannot create websocket connection in unath session");
         }
-        websocket_url += accountStore.token;
+
         this.socket = new WebSocket(websocket_url);
         this.socket.onmessage = this.onMessage;
         this.socket.onerror = (err)=> {
@@ -81,4 +85,4 @@ class WebsocketService{
 
 }
 
-export default new WebsocketService();
+export default WebsocketService;

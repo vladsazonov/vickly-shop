@@ -113,7 +113,7 @@ class ChatWindow extends React.Component {
 
                 }
                 if (!elem.timestamp_read) {
-                    this.messagesStore.readMessage(elem.id, 1, 'user');
+                    this.messagesStore.readMessage(elem.id, 'user');
 
                 }
             })

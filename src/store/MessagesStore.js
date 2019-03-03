@@ -16,6 +16,19 @@ class MessagesStore {
 
     addMessageToEnd(message){
         //TODO for websocket push
+        let messages = this.messages.find((elem)=>{
+            return elem.chatId === message.chat_id;
+        });
+        if(messages){
+           messages.push(message);
+        }else {
+            messages = {
+                chatId:message.chat_id,
+                chat_type:message.chat_type,
+                messages:[message]
+            }
+        }
+
     }
 
     async getAllMessagesByChatId(chatId, chat_type) {
@@ -113,7 +126,7 @@ class MessagesStore {
         }
     }
 
-    async readMessage(messageId, chatId, chatType) {
+    async readMessage(messageId, chatType) {
         try {
             const response = await fetch(BACKEND_URL + "/message/read", {
                 method: 'POST',
@@ -123,7 +136,6 @@ class MessagesStore {
                 },
                 body: JSON.stringify({
                     "id": messageId,
-                    "chat_id": chatId,
                     "chat_type": 'user'
                 })
             });
