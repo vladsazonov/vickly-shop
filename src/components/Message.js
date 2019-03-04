@@ -8,14 +8,18 @@ import loginService from "../services/loginService"
 
 const styles = theme => ({
     root: {
-        display: 'flex',
         marginLeft: 25,
-        maxWidth: '30%',
         marginBottom: 15,
     },
     avatar: {
-        alignSelf: 'flex-end',
+        // alignSelf: 'flex-end',
         marginRight: 9,
+        display: 'flex',
+        alignItems: 'flex-end',
+    },
+    avatarIco: {
+        width: 35,
+        height: 35,
     },
     fromMe: {
         backgroundColor: '#eef2ff',
@@ -26,14 +30,35 @@ const styles = theme => ({
     toMe: {
         backgroundColor: '#eef2ff',
         borderRadius: 19,
-        wordWrap: 'break-word',
-        overflowWrap: 'break-word',
-        display: 'inline-flex',
+        //   wordWrap: 'break-word',
+        wordBreak: 'break-all,',
+        //  overflowWrap: 'break-word',
+        maxWidth: 500,
     },
     messageBlock: {
         wordWrap: 'break-word',
         overflowWrap: 'break-word',
+        display: 'flex',
+
     },
+    caption: {
+        marginLeft: '8%',
+        color: '#bbb',
+        paddingRight: 4,
+    },
+    wrap: {
+        maxWidth: 500,
+        [theme.breakpoints.down('xs')]: {
+            maxWidth: 300,
+        },
+        [theme.breakpoints.down('md')]: {
+            maxWidth: 300,
+        },
+        padding: 11,
+        backgroundColor: '#efefef',
+        borderRadius: 20,
+    },
+    mess: {},
 });
 
 function handleDelete() {
@@ -72,7 +97,8 @@ class Message extends React.Component {
         if (today) {
             return date.getHours() + ":" + mins;
         } else {
-            return date.getHours() + ":" + mins + " " + date.getDay() + "/" + date.getMonth() + "/" + (date.getFullYear() - 2000);
+            //  return date.getHours() + ":" + mins + " " + date.getDay() + "/" + date.getMonth() + "/" + (date.getFullYear() - 2000);
+            return date.getHours() + ":" + mins;
         }
     };
 
@@ -90,27 +116,26 @@ class Message extends React.Component {
 
         return (
             <div className={classes.root}>
-                <div className={classes.avatar}>
-                    <Avatar style={{width: 35, height: 35,}}>
-                        {
-                            fromMe ?
-                                loginService.getCreds().first_name[0].toUpperCase() + loginService.getCreds().last_name[0].toUpperCase()
-                                :
-                                this.props.userInfo.first_name[0].toUpperCase() + this.props.userInfo.last_name[0].toUpperCase()
-                        }
-                    </Avatar>
-                </div>
-
                 <div className={classes.messageBlock}>
-                    <Typography
-                        variant="body2"> {fromMe ? loginService.getCreds().first_name : this.props.userInfo.first_name} </Typography>
-                    <div className={fromMe ? classes.fromMe : classes.toMe}>
-                        <Typography variant="body1" style={{padding: 8}}>{this.props.message} </Typography>
-                        <Typography variant="caption" style={{
-                            margin: 10,
-                            color: '#bbb'
-                        }}>{this.formatDate(this.props.messageInfo.timestamp_post.timestamp)}</Typography>
+                    <div className={classes.avatar}>
+                        <Avatar className={classes.avatarIco}>
+                            {
+                                fromMe ? loginService.getCreds().first_name[0].toUpperCase() + loginService.getCreds().last_name[0].toUpperCase()
+                                    :
+                                    this.props.userInfo.first_name[0].toUpperCase() + this.props.userInfo.last_name[0].toUpperCase()
+                            }
+                        </Avatar>
                     </div>
+                    <div className={classes.wrap}>
+                        <div style={{display: 'inline-flex', alignItems: 'center'}}>
+                            <Typography
+                                variant="body2">{fromMe ? loginService.getCreds().first_name : this.props.userInfo.first_name}</Typography>
+                            <Typography variant="caption"
+                                        className={classes.caption}>{this.formatDate(this.props.messageInfo.timestamp_post.timestamp)}</Typography>
+                        </div>
+                        <Typography variant="body1" className={classes.mess}>{this.props.message}</Typography>
+                    </div>
+
                 </div>
             </div>
         );

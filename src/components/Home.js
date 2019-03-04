@@ -9,7 +9,7 @@ import Hidden from '@material-ui/core/Hidden';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChatWindow from "./ChatWindow"
 import Workgroup from "./Workgroup";
-import {Scrollbars} from "react-custom-scrollbars";
+// import {Scrollbars} from "react-custom-scrollbars";
 import SearchBar from "./SearchBar";
 import ProfileIco from "./ProfileIco";
 import InviteIco from "./InviteIco";
@@ -17,8 +17,6 @@ import accountStore from "../store/AccountStore";
 import chatsStore from "../store/ChatsStore";
 import {observer} from "mobx-react";
 import {Route} from "react-router-dom";
-
-const drawerWidth = 450;
 
 const styles = theme => ({
 
@@ -46,19 +44,6 @@ const styles = theme => ({
         zIndex: 1500,
     },
     appBar: {
-        /*  [theme.breakpoints.up('xs')]: {
-              width: '100%',
-          },
-          [theme.breakpoints.up('sm')]: {
-              width: '65%',
-          },
-          [theme.breakpoints.up('md')]: {
-              width: '70%',
-          },
-          [theme.breakpoints.up('lg')]: {
-              width: '70%',
-          },*/
-        /* borderBottom: '1px solid #e2e2e2',*/
         zIndex: 1501,
         height: 40,
         boxShadow: theme.shadows[0],
@@ -89,6 +74,7 @@ const styles = theme => ({
     },
     content: {
         flexGrow: 1,
+        minHeight: '100vh',
     },
     logo: {
         width: 150,
@@ -109,6 +95,19 @@ const styles = theme => ({
         top: 0,
 
         zIndex: 1000
+    },
+    emptyChat: {
+        top: 40,
+        bottom: 0,
+        right: 0,
+        [theme.breakpoints.down('xs')]: {
+            left: 0,
+        },
+        left: '30%',
+        position: 'fixed',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
     },
 });
 
@@ -154,23 +153,12 @@ class Home extends React.Component {
 
 
         drawer = (
-            <Scrollbars
-                autoHide>
-                {this.props.children}
                 <div>
-                    <div/>
-                    {/*<div className={classes.container}>
-                        <img src={logo} alt="logo" className={classes.logo}/>
-                        <IconButton>
-                            <MenuIcon/>
-                        </IconButton>
-                    </div>*/}
                     <SearchBar/>
                     <List className={classes.workG}>
                         {this.workgroups()}
                     </List>
                 </div>
-            </Scrollbars>
         );
 
 
@@ -227,8 +215,7 @@ class Home extends React.Component {
                     <div className={classes.toolbar}/>
                         <Route path="/home/chat/:chat_id"
                                render={(routeProps) => <ChatWindow {...routeProps}
-                                                                   handleDrawerToggle={this.handleDrawerToggle}
-                               />}/>
+                                                                   handleDrawerToggle={this.handleDrawerToggle}/>}/>
                 </main>
             </div>
         );

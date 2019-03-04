@@ -11,7 +11,7 @@ import LockIcon from '@material-ui/icons/LockOutlined';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
-import Grid from "@material-ui/core/Grid/Grid";
+import div from "@material-ui/core/Grid/Grid";
 import {observer} from "mobx-react";
 import accountStore from "../../store/AccountStore";
 // import Background from "../../images/loginBack.jpg"
@@ -20,20 +20,21 @@ import accountStore from "../../store/AccountStore";
 const styles = theme => ({
     backg: {
         // backgroundImage: `url(${Background})`,
-        height: '-webkit-fill-available'
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        [theme.breakpoints.down('xs')]: {},
+        [theme.breakpoints.up('xs')]: {
+            minHeight: '100vh',
+        },
     },
     main: {
-        width: 'auto',
         display: 'block', // Fix IE 11 issue.
         [theme.breakpoints.down('xs')]: {
             width: 300,
-            margin: 'auto',
-            marginTop: '30%'
         },
         [theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
             width: 400,
-            margin: 'auto',
-            marginTop: '40%',
         },
     },
     paper: {
@@ -69,53 +70,49 @@ class LoginForm extends React.Component {
     render() {
         const {classes} = this.props;
         return (
-            <Grid container className={classes.backg}>
-                <Grid item xs={1} lg={4}/>
-                <Grid item xs={10} lg={4}>
-                    <main className={classes.main}>
-                        <CssBaseline/>
-                        <Paper
-                            className={classes.paper}>
-                            <Avatar
-                                className={classes.avatar}>
-                                <LockIcon/>
-                            </Avatar>
-                            <Typography component="h1" variant="h5">
-                                Вход в систему Vicly
-                            </Typography>
-                            <form
-                                onSubmit={this.handleSubmit.bind(this)}
-                                className={classes.form}>
-                                <FormControl
-                                    margin="normal"
-                                    required
-                                    fullWidth>
-                                    <InputLabel
-                                        htmlFor="login"> Логин </InputLabel>
-                                    <Input id="login" name="login" autoFocus/>
-                                </FormControl>
-                                <FormControl margin="normal" required fullWidth>
-                                    <InputLabel htmlFor="password">Пароль</InputLabel>
-                                    <Input name="password" type="password" id="password"
-                                           autoComplete="current-password"/>
-                                </FormControl>
-                                <FormControlLabel
-                                    control={<Checkbox value="remember" color="primary"/>}
-                                    label="Запомнить меня"/>
-                                <Button
-                                    type="submit"
-                                    fullWidth
-                                    variant="contained"
-                                    color="primary"
-                                    className={classes.submit}>
-                                    Войти
-                                </Button>
-                            </form>
-                        </Paper>
-                    </main>
-                </Grid>
-                <Grid item xs={1} lg={4}/>
-            </Grid>
+            <div className={classes.backg}>
+                <main className={classes.main}>
+                    <CssBaseline/>
+                    <Paper
+                        className={classes.paper}>
+                        <Avatar
+                            className={classes.avatar}>
+                            <LockIcon/>
+                        </Avatar>
+                        <Typography component="h1" variant="h5">
+                            Вход в систему Vicly
+                        </Typography>
+                        <form
+                            onSubmit={this.handleSubmit.bind(this)}
+                            className={classes.form}>
+                            <FormControl
+                                margin="normal"
+                                required
+                                fullWidth>
+                                <InputLabel
+                                    htmlFor="login"> Логин </InputLabel>
+                                <Input id="login" name="login" autoFocus/>
+                            </FormControl>
+                            <FormControl margin="normal" required fullWidth>
+                                <InputLabel htmlFor="password">Пароль</InputLabel>
+                                <Input name="password" type="password" id="password"
+                                       autoComplete="current-password"/>
+                            </FormControl>
+                            <FormControlLabel
+                                control={<Checkbox value="remember" color="primary"/>}
+                                label="Запомнить меня"/>
+                            <Button
+                                type="submit"
+                                fullWidth
+                                variant="contained"
+                                color="primary"
+                                className={classes.submit}>
+                                Войти
+                            </Button>
+                        </form>
+                    </Paper>
+                </main>
+            </div>
         );
     }
 }

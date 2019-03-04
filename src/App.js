@@ -11,6 +11,7 @@ import InviteForm from "./components/login/InviteForm";
 import accountStore from "./store/AccountStore";
 import {ToastContainer} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import DevTools from "mobx-react-devtools";
 
 
 @observer
@@ -61,7 +62,7 @@ class App extends Component {
                     </Switch>
                 </BrowserRouter>
                 <ToastContainer  position="bottom-right"/>
-
+                <DevTools/>
             </div>
         )
 

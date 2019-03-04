@@ -90,7 +90,8 @@ class Dialog extends React.Component {
         if (today) {
             return date.getHours() + ":" + mins;
         } else {
-            return date.getHours() + ":" + mins + " " + date.getDay() + "/" + date.getMonth() + "/" + (date.getFullYear() - 2000);
+            //  return date.getHours() + ":" + mins + " " + date.getDay() + "/" + date.getMonth() + "/" + (date.getFullYear() - 2000);
+            return date.getDay() + "/" + date.getMonth() + "/" + (date.getFullYear() - 2000);
         }
     };
 
