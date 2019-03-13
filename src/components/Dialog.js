@@ -10,6 +10,7 @@ import chatsStore from "../store/ChatsStore";
 import {observer} from "mobx-react";
 import {withRouter} from "react-router-dom";
 import ToastService from '../services/toastService'
+import messagesStore from "../store/MessagesStore"
 
 const styles = theme => ({
     fixWidth: {
@@ -55,6 +56,7 @@ class Dialog extends React.Component {
 
     constructor(props) {
         super(props);
+        this.messagesStore = messagesStore;
         this.chatsStore = chatsStore;
     }
 
@@ -98,6 +100,15 @@ class Dialog extends React.Component {
     render() {
         const {classes, dialog} = this.props;
         const selected = this.props.chatId === this.chatsStore.currentChatId;
+        const messagesObj = this.messagesStore.messages.find(elem => elem.chatId == this.props.chatId);
+        let unreadCount,lastUnread;
+        if (messagesObj) {
+            unreadCount = messagesObj.unread;
+            lastUnread = messagesObj.last;
+        } else {
+             unreadCount = 0;
+             lastUnread = null;
+        }
         return (
             <ListItem
                 selected={selected}
@@ -126,13 +137,13 @@ class Dialog extends React.Component {
                     <Grid item style={{padding: 0, marginRight: 7,}}>
                         <Typography
                             variant="caption"
-                            className={classes.time}>{this.props.lastMsg ? this.formatDate(this.props.lastMsg.timestamp_post.timestamp) : ""}</Typography>
+                            className={classes.time}>{lastUnread ? this.formatDate(lastUnread.timestamp_post.timestamp) : ""}</Typography>
                     </Grid>
                     {
-                        this.props.unread ?
+                        unreadCount ?
                             (
                                 <div className={classes.margin}>
-                                    <Badge color="primary" badgeContent={this.props.unread} className={classes.margin}>
+                                    <Badge color="primary" badgeContent={unreadCount} className={classes.margin}>
                                     </Badge>
                                 </div>
                             )

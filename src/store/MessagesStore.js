@@ -6,7 +6,7 @@ import accountStore from "./AccountStore";
 class MessagesStore {
     @observable messages = [];
 
-    loadMessagesByChatId(chatId){
+    loadMessagesByChatId(chatId) {
         if (this.messages.find((elem) => elem.chatId === chatId)) {
             console.log("Chatid " + chatId + " already loaded! need to resolve only inreaded messages");
         } else {
@@ -14,18 +14,19 @@ class MessagesStore {
         }
     }
 
-    addMessageToEnd(message){
+    //@action
+    addMessageToEnd(message) {
         //TODO for websocket push
-        let messages = this.messages.find((elem)=>{
+        let messages = this.messages.find((elem) => {
             return elem.chatId === message.chat.id;
         });
-        if(messages){
-           messages.messages.push(message);
-        }else {
+        if (messages) {
+            messages.messages.push(message);
+        } else {
             messages = {
-                chatId:message.chat.id,
-                chat_type:message.chat.chat_type,
-                messages:[message]
+                chatId: message.chat.id,
+                chat_type: message.chat.chat_type,
+                messages: [message]
             }
         }
 
@@ -43,12 +44,23 @@ class MessagesStore {
             if (!response.ok) {
                 alert("fetch messages failed")
             }
-            const messages = await response.json();
+            let messages = await response.json();
+            let countUnreaded = 0;
+            let lastUnread = null;
+            messages = messages.sort((a, b) => a.timestamp_post.timestamp - b.timestamp_post.timestamp);
+            messages.forEach(message => {
+                if (!message.timestamp_read) {
+                    countUnreaded++;
+                    lastUnread = message;
+                }
+            });
             runInAction("getAllMessagesById", () => {
                 let chatMessages = {
-                    chatId:chatId,
-                    chat_type:chat_type,
-                    messages:messages
+                    chatId: chatId,
+                    chat_type: chat_type,
+                    last: lastUnread,
+                    unread: countUnreaded,
+                    messages: messages
                 };
                 this.messages.push(chatMessages);
                 //this.messages = messages;
@@ -56,6 +68,25 @@ class MessagesStore {
         } catch (err) {
             console.log(err);
             // return dispatch(setChatList(err))
+        }
+    }
+
+    //IT'S MY NAMING STYLE !!!!
+    //@action("createOrUpdateChatMessagesObjByUnreadedMessages")
+    createOrUpdateChatMessagesObjByUnreadedMessages(chatId, chatType, countUnread, lastUnread) {
+        let messagesObj = this.messages.find(elem => elem.chatId == chatId);
+        if (messagesObj) {
+            messagesObj.last = lastUnread;
+            messagesObj.unread = countUnread;
+        } else {
+            let chatMessages = {
+                chatId: chatId,
+                chat_type: chatType,
+                last: lastUnread,
+                unread: countUnread,
+                messages: []
+            };
+            this.messages.push(chatMessages);
         }
     }
 
