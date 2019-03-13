@@ -92,7 +92,7 @@ class Message extends React.Component {
     formatDate = (timestamp) => {
         const now = new Date(Date.now());
         let date = new Date(timestamp);
-        const today = now.toDateString() == date.toDateString();
+        const today = now.toDateString() === date.toDateString();
         const mins = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
         if (today) {
             return date.getHours() + ":" + mins;
@@ -101,13 +101,6 @@ class Message extends React.Component {
             return date.getHours() + ":" + mins;
         }
     };
-
-    returnName(fromMe) {
-        return fromMe ?
-            loginService.getCreds().first_name[0].toUpperCase() + loginService.getCreds().last_name[0].toUpperCase()
-            :
-            this.props.userInfo.first_name[0].toUpperCase() + this.props.userInfo.last_name[0].toUpperCase();
-    }
 
     render() {
         // Was the message sent by the current user. If so, add a css class
@@ -119,17 +112,13 @@ class Message extends React.Component {
                 <div className={classes.messageBlock}>
                     <div className={classes.avatar}>
                         <Avatar className={classes.avatarIco}>
-                            {
-                                fromMe ? loginService.getCreds().first_name[0].toUpperCase() + loginService.getCreds().last_name[0].toUpperCase()
-                                    :
-                                    this.props.userInfo.first_name[0].toUpperCase() + this.props.userInfo.last_name[0].toUpperCase()
-                            }
+                            {this.props.userInfo.fullName[0].toUpperCase()}
                         </Avatar>
                     </div>
                     <div className={classes.wrap}>
                         <div style={{display: 'inline-flex', alignItems: 'center'}}>
                             <Typography
-                                variant="body2">{fromMe ? loginService.getCreds().first_name : this.props.userInfo.first_name}</Typography>
+                                variant="body2">{this.props.userInfo.fullName}</Typography>
                             <Typography variant="caption"
                                         className={classes.caption}>{this.formatDate(this.props.messageInfo.timestamp_post.timestamp)}</Typography>
                         </div>

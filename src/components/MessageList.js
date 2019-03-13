@@ -43,24 +43,24 @@ class MessageList extends React.Component {
     render() {
         const {classes} = this.props;
         // Loop through all the messages in the state and create a Message component
-        const {myUserId} = this.accountStore.userId;
-        console.log("myUserId:"+myUserId);
+    const myUserId = this.accountStore.userId;
+        console.log("myUserId:" + myUserId);
+
         const messages = this.props.messages.messages.map((message, i) => {
-            let fromMe = message.from == myUserId;
+            let fromMe = message.from == myUserId;//int == string !!!
             return (
                 <Message
                     key={i}
-                    userInfo={this.props.userInfo}
-                    username={"Placeholder"}
+                    userInfo={fromMe ? this.props.myselfUser : this.props.chatUser}
                     message={message.message}
                     messageInfo={message}
-                    fromMe={fromMe} />
+                    fromMe={fromMe}/>
             );
         });
 
         return (
             <div id='messageList'>
-                { messages }
+                {messages}
             </div>
         );
     }

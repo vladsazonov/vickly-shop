@@ -4,8 +4,9 @@ import accountStore from "./AccountStore";
 import messagesStore from "./MessagesStore";
 
 class ChatsStore {
-    @observable userChats = {};
-    @observable groupChats = {};
+    @observable groups = [];
+    @observable userChats = [];
+    @observable groupChats = [];
     @observable fetchFail = false;
     @observable currentChatId = null;
     err_message = "";
@@ -34,7 +35,11 @@ class ChatsStore {
             }
             const content = await userListResponse.json();
             runInAction("Update users info", () => {
-                this.userChats = content;
+                this.userChats = content.with_group.flatMap((elem=>elem.users));
+                this.groupChats =  content.with_group.flatMap((elem=>elem.group_chats));
+                this.groups = content.with_group.map(elem=>{
+                    return elem.group;
+                });
             });
         } catch (err) {
             console.log(err);

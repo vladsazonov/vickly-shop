@@ -129,9 +129,11 @@ class Home extends React.Component {
     };
 
     workgroups() {
-        if (this.chatsStore.userChats.with_group) {
-            return this.chatsStore.userChats.with_group.map(
-                workgroup => <Workgroup workgroup={workgroup}/>
+        if (this.chatsStore.groups.length) {
+            return this.chatsStore.groups.map(
+                workgroup => <Workgroup workgroup={workgroup} chats={
+                    this.chatsStore.userChats.filter(
+                        userChat=>userChat.user.group_id===workgroup.id)}/>
             )
         }
     }

@@ -102,20 +102,22 @@ class ChatWindow extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-
-
         this.messagesStore.loadMessagesByChatId(this.chatsStore.currentChatId);
-        let messages = this.messagesStore.messages.find((elem) => elem.chatId === this.chatsStore.currentChatId);
+        let messages = this.messagesStore.messages.find(elem => elem.chatId === this.chatsStore.currentChatId);
+        let self = this;
         if (messages) {
             messages.messages.forEach((elem) => {
-                if (!elem.timestamp_delivery) {
-                    this.messagesStore.deliveryMessage(elem.id, 1, 'user');
+                console.log(elem.from);
+                if (elem.from !== self.accountStore.userId) {
+                    if (!elem.timestamp_delivery) {
+                        self.messagesStore.deliveryMessage(elem.id, 1, 'user');
+                    }
+                    if (!elem.timestamp_read) {
+                        self.messagesStore.readMessage(elem.id, 'user');
 
+                    }
                 }
-                if (!elem.timestamp_read) {
-                    this.messagesStore.readMessage(elem.id, 'user');
 
-                }
             })
         }
 
@@ -131,51 +133,47 @@ class ChatWindow extends React.Component {
         //this.props.getAllMessages(this.props.userId);
     };
 
-
-    testUser = {
-        "_id": "5c55d1c12cf1d52f70fb15d9",
-        "id": 3,
-        "first_name": "test_user_invite",
-        "last_name": "test_user_invite",
-        "group_id": 2,
-        "login": "test_user_invite",
-        "is_active": true,
-        "join_time": 1542552311,
-        "last_activity": 0,
-        "archive": false,
-        "avatar": "",
-        "role_id": 0
-    };
-
     render() {
         const {classes} = this.props;
-        let messages = this.messagesStore.messages.find((elem) => elem.chatId === this.chatsStore.currentChatId);
-        return this.chatsStore.currentChatId ? (
-            <div className={classes.chat}>
-                <ChatBar/>
-                {
-                    messages && messages.messages.length > 0 ?
-                        <div className={classes.list}>
-                            <MessageList userInfo={this.testUser}
-                                         myUserId={this.props.userId}
-                                         messages={messages}
-                                         ref={this.messageList}/>
-                        </div>
-                        :
-                        <div className={classes.emptyChat}>
-                            <Typography variant="h5">История сообщений пуста...</Typography>
-                            {/* <SendMessageBar sendMsg={this.handleSendMessage}/>*/}
-                        </div>
-                }
-                <SendMessageBar handleSendMessage={this.handleSendMessage.bind(this)}/>
-            </div>
-        ) : (
-            <div className={classes.emptyChat}>
-                <div className={classes.empty}>
-                    <Typography variant="h5">Выберите диалог...</Typography>
+        const myselfUser = {
+            fullName: this.accountStore.fullName,
+            userId: this.accountStore.userId
+        };
+        if (this.chatsStore.currentChatId){
+            let chatUser = this.chatsStore.userChats.find((elem) => elem.user.id === this.chatsStore.currentChatId);
+            chatUser = chatUser.user;
+            chatUser.fullName = chatUser.first_name + " " + chatUser.last_name;
+            let messages = this.messagesStore.messages.find((elem) => elem.chatId === this.chatsStore.currentChatId);
+            return (
+                <div className={classes.chat}>
+                    <ChatBar/>
+                    {
+                        messages && messages.messages.length > 0 ?
+                            <div className={classes.list}>
+                                <MessageList
+                                    myselfUser={myselfUser}
+                                    chatUser={chatUser}
+                                    messages={messages}
+                                    ref={this.messageList}/>
+                            </div>
+                            :
+                            <div className={classes.emptyChat}>
+                                <Typography variant="h5">История сообщений пуста...</Typography>
+                                {/* <SendMessageBar sendMsg={this.handleSendMessage}/>*/}
+                            </div>
+                    }
+                    <SendMessageBar handleSendMessage={this.handleSendMessage.bind(this)}/>
                 </div>
-            </div>
-        );
+            )
+        } else {
+            return (
+                <div className={classes.emptyChat}>
+                    <div className={classes.empty}>
+                        <Typography variant="h5">Выберите диалог...</Typography>
+                    </div>
+                </div>
+            );
+        }
     }
 }
 

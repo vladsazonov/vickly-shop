@@ -37,7 +37,7 @@ class Workgroup extends React.Component {
     };
 
     render() {
-        const {classes, theme, workgroup} = this.props;
+        const {classes, theme, workgroup, chats} = this.props;
 
         return (
             <div>
@@ -45,7 +45,7 @@ class Workgroup extends React.Component {
                     <ListItem button onClick={this.handleClick} className={classes.groupName}>
                         <ListItem>
                             <Typography variant='h6'>
-                                {workgroup.group.name}
+                                {workgroup.name}
                             </Typography>
                         </ListItem>
                         {this.state.open ? <ExpandLess/> : <ExpandMore/>}
@@ -54,15 +54,13 @@ class Workgroup extends React.Component {
                 <Collapse in={this.state.open} timeout="auto" unmountOnExit>
                     <List component="div" disablePadding className={classes.active}>
                         {
-                            workgroup.users.map(
-                                function (user) {
-                                    return user.user.id !== loginService.getCreds().myUserId ?
-                                        <Dialog chatId={user.user.id} unread={user.unread} lastMsg={user.last}
-                                                dialog={user.user}/>
-                                        :
-                                        null
-                                }
+                            chats.map(
+                                userChat =>
+                                    <Dialog chatId={userChat.user.id} unread={userChat.unread}
+                                            lastMsg={userChat.last}
+                                            dialog={userChat.user}/>
                             )
+
                         }
                     </List>
                 </Collapse>
