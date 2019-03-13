@@ -1,6 +1,5 @@
 import {getAllMessages} from "../store/actions/messageActions";
 import {fetchChats} from "../store/actions/mainActions";
-import accountStore from "../store/AccountStore";
 import messageStore from "../store/MessagesStore";
 import {IP} from "../common";
 
@@ -11,14 +10,18 @@ let websocket_url =`ws://${IP}/ws/`;
 
 class WebsocketService{
     socket;
-    constructor(){
-        websocket_url += accountStore.token;
-    }
+    token;
+    running = false;
 
-    run(){
-        if (!accountStore.token) {
-            throw Error("Cannot create websocket connection in unath session");
-        }
+    run(token){
+        if (this.running)
+            return;
+        websocket_url += token;
+        // if (token) {
+        //     throw Error("Cannot create websocket connection in unath session");
+        // }
+        this.running = true;
+        this.token = token;
 
         this.socket = new WebSocket(websocket_url);
         this.socket.onmessage = this.onMessage;
@@ -48,7 +51,7 @@ class WebsocketService{
                 alert('Обрыв соединения');
             }
             alert('Код: ' + event.code + ' причина: ' + event.reason);
-            if (accountStore.token) {
+            if (token) {
                 this.run();
             }
         };
@@ -61,6 +64,7 @@ class WebsocketService{
             console.log("ws pong");
             return;
         }
+        console.log("ws message");
         switch (payload.event) {
             case NEW_MESSAGE:
                 if(payload)
@@ -85,4 +89,4 @@ class WebsocketService{
 
 }
 
-export default WebsocketService;
+export default new WebsocketService();

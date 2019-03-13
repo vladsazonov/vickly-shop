@@ -20,6 +20,7 @@ class AccountStore {
         if (this.token) {
             this.status = "authed";
         }
+        WebSocketService.run(this.token)
     }
 
     async loginUser(login, password) {
@@ -52,7 +53,7 @@ class AccountStore {
                 this.groupId = content.group_id;
                 this.saveInLocalStorage(this.fullName, this.token, this.userId, this.groupId, this.login);
             });
-            new WebSocketService().run()
+            WebSocketService.run(this.token)
         } catch (err) {
             console.log(err);
             runInAction("Auth failed", () => {

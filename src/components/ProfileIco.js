@@ -9,7 +9,6 @@ import Menu from '@material-ui/core/Menu';
 import ExitToApp from '@material-ui/icons/ExitToApp'
 import PersonOutline from '@material-ui/icons/PersonOutline'
 import Settings from '@material-ui/icons/Settings'
-import loginService from "../services/loginService"
 
 
 const styles = {
@@ -38,7 +37,7 @@ class ProfileIco extends React.Component {
     };
 
     handleLogout = () => {
-        loginService.clearUserInfo();
+        // loginService.clearUserInfo();
 
     };
 

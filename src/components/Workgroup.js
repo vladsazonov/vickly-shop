@@ -6,7 +6,6 @@ import ListItem from '@material-ui/core/ListItem';
 import Collapse from '@material-ui/core/Collapse';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
-import loginService from "../services/loginService";
 import {MenuProvider} from "react-contexify";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/es/Divider/Divider";

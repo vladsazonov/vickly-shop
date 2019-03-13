@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
 import Typography from "@material-ui/core/Typography/Typography";
 import div from "@material-ui/core/Grid/Grid";
-import loginService from "../services/loginService"
 
 const styles = theme => ({
     root: {

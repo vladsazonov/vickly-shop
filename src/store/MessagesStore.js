@@ -17,14 +17,14 @@ class MessagesStore {
     addMessageToEnd(message){
         //TODO for websocket push
         let messages = this.messages.find((elem)=>{
-            return elem.chatId === message.chat_id;
+            return elem.chatId === message.chat.id;
         });
         if(messages){
-           messages.push(message);
+           messages.messages.push(message);
         }else {
             messages = {
-                chatId:message.chat_id,
-                chat_type:message.chat_type,
+                chatId:message.chat.id,
+                chat_type:message.chat.chat_type,
                 messages:[message]
             }
         }

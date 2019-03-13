@@ -107,8 +107,7 @@ class ChatWindow extends React.Component {
         let self = this;
         if (messages) {
             messages.messages.forEach((elem) => {
-                console.log(elem.from);
-                if (elem.from !== self.accountStore.userId) {
+                if (elem.from != self.accountStore.userId) {
                     if (!elem.timestamp_delivery) {
                         self.messagesStore.deliveryMessage(elem.id, 1, 'user');
                     }
