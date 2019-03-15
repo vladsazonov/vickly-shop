@@ -2,23 +2,31 @@ import {BACKEND_URL} from "../common";
 import {observable, runInAction} from "mobx";
 import accountStore from "./AccountStore";
 
-
 class MessagesStore {
     @observable messages = [];
 
-    loadMessagesByChatId(chatId) {
+    constructor() {
+        this.accountStore = accountStore;
+    }
+
+    loadMessagesByChatId(chatId, chatType) {
         if (this.messages.find((elem) => elem.chatId === chatId)) {
             console.log("Chatid " + chatId + " already loaded! need to resolve only inreaded messages");
         } else {
-            this.getAllMessagesByChatId(chatId)
+            this.getAllMessagesByChatId(chatId, chatType)
         }
     }
 
     //@action
     addMessageToEnd(message) {
         //TODO for websocket push
+        const myselfUserId = parseInt(accountStore.userId, 10);
         let messages = this.messages.find((elem) => {
-            return elem.chatId === message.chat.id;
+            if (message.chat.chat_type === 'user') {
+                return message.chat.user_ids.includes(elem.chatId) && message.chat.user_ids.includes(myselfUserId);
+            } else {
+                return elem.chatId === message.chat.id;
+            }
         });
         if (messages) {
             messages.messages.push(message);

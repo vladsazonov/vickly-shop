@@ -88,21 +88,20 @@ class ChatWindow extends React.Component {
     scrollToBottom = () => {
         //this.messagesEnd.current.scrollIntoView({behavior: "smooth"});
         //TODO scroll child
-        //this.messageList.current.scrollToEnd();
+        this.messageList.current.scrollToEnd();
     };
-
-    //Injected func
-    scrollToEnd() {
-        this.messagesEnd.current.scrollIntoView({behavior: "smooth"});
-    };
-
 
     componentWillMount() {
         //this.messagesStore.getAllMessagesByChatId(this.chatsStore.currentChatId);
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        this.messagesStore.loadMessagesByChatId(this.chatsStore.currentChatId);
+        // FIXME Need update ChatsStore too
+        // if (this.props.match.params.chat_id !== this.chatsStore.currentChatId){
+        //     this.chatsStore.currentChatId = this.props.match.params.chat_id;
+        //     return;
+        // }
+        this.messagesStore.loadMessagesByChatId(this.chatsStore.currentChatId, 'user');
         let messages = this.messagesStore.messages.find(elem => elem.chatId === this.chatsStore.currentChatId);
         let self = this;
         if (messages) {
@@ -117,7 +116,10 @@ class ChatWindow extends React.Component {
                     }
                 }
 
-            })
+            });
+            if (messages.messages.length){
+                this.scrollToBottom();
+            }
         }
 
         // if(this.props.chatMessages){

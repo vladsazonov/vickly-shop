@@ -36,6 +36,10 @@ class ChatsStore {
             const content = await userListResponse.json();
             runInAction("Update users info", () => {
                 this.userChats = content.with_group.flatMap((elem => elem.users));
+                this.userChats = this.userChats.map(chat => {
+                    chat.chat_type = "user";
+                    return chat;
+                });
                 this.groupChats = content.with_group.flatMap((elem => elem.group_chats));
                 this.groups = content.with_group.map(elem => {
                     return elem.group;

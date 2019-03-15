@@ -20,7 +20,8 @@ class AccountStore {
         if (this.token) {
             this.status = "authed";
         }
-        WebSocketService.run(this.token)
+        if(this.token)
+            WebSocketService.run(this.token)
     }
 
     async loginUser(login, password) {

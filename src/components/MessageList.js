@@ -36,14 +36,15 @@ class MessageList extends React.Component {
         /*this.scrollToEnd();*/
     }
 
-    /*  scrollToEnd(){
-          this.messagesEnd.current.scrollIntoView({behavior: "smooth"});
-      };*/
+    scrollToEnd(smooth=false) {
+        this.messagesEnd.current.scrollIntoView({behavior: smooth? "smooth" : "instant"});
+        // this.messagesEnd.current.scrollTop = this.messagesEnd.current.scrollHeight;
+    };
 
     render() {
         const {classes} = this.props;
         // Loop through all the messages in the state and create a Message component
-    const myUserId = this.accountStore.userId;
+        const myUserId = this.accountStore.userId;
         console.log("myUserId:" + myUserId);
 
         const messages = this.props.messages.messages.map((message, i) => {
@@ -61,6 +62,7 @@ class MessageList extends React.Component {
         return (
             <div id='messageList'>
                 {messages}
+                <div ref={this.messagesEnd} />
             </div>
         );
     }
