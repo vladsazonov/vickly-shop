@@ -9,19 +9,26 @@ import Hidden from '@material-ui/core/Hidden';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChatWindow from "./ChatWindow"
 import Workgroup from "./Workgroup";
-// import {Scrollbars} from "react-custom-scrollbars";
+import {Scrollbars} from "react-custom-scrollbars";
 import SearchBar from "./SearchBar";
 import ProfileIco from "./ProfileIco";
-import InviteIco from "./InviteIco";
+import InviteIcon from "./InviteIcon";
 import accountStore from "../store/AccountStore";
 import chatsStore from "../store/ChatsStore";
 import {observer} from "mobx-react";
 import {Route} from "react-router-dom";
+import ProfileBar from "./ProfileBar";
+//import Button from "@material-ui/core/es/Button/Button";
+import $ from 'jquery';
+import {Button, Header, Image, Modal} from 'semantic-ui-react';
 
 const styles = theme => ({
 
     root: {
         display: 'flex',
+        [theme.breakpoints.down('xs')]: {
+           // display: 'block',
+        },
         top: 0,
         bottom: 0,
         left: 100,
@@ -45,36 +52,43 @@ const styles = theme => ({
     },
     appBar: {
         zIndex: 1501,
-        height: 40,
+        height: 55,
         boxShadow: theme.shadows[0],
+        width: '100%',
     },
     menuButton: {
         marginRight: 20,
         [theme.breakpoints.up('sm')]: {
             display: 'none',
+            right: 0,
+            top: 0,
         },
     },
     toolbar: {
-        height: 40,
+        height: 55,
     },
     drawerPaper: {
         [theme.breakpoints.down('xs')]: {
             width: '85%',
         },
-            width: '30%',
-        backgroundColor: theme.background,
+        width: '30%',
+        backgroundColor: theme.palette.primary.main,
         borderRight: '0px',
     },
     workG: {
         [theme.breakpoints.down('xs')]: {
-            marginTop: 40,
+            marginTop: 105,
         },
-        marginTop: 96,
+        marginTop: 113,
         padding: 0,
     },
     content: {
         flexGrow: 1,
         minHeight: '100vh',
+        [theme.breakpoints.down('xs')]: {
+            //minHeight: '100%',
+        },
+        boxShadow: '-2px 0px 20px 0px rgba(0,0,0,0.5)',
     },
     logo: {
         width: 150,
@@ -109,6 +123,10 @@ const styles = theme => ({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    userBar: {
+      display: 'flex',
+      marginLeft: 'auto',
+    },
 });
 
 @observer
@@ -128,12 +146,13 @@ class Home extends React.Component {
         this.setState(state => ({mobileOpen: !state.mobileOpen}));
     };
 
+
     workgroups() {
         if (this.chatsStore.groups.length) {
             return this.chatsStore.groups.map(
                 workgroup => <Workgroup workgroup={workgroup} chats={
                     this.chatsStore.userChats.filter(
-                        userChat=>userChat.user.group_id===workgroup.id)}/>
+                        userChat => userChat.user.group_id === workgroup.id)}/>
             )
         }
     }
@@ -155,41 +174,50 @@ class Home extends React.Component {
 
 
         drawer = (
+            <Scrollbars autoHide>
                 <div>
+                    <Hidden xsDown implementation="css">
+                        <ProfileBar chats={this.props.chats} andleLogout={this.accountStore.unauth.bind(accountStore)}/>
+                    </Hidden>
                     <SearchBar/>
                     <List className={classes.workG}>
                         {this.workgroups()}
                     </List>
                 </div>
+            </Scrollbars>
         );
 
 
         return (
             <div className={classes.root}>
-                <AppBar position="fixed" className={classes.appBar}>
-                    <Toolbar style={{minHeight: 'auto'}}>
-                        <IconButton
-                            color="inherit"
-                            aria-label="Open drawer"
-                            onClick={this.handleDrawerToggle}
-                            className={classes.menuButton}
-                        >
-                            <MenuIcon/>
-                        </IconButton>
-                        <div className={classes.logoDiv}>Vicly messenger</div>
-                        <InviteIco chats={this.props.chats}/>
-                        <ProfileIco handleLogout={this.accountStore.unauth.bind(accountStore)}/>
-                    </Toolbar>
-                </AppBar>
                 <nav className={classes.drawer}>
                     {/* The implementation can be swap with js to avoid SEO duplication of links. */}
                     <Hidden smUp implementation="css">
+                        <AppBar position="fixed" className={classes.appBar}>
+                            <Toolbar>
+                                <IconButton
+                                    color="inherit"
+                                    aria-label="Open drawer"
+                                    onClick={this.handleDrawerToggle}
+                                    className={classes.menuButton}>
+                                    <MenuIcon/>
+                                </IconButton>
+                                {/* <div className={classes.logoDiv}>Vicly messenger</div>*/}
+                                <div className={classes.userBar}>
+                                <InviteIcon chats={this.props.chats}/>
+                                <ProfileIco handleLogout={this.accountStore.unauth.bind(accountStore)}
+                                            name={this.accountStore.fullName}/>
+                                </div>
+                            </Toolbar>
+                            {/*<ProfileBar chats={this.props.chats} andleLogout={this.accountStore.unauth.bind(accountStore)}/>*/}
+                        </AppBar>
                         <Drawer
                             container={this.props.container}
                             variant="temporary"
                             anchor={theme.direction === 'rtl' ? 'right' : 'left'}
                             open={this.state.mobileOpen}
                             onClose={this.handleDrawerToggle}
+                            onOpen={this.handleDrawerToggle}
                             classes={{
                                 paper: classes.drawerPaper,
                             }}
@@ -214,10 +242,13 @@ class Home extends React.Component {
                 </nav>
 
                 <main className={classes.content}>
-                    <div className={classes.toolbar}/>
+                    <Scrollbars autoHide>
+                        <div className={classes.toolbar}/>
                         <Route path="/home/chat/:chat_id"
                                render={(routeProps) => <ChatWindow {...routeProps}
-                                                                   handleDrawerToggle={this.handleDrawerToggle}/>}/>
+                                                                   handleDrawerToggle={this.handleDrawerToggle}
+                               />}/>
+                    </Scrollbars>
                 </main>
             </div>
         );

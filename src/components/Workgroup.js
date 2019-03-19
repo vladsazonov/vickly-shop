@@ -43,11 +43,11 @@ class Workgroup extends React.Component {
                 <MenuProvider id="menu_id">
                     <ListItem button onClick={this.handleClick} className={classes.groupName}>
                         <ListItem>
-                            <Typography variant='h6'>
+                            <Typography variant='h6' color="secondary">
                                 {workgroup.name}
                             </Typography>
                         </ListItem>
-                        {this.state.open ? <ExpandLess/> : <ExpandMore/>}
+                        {this.state.open ? <ExpandLess color="secondary"/> : <ExpandMore color="secondary"/>}
                     </ListItem>
                 </MenuProvider>
                 <Collapse in={this.state.open} timeout="auto" unmountOnExit>

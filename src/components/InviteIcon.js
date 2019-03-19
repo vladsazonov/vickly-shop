@@ -21,6 +21,9 @@ function getModalStyle() {
 }
 
 const styles = theme => ({
+    root: {
+        alignSelf: 'center',
+    },
     paper: {
         position: 'absolute',
         [theme.breakpoints.up('xs')]: {
@@ -78,7 +81,7 @@ class SimpleModal extends React.Component {
         const {classes} = this.props;
 
         return (
-            <div>
+            <div className={classes.root}>
                 <IconButton
                     onClick={this.handleOpen}
                     color="secondary">
@@ -95,7 +98,7 @@ class SimpleModal extends React.Component {
                         <form className={classes.container} noValidate autoComplete="off">
                             <Typography variant="h5" align="center"> Приглашение нового пользователя</Typography>
                             <TextField
-                                id="standard-name"
+                                id="standard-n"
                                 label="Введите имя "
                                 className={classes.textField}
                                 value={this.state.name}

@@ -11,22 +11,24 @@ import MenuItem from "@material-ui/core/MenuItem/MenuItem";
 import Menu from "@material-ui/core/Menu/Menu";
 import Group from '@material-ui/icons/Group'
 import accountStore from "../store/AccountStore";
+import MenuIcon from "./Home";
 
 const styles = theme => ({
     position: {
         position: 'fixed',
-        top: 40,
+        top: 0,
         right: 0,
         display: 'inline-flex',
         justifyContent: 'space-between',
         height: 55,
         zIndex: 1,
         borderBottom: '1px solid #e2e2e2',
-        borderLeft: '1px solid #e2e2e2',
+      //  borderLeft: '1px solid #e2e2e2',
         backgroundColor: theme.palette.primary.light,
         left: '30%',
         [theme.breakpoints.down('xs')]: {
             left: 0,
+            top: 55,
         },
     },
     namePosition: {
@@ -38,7 +40,9 @@ const styles = theme => ({
         height: 33,
         margin: 10,
         marginRight: 0,
-        backgroundColor: '#ffffff',
+        /*backgroundColor: ` ${
+            theme.palette.type === 'light' ? theme.palette.primary.main : theme.palette.primary.dark
+            }`,*/ // Логика стилей для темной темы
         [theme.breakpoints.down('xs')]: {
             maxWidth: '90%',
         },
@@ -81,9 +85,21 @@ class ChatBar extends React.Component {
 
         return (
             <div className={classes.position}>
-
+               {/* <div>
+                    <IconButton
+                        color="inherit"
+                        aria-label="Open drawer"
+                        onClick={this.props.handleDrawerToggle}
+                        className={classes.menuButton}>
+f
+                    </IconButton>
+                </div>*/}
                 <div>
-                    <TextField
+                    <div className={"ui icon input " +classes.searchField}>
+                        <input type="text" placeholder="Поиск сообщений..."/>
+                        <i className="search icon"></i>
+                    </div>
+                    {/*<TextField
                         id="outlined-search"
                         placeholder="Поиск по сообщениям..."
                         type="search"
@@ -101,7 +117,7 @@ class ChatBar extends React.Component {
                                 </InputAdornment>
                             ),
                         }}
-                    />
+                    />*/}
                 </div>
 
                 <div className={classes.namePosition}>

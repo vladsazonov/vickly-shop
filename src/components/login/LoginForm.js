@@ -21,12 +21,19 @@ const styles = theme => ({
     backg: {
         // backgroundImage: `url(${Background})`,
         display: 'flex',
+        top: 0,
+        bottom: 0,
+        right: 0,
+        position: 'absolute',
+        left: 0,
         justifyContent: 'center',
+        minHeight: '100vh',
         alignItems: 'center',
         [theme.breakpoints.down('xs')]: {},
-        [theme.breakpoints.up('xs')]: {
-            minHeight: '100vh',
+        [theme.breakpoints.down('xs')]: {
+           minHeight: '100%',
         },
+        backgroundColor: theme.palette.primary.main,
     },
     main: {
         display: 'block', // Fix IE 11 issue.
@@ -42,6 +49,7 @@ const styles = theme => ({
         flexDirection: 'column',
         alignItems: 'center',
         padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px`,
+        boxShadow: theme.shadows[0],
     },
     avatar: {
         margin: theme.spacing.unit,

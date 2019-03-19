@@ -9,14 +9,23 @@ import Menu from '@material-ui/core/Menu';
 import ExitToApp from '@material-ui/icons/ExitToApp'
 import PersonOutline from '@material-ui/icons/PersonOutline'
 import Settings from '@material-ui/icons/Settings'
+import Avatar from "@material-ui/core/es/Avatar/Avatar";
+import accountStore from "../store/AccountStore";
 
 
-const styles = {
+const styles = theme => ({
+    root: {
+        [theme.breakpoints.down('xs')]: {
+            display: 'inline-flex',
+            top: 0,
+            marginLeft: 'auto',
+        },
+    },
     menuButton: {
         marginLeft: -12,
         marginRight: 5,
     },
-};
+});
 
 class ProfileIco extends React.Component {
     state = {
@@ -24,26 +33,26 @@ class ProfileIco extends React.Component {
         anchorEl: null,
     };
 
+    constructor(props) {
+        super(props);
+        this.accountStore = accountStore;
+    }
+
     handleChange = event => {
-        this.setState({ auth: event.target.checked });
+        this.setState({auth: event.target.checked});
     };
 
     handleMenu = event => {
-        this.setState({ anchorEl: event.currentTarget });
+        this.setState({anchorEl: event.currentTarget});
     };
 
     handleClose = () => {
-        this.setState({ anchorEl: null });
-    };
-
-    handleLogout = () => {
-        // loginService.clearUserInfo();
-
+        this.setState({anchorEl: null});
     };
 
     render() {
-        const { classes } = this.props;
-        const { auth, anchorEl } = this.state;
+        const {classes} = this.props;
+        const {auth, anchorEl} = this.state;
         const open = Boolean(anchorEl);
 
         return (
@@ -57,8 +66,9 @@ class ProfileIco extends React.Component {
                                 onClick={this.handleMenu}
                                 color="secondary"
                             >
-                                <AccountCircle/>
+                                <Avatar> {this.props.name} </Avatar>
                             </IconButton>
+
                             <Menu
                                 style={{zIndex: 2000}}
                                 id="menu-appbar"

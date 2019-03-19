@@ -115,9 +115,9 @@ class Message extends React.Component {
                         </Avatar>
                     </div>
                     <div className={classes.wrap}>
-                        <div style={{display: 'inline-flex', alignItems: 'center'}}>
+                        <div style={{display: 'inline-flex', alignItems: 'center', width: '-webkit-fill-available'}}>
                             <Typography
-                                variant="body2">{this.props.userInfo.fullName}</Typography>
+                                variant="body2" style={{    minWidth: 'max-content'}}>{this.props.userInfo.fullName}</Typography>
                             <Typography variant="caption"
                                         className={classes.caption}>{this.formatDate(this.props.messageInfo.timestamp_post.timestamp)}</Typography>
                         </div>

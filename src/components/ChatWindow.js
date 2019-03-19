@@ -8,7 +8,9 @@ import ChatBar from "./ChatBar";
 import chatsStore from "../store/ChatsStore";
 import messagesStore from "../store/MessagesStore"
 import {observer} from "mobx-react";
-import accountStore from "../store/AccountStore"
+import accountStore from "../store/AccountStore";
+import {Scrollbars} from "react-custom-scrollbars";
+
 
 
 const styles = theme => ({
@@ -40,7 +42,7 @@ const styles = theme => ({
     empty: {},
     list: {
         backgroundColor: '#fff',
-        paddingTop: 60,
+        paddingTop: 6,
         paddingBottom: 55,
     },
 
@@ -147,16 +149,22 @@ class ChatWindow extends React.Component {
             let messages = this.messagesStore.messages.find((elem) => elem.chatId === this.chatsStore.currentChatId);
             return (
                 <div className={classes.chat}>
-                    <ChatBar/>
+
+                    <ChatBar handleDrawerToggle={this.props.handleDrawerToggle}/>
                     {
                         messages && messages.messages.length > 0 ?
+
                             <div className={classes.list}>
+
                                 <MessageList
                                     myselfUser={myselfUser}
                                     chatUser={chatUser}
                                     messages={messages}
                                     ref={this.messageList}/>
+
+
                             </div>
+
                             :
                             <div className={classes.emptyChat}>
                                 <Typography variant="h5">История сообщений пуста...</Typography>
@@ -164,6 +172,7 @@ class ChatWindow extends React.Component {
                             </div>
                     }
                     <SendMessageBar handleSendMessage={this.handleSendMessage.bind(this)}/>
+
                 </div>
             )
         } else {

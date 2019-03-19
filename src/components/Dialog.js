@@ -25,7 +25,7 @@ const styles = theme => ({
         padding: 'unset'
     },
     margin: {
-        top: '39px!important',
+        top: '34px!important',
         right: '17px!important',
     },
     fixPadding: {
@@ -41,11 +41,11 @@ const styles = theme => ({
         fontSize: '1rem'
     },
     message: {
-        color: '#9f9f9f',
+        color: '#cdcdcd',
         fontSize: '0.9rem'
     },
     time: {
-        color: '#31439f',
+        color: '#ecebff',
         padding: 0,
         marginTop: 4,
     },
@@ -126,7 +126,7 @@ class Dialog extends React.Component {
 
                     <Grid item xs zeroMinWidth>
                         <Typography variant="body2"
-                                    color="textPrimary"
+                                    color="secondary"
                                     noWrap
                                     className={classes.userName}>{dialog.first_name + " " + dialog.last_name}</Typography>
                         <Typography variant="caption"
@@ -136,14 +136,14 @@ class Dialog extends React.Component {
 
                     <Grid item style={{padding: 0, marginRight: 7,}}>
                         <Typography
-                            variant="caption"
+
                             className={classes.time}>{lastUnread ? this.formatDate(lastUnread.timestamp_post.timestamp) : ""}</Typography>
                     </Grid>
                     {
                         unreadCount ?
                             (
                                 <div className={classes.margin}>
-                                    <Badge color="primary" badgeContent={unreadCount} className={classes.margin}>
+                                    <Badge color="secondary" badgeContent={unreadCount} className={classes.margin}>
                                     </Badge>
                                 </div>
                             )

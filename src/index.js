@@ -19,7 +19,7 @@ const store = createStore(
 const theme = createMuiTheme({
     palette: {
         primary: {
-            light: "#f9f9f9",
+            light: "#ffffff",
             main: "#363b41", //аппбар и серчбар
             dark: "#5ab2ff",
             contrastText: "#fff",
@@ -43,9 +43,9 @@ const theme = createMuiTheme({
         },
         action: {
             active: "rgb(72, 170, 210)",
-            hover: "rgba(58, 167, 183, 0.17)",
+            hover: "rgba(72, 170, 210, 0.21)",
             hoverOpacity: 0.08,
-            selected: "rgba(58, 167, 183, 0.41)",
+            selected: "rgba(72, 170, 210, 0.68)",
             disabled: "rgba(158, 158, 158, 0.68)",
             disabledBackground: "rgba(0, 0, 0, 0.12)",
         },

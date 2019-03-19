@@ -27,7 +27,7 @@ const styles = theme => ({
         },
             left: '30%',
         borderTop: '1px solid #e2e2e2',
-        borderLeft: '1px solid #e2e2e2',
+      //  borderLeft: '1px solid #e2e2e2',
     },
     iconButton: {
         width: 48,
@@ -75,7 +75,7 @@ class SendMessageBar extends React.Component {
 
         return (
             <div className={classes.position}>
-                <TextField
+                {/*<TextField
 
                     type="text"
                     value={this.state.messageText}
@@ -97,7 +97,14 @@ class SendMessageBar extends React.Component {
                             </InputAdornment>
                         ),
                     }}
-                />
+                />*/}
+                <div className={"ui icon input " +classes.textField}>
+                    <input type="text" placeholder="Введите сообщение..."  onChange={this.handleOnTextChange} onKeyDown={this.onEnterDown} value={this.state.messageText} />
+                    <i className=" icon"><IconButton disabled={!this.state.messageText.trim()}
+                                                           onClick={this.handleSendButton.bind(this)}>
+                        <SendOutlined/>
+                    </IconButton></i>
+                </div>
                 <IconButton className={classes.iconButton}>
                     <AttachFile/>
                 </IconButton>
