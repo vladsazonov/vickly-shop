@@ -23,6 +23,7 @@ function getModalStyle() {
 const styles = theme => ({
     root: {
         alignSelf: 'center',
+       marginLeft: 'auto',
     },
     paper: {
         position: 'absolute',

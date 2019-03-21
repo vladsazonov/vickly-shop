@@ -41,7 +41,9 @@ const styles = theme => ({
     },
     empty: {},
     list: {
-        backgroundColor: '#fff',
+        [theme.breakpoints.down('xs')]: {
+            paddingTop: 65,
+        },
         paddingTop: 6,
         paddingBottom: 55,
     },

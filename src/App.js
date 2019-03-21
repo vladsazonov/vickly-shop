@@ -62,7 +62,7 @@ class App extends Component {
                     </Switch>
                 </BrowserRouter>
                 <ToastContainer  position="bottom-right"/>
-                <DevTools/>
+               {/* <DevTools/>*/}
             </div>
         )
 

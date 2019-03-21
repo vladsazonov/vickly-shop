@@ -18,9 +18,8 @@ import chatsStore from "../store/ChatsStore";
 import {observer} from "mobx-react";
 import {Route} from "react-router-dom";
 import ProfileBar from "./ProfileBar";
-//import Button from "@material-ui/core/es/Button/Button";
-import $ from 'jquery';
-import {Button, Header, Image, Modal} from 'semantic-ui-react';
+import Background from '../images/mesB.jpg'
+;
 
 const styles = theme => ({
 
@@ -88,6 +87,8 @@ const styles = theme => ({
         [theme.breakpoints.down('xs')]: {
             //minHeight: '100%',
         },
+        backgroundImage: 'url(' +Background + ')' ,
+
         boxShadow: '-2px 0px 20px 0px rgba(0,0,0,0.5)',
     },
     logo: {

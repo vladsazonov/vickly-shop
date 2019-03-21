@@ -4,35 +4,73 @@ import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
 import Typography from "@material-ui/core/Typography/Typography";
 import div from "@material-ui/core/Grid/Grid";
+import Hidden from "@material-ui/core/es/Hidden/Hidden";
 
 const styles = theme => ({
     root: {
-        marginLeft: 25,
-        marginBottom: 15,
+        margin: '0px 0px 15px 25px',
+    },
+    rootMob: {
+        margin: '0px 25px 15px 0px',
+      display: 'flex',
+      justifyContent: 'flex-end',
     },
     avatar: {
-        // alignSelf: 'flex-end',
         marginRight: 9,
+        display: 'flex',
+        alignItems: 'flex-end',
+    },
+    avatarMob: {
+        marginLeft: 9,
         display: 'flex',
         alignItems: 'flex-end',
     },
     avatarIco: {
         width: 35,
         height: 35,
+        boxShadow: 'inset 0px 4px 2px 0px rgba(0, 0, 0, 0.08)',
     },
     fromMe: {
-        backgroundColor: '#eef2ff',
-        borderRadius: 9,
-        padding: 6,
+        maxWidth: 500,
+        [theme.breakpoints.down('xs')]: {
+            maxWidth: 300,
+        },
+        [theme.breakpoints.down('md')]: {
+            maxWidth: 300,
+        },
+        padding: 11,
+        backgroundColor: '#e7f1e2',
+        borderRadius: 20,
+        boxShadow: '0px 3px 5px 0px rgba(0, 0, 0, 0.08)',
+transition: 'box-shadow 0.3s ease-in-out',
+    },
 
+    fromMeMob: {
+        maxWidth: 500,
+        [theme.breakpoints.down('xs')]: {
+            maxWidth: 300,
+        },
+        [theme.breakpoints.down('md')]: {
+            maxWidth: 300,
+        },
+        padding: 11,
+        backgroundColor: '#e2f0f1',
+        borderRadius: 20,
+        boxShadow: '0px 3px 5px 0px rgba(0, 0, 0, 0.08)',
+        transition: 'box-shadow 0.3s ease-in-out',
     },
     toMe: {
-        backgroundColor: '#eef2ff',
-        borderRadius: 19,
-        //   wordWrap: 'break-word',
-        wordBreak: 'break-all,',
-        //  overflowWrap: 'break-word',
         maxWidth: 500,
+        [theme.breakpoints.down('xs')]: {
+            maxWidth: 300,
+        },
+        [theme.breakpoints.down('md')]: {
+            maxWidth: 300,
+        },
+        padding: 11,
+        backgroundColor: '#f9f9f9',
+        boxShadow: '0px 3px 5px 0px rgba(0, 0, 0, 0.08)',
+        borderRadius: 20,
     },
     messageBlock: {
         wordWrap: 'break-word',
@@ -41,9 +79,8 @@ const styles = theme => ({
 
     },
     caption: {
-        marginLeft: '8%',
+        marginLeft: 14,
         color: '#bbb',
-        paddingRight: 4,
     },
     wrap: {
         maxWidth: 500,
@@ -106,25 +143,74 @@ class Message extends React.Component {
         const fromMe = this.props.fromMe ? 'from-me' : '';
         const {classes} = this.props;
 
-        return (
-            <div className={classes.root}>
-                <div className={classes.messageBlock}>
-                    <div className={classes.avatar}>
-                        <Avatar className={classes.avatarIco}>
-                            {this.props.userInfo.fullName[0].toUpperCase()}
-                        </Avatar>
-                    </div>
-                    <div className={classes.wrap}>
-                        <div style={{display: 'inline-flex', alignItems: 'center', width: '-webkit-fill-available'}}>
-                            <Typography
-                                variant="body2" style={{    minWidth: 'max-content'}}>{this.props.userInfo.fullName}</Typography>
-                            <Typography variant="caption"
-                                        className={classes.caption}>{this.formatDate(this.props.messageInfo.timestamp_post.timestamp)}</Typography>
-                        </div>
-                        <Typography variant="body1" className={classes.mess}>{this.props.message}</Typography>
-                    </div>
+        let kek;
 
+        if (fromMe) {
+            kek = <div className={classes.messageBlock}>
+                <div className={fromMe ? classes.fromMe : classes.toMe}>
+                    <div style={{display: 'inline-flex', alignItems: 'center', width: '-webkit-fill-available'}}>
+                        <Typography
+                            variant="body2" style={{    minWidth: 'max-content'}}>{this.props.userInfo.fullName}</Typography>
+                        <Typography variant="caption"
+                                    className={classes.caption}>{this.formatDate(this.props.messageInfo.timestamp_post.timestamp)}</Typography>
+                    </div>
+                    <Typography variant="body1" className={classes.mess}>{this.props.message}</Typography>
                 </div>
+                <div className={classes.avatarMob}>
+                    <Avatar className={classes.avatarIco}>
+                        {this.props.userInfo.fullName[0].toUpperCase()}
+                    </Avatar>
+                </div>
+            </div>
+        } else {
+            kek = <div className={classes.messageBlock}>
+                <div className={classes.avatar}>
+                    <Avatar className={classes.avatarIco}>
+                        {this.props.userInfo.fullName[0].toUpperCase()}
+                    </Avatar>
+                </div>
+                <div className={fromMe ? classes.fromMe : classes.toMe}>
+                    <div style={{display: 'inline-flex', alignItems: 'center', width: '-webkit-fill-available'}}>
+                        <Typography
+                            variant="body2" style={{    minWidth: 'max-content'}}>{this.props.userInfo.fullName}</Typography>
+                        <Typography variant="caption"
+                                    className={classes.caption}>{this.formatDate(this.props.messageInfo.timestamp_post.timestamp)}</Typography>
+                    </div>
+                    <Typography variant="body1" className={classes.mess}>{this.props.message}</Typography>
+                </div>
+
+            </div>
+        }
+
+        return (
+            <div>
+                <Hidden smDown implementation="css">
+        <div className={classes.root}>
+            <div className={classes.messageBlock}>
+                <div className={classes.avatar}>
+                    <Avatar className={classes.avatarIco}>
+                        {this.props.userInfo.fullName[0].toUpperCase()}
+                    </Avatar>
+                </div>
+                <div className={fromMe ? classes.fromMe : classes.toMe}>
+                    <div style={{display: 'inline-flex', alignItems: 'center', width: '-webkit-fill-available'}}>
+                        <Typography
+                            variant="body2" style={{    minWidth: 'max-content'}}>{this.props.userInfo.fullName}</Typography>
+                        <Typography variant="caption"
+                                    className={classes.caption}>{this.formatDate(this.props.messageInfo.timestamp_post.timestamp)}</Typography>
+                    </div>
+                    <Typography variant="body1" className={classes.mess}>{this.props.message}</Typography>
+                </div>
+            </div>
+        </div>
+                </Hidden>
+
+                <Hidden mdUp implementation="css">
+                    <div className={fromMe ? classes.rootMob : classes.root}>
+                        {kek}
+                    </div>
+                </Hidden>
+
             </div>
         );
     }

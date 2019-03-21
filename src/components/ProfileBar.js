@@ -62,9 +62,12 @@ class ProfileBar extends React.Component {
                 <Typography variant="h6" color="secondary" className={classes.wrap}>{accountStore.fullName}</Typography>
 
 
-                <IconButton style={{marginLeft: 'auto'}}>
-                        <ExitToApp onClick={this.accountStore.unauth.bind(accountStore)}/>
-                    </IconButton>
+                <InviteIcon />
+                <IconButton >
+                    <ExitToApp color="secondary"  onClick={this.accountStore.unauth.bind(accountStore)}/>
+                </IconButton>
+
+
 
 
 
