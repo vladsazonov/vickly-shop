@@ -8,7 +8,7 @@ class AccountStore {
     @observable login = "";
     userId = null;
     groupId = null;
-    @observable status = "unauthed";
+    @observable status = "authed";
     err_message = "";
 
     constructor() {
