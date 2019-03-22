@@ -5,7 +5,7 @@ const styles = theme => ({
 
 });
 
-class SalePage extends React.Component {
+class BuyIncomes extends React.Component {
 
     constructor(props) {
         super(props);
@@ -22,4 +22,4 @@ class SalePage extends React.Component {
     }
 }
 
-export default withStyles(styles)(SalePage);
+export default withStyles(styles)(BuyIncomes);

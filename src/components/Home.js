@@ -21,6 +21,7 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import DraftsIcon from '@material-ui/icons/Drafts';
 import {Typography} from "@material-ui/core";
 import accountStore from "../store/AccountStore";
+import SalePage from "./SalePage";
 
 const styles = theme => ({
 
@@ -268,7 +269,7 @@ class Home extends React.Component {
                 <main className={classes.content}>
                     <Scrollbars autoHide>
                         <div className={classes.toolbar}/>
-
+                        <SalePage/>
                     </Scrollbars>
                 </main>
             </div>
