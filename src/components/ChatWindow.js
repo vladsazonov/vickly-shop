@@ -2,9 +2,6 @@ import React from 'react';
 import {withStyles} from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import 'typeface-roboto';
-import SendMessageBar from "./SendMessageBar";
-import MessageList from "./MessageList";
-import ChatBar from "./ChatBar";
 import chatsStore from "../store/ChatsStore";
 import messagesStore from "../store/MessagesStore"
 import {observer} from "mobx-react";

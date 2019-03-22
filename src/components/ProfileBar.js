@@ -1,6 +1,5 @@
 import React from 'react';
 import {Badge, Hidden, IconButton, withStyles} from "@material-ui/core";
-import InviteIco from "./SearchBar";
 import accountStore from "../store/AccountStore";
 import ProfileIco from "./ProfileIco";
 import chatsStore from "../store/ChatsStore";
@@ -16,7 +15,7 @@ const styles = theme => ({
         position: 'fixed',
         backgroundColor: theme.palette.primary.main,
         display: 'inline-flex',
-        width: '30%',
+        width: 300,
         alignItems: 'center',
         top: 0,
     },

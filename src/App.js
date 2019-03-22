@@ -7,7 +7,6 @@ import Home from "./components/Home";
 import {BrowserRouter, Redirect, Route, Switch} from "react-router-dom";
 import {PrivateRoute} from 'react-router-with-props';
 import {observer} from "mobx-react";
-import InviteForm from "./components/login/InviteForm";
 import accountStore from "./store/AccountStore";
 import {ToastContainer} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -57,7 +56,6 @@ class App extends Component {
                                       component={Login}
                                       redirectTo="/home"
                                       authed={!login}/>
-                        <Route exact path="/invite/:invite_id" component={InviteForm}/>
                         <Route render={() => <Redirect to="/home"/>}/>
                     </Switch>
                 </BrowserRouter>

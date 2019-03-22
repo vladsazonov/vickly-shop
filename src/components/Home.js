@@ -7,26 +7,27 @@ import List from '@material-ui/core/List';
 import IconButton from '@material-ui/core/IconButton';
 import Hidden from '@material-ui/core/Hidden';
 import MenuIcon from '@material-ui/icons/Menu';
-import ChatWindow from "./ChatWindow"
-import Workgroup from "./Workgroup";
 import {Scrollbars} from "react-custom-scrollbars";
-import SearchBar from "./SearchBar";
 import ProfileIco from "./ProfileIco";
 import InviteIcon from "./InviteIcon";
-import accountStore from "../store/AccountStore";
-import chatsStore from "../store/ChatsStore";
 import {observer} from "mobx-react";
-import {Route} from "react-router-dom";
 import ProfileBar from "./ProfileBar";
-import Background from '../images/mesB.jpg'
-;
+import Background from '../images/mesB.jpg';
+import InboxIcon from '@material-ui/icons/Inbox';
+import ListItemText from "@material-ui/core/ListItemText";
+import ListItem from "@material-ui/core/ListItem";
+import Divider from "@material-ui/core/Divider";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import DraftsIcon from '@material-ui/icons/Drafts';
+import {Typography} from "@material-ui/core";
+import accountStore from "../store/AccountStore";
 
 const styles = theme => ({
 
     root: {
         display: 'flex',
         [theme.breakpoints.down('xs')]: {
-           // display: 'block',
+            // display: 'block',
         },
         top: 0,
         bottom: 0,
@@ -44,7 +45,7 @@ const styles = theme => ({
             flexShrink: 0,
         },
         [theme.breakpoints.up('sm')]: {
-            width: '30%',
+            width: 300,
             flexShrink: 0,
         },
         zIndex: 1500,
@@ -70,7 +71,7 @@ const styles = theme => ({
         [theme.breakpoints.down('xs')]: {
             width: '85%',
         },
-        width: '30%',
+        width: 300,
         backgroundColor: theme.palette.primary.main,
         borderRight: '0px',
     },
@@ -87,7 +88,7 @@ const styles = theme => ({
         [theme.breakpoints.down('xs')]: {
             //minHeight: '100%',
         },
-        backgroundImage: 'url(' +Background + ')' ,
+        backgroundImage: 'url(' + Background + ')',
 
         boxShadow: '-2px 0px 20px 0px rgba(0,0,0,0.5)',
     },
@@ -125,8 +126,8 @@ const styles = theme => ({
         justifyContent: 'center',
     },
     userBar: {
-      display: 'flex',
-      marginLeft: 'auto',
+        display: 'flex',
+        marginLeft: 'auto',
     },
 });
 
@@ -136,7 +137,6 @@ class Home extends React.Component {
     constructor(props) {
         super(props);
         this.accountStore = accountStore;
-        this.chatsStore = chatsStore;
     }
 
     state = {
@@ -147,29 +147,13 @@ class Home extends React.Component {
         this.setState(state => ({mobileOpen: !state.mobileOpen}));
     };
 
-
-    workgroups() {
-        if (this.chatsStore.groups.length) {
-            return this.chatsStore.groups.map(
-                workgroup => <Workgroup workgroup={workgroup} chats={
-                    this.chatsStore.userChats.filter(
-                        userChat => userChat.user.group_id === workgroup.id)}/>
-            )
-        }
+    ListItemLink(props) {
+        return <ListItem button component="a" {...props} />;
     }
 
-    // componentDidMount() {
-    //     if (this.props.currentChatId.userId !== this.props.currentChatId.prevUserId) {
-    //         this.handleDrawerToggle();
-    //     }
-    // }
-
-    componentWillMount() {
-        chatsStore.fetchChats()
-    };
 
     render() {
-        const {classes, theme, chats} = this.props;
+        const {classes, theme} = this.props;
 
         let drawer;
 
@@ -178,11 +162,52 @@ class Home extends React.Component {
             <Scrollbars autoHide>
                 <div>
                     <Hidden xsDown implementation="css">
-                        <ProfileBar chats={this.props.chats} andleLogout={this.accountStore.unauth.bind(accountStore)}/>
+                        <ProfileBar/>
                     </Hidden>
-                    <SearchBar/>
                     <List className={classes.workG}>
-                        {this.workgroups()}
+                        {
+                            !this.accountStore.isAdmin ?
+                                (
+                                    <div>
+                                        <ListItem button>
+                                            <ListItemIcon>
+                                                <InboxIcon/>
+                                            </ListItemIcon>
+                                            <Typography color="secondary"> Купить </Typography>
+                                        </ListItem>
+                                        <ListItem button>
+                                            <ListItemIcon>
+                                                <DraftsIcon/>
+                                            </ListItemIcon>
+                                            <Typography color="secondary"> Продать </Typography>
+                                        </ListItem>
+                                    </div>
+                                )
+                                :
+                                (
+                                    <div>
+                                        <ListItem button>
+                                            <ListItemIcon>
+                                                <InboxIcon/>
+                                            </ListItemIcon>
+                                            <Typography color="secondary"> Заявки на покупку </Typography>
+                                        </ListItem>
+                                        < ListItem button>
+                                            <ListItemIcon>
+                                                <DraftsIcon/>
+                                            </ListItemIcon>
+                                            <Typography color="secondary"> Заявки на продажу </Typography>
+                                        </ListItem>
+                                    </div>
+                                )
+                        }
+
+                    </List>
+                    <Divider/>
+                    <List component="nav">
+                        <ListItem button>
+                            <Typography color="secondary"> История </Typography>
+                        </ListItem>
                     </List>
                 </div>
             </Scrollbars>
@@ -205,12 +230,10 @@ class Home extends React.Component {
                                 </IconButton>
                                 {/* <div className={classes.logoDiv}>Vicly messenger</div>*/}
                                 <div className={classes.userBar}>
-                                <InviteIcon chats={this.props.chats}/>
-                                <ProfileIco handleLogout={this.accountStore.unauth.bind(accountStore)}
-                                            name={this.accountStore.fullName}/>
+                                    {/* <InviteIcon />
+                                <ProfileIco />*/}
                                 </div>
                             </Toolbar>
-                            {/*<ProfileBar chats={this.props.chats} andleLogout={this.accountStore.unauth.bind(accountStore)}/>*/}
                         </AppBar>
                         <Drawer
                             container={this.props.container}
@@ -245,10 +268,7 @@ class Home extends React.Component {
                 <main className={classes.content}>
                     <Scrollbars autoHide>
                         <div className={classes.toolbar}/>
-                        <Route path="/home/chat/:chat_id"
-                               render={(routeProps) => <ChatWindow {...routeProps}
-                                                                   handleDrawerToggle={this.handleDrawerToggle}
-                               />}/>
+
                     </Scrollbars>
                 </main>
             </div>

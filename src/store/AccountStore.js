@@ -6,6 +6,7 @@ class AccountStore {
     @observable fullName = "";
     @observable token = "";
     @observable login = "";
+    isAdmin = null;
     userId = null;
     groupId = null;
     @observable status = "authed";
