@@ -22,6 +22,13 @@ import DraftsIcon from '@material-ui/icons/Drafts';
 import {Typography} from "@material-ui/core";
 import accountStore from "../store/AccountStore";
 import SalePage from "./SalePage";
+import {PrivateRoute} from "react-router-with-props";
+import Login from "./login/LoginForm";
+import {BrowserRouter, Link, Redirect, Route, Switch} from "react-router-dom";
+import BuyPage from "./BuyPage";
+import SalesIncomes from "./SalesIncomes";
+import BuyIncomes from "./BuyIncomes";
+import HistoryPage from "./HistoryPage";
 
 const styles = theme => ({
 
@@ -170,30 +177,36 @@ class Home extends React.Component {
                             !this.accountStore.isAdmin ?
                                 (
                                     <div>
-                                        <ListItem button>
+                                        <ListItem button component={props => <Link to="/home/sale" {...props} />}>
                                             <ListItemIcon>
                                                 <InboxIcon/>
                                             </ListItemIcon>
                                             <Typography color="secondary"> Купить </Typography>
                                         </ListItem>
-                                        <ListItem button>
+                                        <ListItem button component={props => <Link to="/home/buy" {...props} />}>
                                             <ListItemIcon>
                                                 <DraftsIcon/>
                                             </ListItemIcon>
                                             <Typography color="secondary"> Продать </Typography>
+                                        </ListItem>
+                                        <Divider/>
+                                        <ListItem button component={props => <Link to="/home/history" {...props} />}>
+                                            <Typography color="secondary"> История </Typography>
                                         </ListItem>
                                     </div>
                                 )
                                 :
                                 (
                                     <div>
-                                        <ListItem button>
+                                        <ListItem button
+                                                  component={props => <Link to="/home/salesincomes" {...props} />}>
                                             <ListItemIcon>
                                                 <InboxIcon/>
                                             </ListItemIcon>
                                             <Typography color="secondary"> Заявки на покупку </Typography>
                                         </ListItem>
-                                        < ListItem button>
+                                        < ListItem button
+                                                   component={props => <Link to="/home/buyincomes" {...props} />}>
                                             <ListItemIcon>
                                                 <DraftsIcon/>
                                             </ListItemIcon>
@@ -203,12 +216,6 @@ class Home extends React.Component {
                                 )
                         }
 
-                    </List>
-                    <Divider/>
-                    <List component="nav">
-                        <ListItem button>
-                            <Typography color="secondary"> История </Typography>
-                        </ListItem>
                     </List>
                 </div>
             </Scrollbars>
@@ -267,10 +274,34 @@ class Home extends React.Component {
                 </nav>
 
                 <main className={classes.content}>
-                    <Scrollbars autoHide>
-                        <div className={classes.toolbar}/>
-                        <SalePage/>
-                    </Scrollbars>
+                    <div className={classes.toolbar}/>
+
+                    {
+                        !this.accountStore.isAdmin ?
+                            (
+                                <Switch>
+                                    <Route path="/home/sale"
+                                           component={SalePage}/>
+                                    <Route exact path="/home/buy"
+                                           component={BuyPage}/>
+                                    <Route exact path="/home/history"
+                                           component={HistoryPage}/>
+                                    <Route exact path="/home" render={() => <div>LOL</div>}/>
+                                    <Route render={() => <Redirect to={"/home"}/>}/>
+                                </Switch>
+                            )
+                            :
+                            (
+                                <Switch>
+                                    <Route path="/home/salesincomes"
+                                           component={SalesIncomes}/>
+                                    <Route exact path="/home/buyincomes"
+                                           component={BuyIncomes}/>
+                                    <Route exact path="/home" render={() => <div>LOL</div>}/>
+                                    <Route render={() => <Redirect to={"/home"}/>}/>
+                                </Switch>
+                            )
+                    }
                 </main>
             </div>
         );
