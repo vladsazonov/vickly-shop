@@ -39,17 +39,6 @@ class userBuyCard extends React.Component {
     handleChange = (e, { value }) => this.setState({ value })
 
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        if (!this.LotStore.lots.length && !this.LotStore.lotsFetched) {
-            this.LotStore.fetchLots();
-        }
-        if (!this.LotStore.games.length && !this.LotStore.gamesFetched) {
-            this.LotStore.fetchGames();
-        }
-    }
-
-
-
     handleBuyProccess = (stateOfProccess) => () => {
         if (stateOfProccess) {
             // TODO
@@ -68,9 +57,9 @@ class userBuyCard extends React.Component {
                 <Card>
                     <Image src={Emp} />
                     <Card.Content>
-                        <Card.Header>Меч Арзула</Card.Header>
+                        <Card.Header>Меч Арзула{this.props.summary}</Card.Header>
                         <Card.Meta>
-                            <span className='date'>Doka 2</span>
+                            <span className='date'>Doka 2{this.props.summary}</span>
                         </Card.Meta>
                         <Card.Description>очень крутой меч всех убивает ваще</Card.Description>
                     </Card.Content>
