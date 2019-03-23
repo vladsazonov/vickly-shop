@@ -36,7 +36,7 @@ const styles = theme => ({
         display: 'inline-flex',
     },
     butt: {
-      marginLeft: 'auto',
+        marginLeft: 'auto',
     },
 });
 
@@ -55,25 +55,19 @@ class ProfileBar extends React.Component {
             <div className={classes.position}>
 
 
-                    <ProfileIco handleLogout={this.accountStore.unauth.bind(accountStore)}
-                                name={this.accountStore.name}/>
+                <ProfileIco handleLogout={this.accountStore.unauth.bind(accountStore)}
+                            name={this.accountStore.name}/>
 
                 <Typography variant="h6" color="secondary" className={classes.wrap}>@ngeLL_v_KeD@X</Typography>
 
 
-        {/*        <InviteIcon />*/}
-                <IconButton style={{marginLeft: 'auto'}} >
-                    <ExitToApp color="secondary"  onClick={this.accountStore.unauth.bind(accountStore)}/>
+                {/*        <InviteIcon />*/}
+                <IconButton style={{marginLeft: 'auto'}}>
+                    <ExitToApp color="secondary" onClick={this.accountStore.unauth.bind(accountStore)}/>
                 </IconButton>
-
-
-
-
-
-
-
-
-
+                {/*TODO new line for balance*/}
+                <br/>
+                <Typography variant="h6" color="secondary" className={classes.wrap}>1000р</Typography>
             </div>
         );
     }

@@ -2,9 +2,12 @@ import React from 'react';
 import {withStyles} from '@material-ui/core/styles';
 import SaleCard from "./SalesIncomes";
 import {Input} from "semantic-ui-react";
-import {Typography} from "@material-ui/core";
+import {List, Typography} from "@material-ui/core";
 import Form from "semantic-ui-react/dist/commonjs/collections/Form";
 import Radio from "@material-ui/core/Radio";
+import Lot from "./Lot";
+import LotStore from "../store/LotsStore"
+import {observer} from "mobx-react";
 
 const styles = theme => ({
     root: {
@@ -18,15 +21,26 @@ const styles = theme => ({
     }
 });
 
+@observer
 class BuyPage extends React.Component {
 
     constructor(props) {
         super(props);
+        this.LotStore = LotStore;
     }
 
     state = {
         val: 1,
     };
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (!this.LotStore.lots.length) {
+            this.LotStore.fetchLots();
+        }
+        if (!this.LotStore.games.length) {
+            this.LotStore.fetchGames();
+        }
+    }
 
     handleChange = event => {
         this.setState({sum: event.target.value * 2})
@@ -68,6 +82,11 @@ class BuyPage extends React.Component {
                                     />
                                 </Form.Field>
                             </Form>
+                            <List>
+                                {
+                                    this.LotStore.lots.map(elem => <Lot/>)
+                                }
+                            </List>
                         </div>
                     </div>
                 </div>

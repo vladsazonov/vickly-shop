@@ -12,6 +12,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Lot from './Lot'
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const styles = theme => ({
     root: {
@@ -63,7 +64,10 @@ alignItems: 'center',
         '&:hover': {
             backgroundColor: '#cacaca',
         },
-    }
+    },
+    progress: {
+        margin: theme.spacing.unit * 2,
+    },
 });
 
 const lotName = 'Меч арзула';
@@ -77,10 +81,12 @@ class BuyCard extends React.Component {
 
     constructor(props) {
         super(props);
+
     }
 
     state = {
         setOpen: false,
+        setOpenProcessing: false
     };
 
     handleClickOpen = () => {
@@ -89,6 +95,14 @@ class BuyCard extends React.Component {
 
     handleClose = () => {
         this.setState(state => ({setOpen: !state.setOpen}))
+    };
+
+    handleClickOpenProcessing = () => {
+        this.setState(state => ({setOpenProcessing: !state.setOpenProcessing}))
+    };
+
+    handleCloseProcessing = () => {
+        this.setState(state => ({setOpenProcessing: !state.setOpenProcessing}))
     };
 
 
@@ -117,8 +131,7 @@ class BuyCard extends React.Component {
 
 
                     <div>
-                        <Button variant="outlined" className={classes.buttonOk}>Принять</Button>
-                        <Button variant="outlined" className={classes.buttonNo}>Отклонить</Button>
+                        <Button variant="outlined" onClick={this.handleClickOpenProcessing} className={classes.buttonOk}>Взять в работу</Button>
                     </div>
                 </div>
 
@@ -128,6 +141,18 @@ class BuyCard extends React.Component {
                         }}>
                     <DialogTitle id="simple-dialog-title">Продаваемый лот</DialogTitle>
                     <Lot/>
+                </Dialog>
+
+                <Dialog onClose={this.handleCloseProcessing} open={this.state.setOpenProcessing} aria-labelledby="simple-dialog-title"
+                        classes={{
+                            paper: classes.paper, // class name, e.g. `classes-nesting-root-x`
+                        }}>
+                    <DialogTitle id="simple-dialog-title">Обменяйте лот с игроком</DialogTitle>
+                    <CircularProgress className={classes.progress} />
+                    <div>
+                    <Button variant="outlined" className={classes.buttonOk}>Сделка совершилась</Button>
+                    <Button variant="outlined" className={classes.buttonNo}>Сделка сорвалась</Button>
+                    </div>
                 </Dialog>
 
             </div>

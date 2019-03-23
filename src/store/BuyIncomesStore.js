@@ -2,14 +2,14 @@ import {observable, reaction, runInAction} from "mobx";
 import {BACKEND_URL} from "../common";
 import accountStore from "./AccountStore";
 
-class SaleIncomesStore {
-    @observable saleLots = [];
+class BuyIncomesStore {
+    @observable buyLots = [];
     @observable fetchFail = false;
     err_message = "";
 
-    async fetchSalesIncomes() {
+    async fetchBuyIncomes() {
         try {
-            const lotsListResponse = await fetch(BACKEND_URL + "/sales/list", {
+            const lotsListResponse = await fetch(BACKEND_URL + "/buy/list", {
                 method: 'GET',
                 headers: {
                     'Authorization': accountStore.token,
@@ -24,7 +24,7 @@ class SaleIncomesStore {
             }
             const content = await lotsListResponse.json();
             runInAction("Update users info", () => {
-                this.saleLots = content;
+                this.buyLots = content;
             });
         } catch (err) {
             console.log(err);
@@ -35,9 +35,9 @@ class SaleIncomesStore {
         }
     }
 
-    async confirmSaleIncomeStatus(isSuccess) {
+    async confirmBuyIncomeStatus(isSuccess) {
         try {
-            const response = await fetch(BACKEND_URL + `/sale/${"ID"}/status`, {
+            const response = await fetch(BACKEND_URL + `/buy/${"ID"}/status`, {
                 method: 'POST',
                 headers: {
                     'Authorization': accountStore.token,
@@ -64,6 +64,6 @@ class SaleIncomesStore {
     }
 }
 
-const store = new SaleIncomesStore();
+const store = new BuyIncomesStore();
 
 export default store;

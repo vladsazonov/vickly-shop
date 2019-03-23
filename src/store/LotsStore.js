@@ -4,12 +4,13 @@ import accountStore from "./AccountStore";
 
 class LotsStore {
     @observable lots = [];
+    @observable games = [];
     @observable fetchFail = false;
     err_message = "";
 
     async fetchLots() {
         try {
-            const lotsListResponse = await fetch(BACKEND_URL + "/lot/list", {
+            const lotsListResponse = await fetch(BACKEND_URL + "/goods ", {
                 method: 'GET',
                 headers: {
                     'Authorization': accountStore.token,
@@ -24,8 +25,73 @@ class LotsStore {
             }
             const content = await lotsListResponse.json();
             runInAction("Update users info", () => {
-                this.lots = content;
+                this.lots = content.goods;
             });
+        } catch (err) {
+            console.log(err);
+            runInAction("Failed fetch users info", () => {
+                this.fetchFail = true;
+                this.err_message = err;
+            });
+        }
+    }
+
+    async fetchGames() {
+        try {
+            const gameListResponse = await fetch(BACKEND_URL + "/game", {
+                method: 'GET',
+                headers: {
+                    'Authorization': accountStore.token,
+                }
+            });
+            if (!gameListResponse.ok) {
+                alert("games failed");
+                runInAction("games fetch info", () => {
+                    this.fetchFail = true;
+                    this.err_message = gameListResponse.error();
+                });
+            }
+            const content = await gameListResponse.json();
+            runInAction("Update users info", () => {
+                this.games = content.games;
+            });
+        } catch (err) {
+            console.log(err);
+            runInAction("Failed fetch users info", () => {
+                this.fetchFail = true;
+                this.err_message = err;
+            });
+        }
+    }
+
+    async postLot(summary, text, price, type) {
+        try {
+            const gameListResponse = await fetch(BACKEND_URL + "/goods", {
+                method: 'POST',
+                headers: {
+                    'Authorization': accountStore.token,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    summary: summary,
+                    text: text,
+                    price: price,
+                    typed: type,
+                    status: 0
+                })
+            });
+            if (!gameListResponse.ok) {
+                alert("add lot failed");
+                runInAction("add lot", () => {
+                    this.fetchFail = true;
+                    this.err_message = gameListResponse.error();
+                });
+            }
+            // NO CONTENT
+            // const content = await gameListResponse.json();
+            // runInAction("Update users info", () => {
+            //     this.games = content;
+            // });
         } catch (err) {
             console.log(err);
             runInAction("Failed fetch users info", () => {

@@ -1,9 +1,8 @@
 import React from 'react';
 import {withStyles} from '@material-ui/core/styles';
+import BuyCard from "./BuyCard";
 
-const styles = theme => ({
-
-});
+const styles = theme => ({});
 
 class BuyIncomes extends React.Component {
 
@@ -16,7 +15,7 @@ class BuyIncomes extends React.Component {
 
         return (
             <div>
-
+                <BuyCard/><BuyCard/><BuyCard/><BuyCard/><BuyCard/><BuyCard/><BuyCard/><BuyCard/><BuyCard/><BuyCard/><BuyCard/><BuyCard/><BuyCard/><BuyCard/><BuyCard/><BuyCard/>}
             </div>
         );
     }

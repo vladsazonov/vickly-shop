@@ -12,7 +12,7 @@ import ProfileIco from "./ProfileIco";
 import InviteIcon from "./InviteIcon";
 import {observer} from "mobx-react";
 import ProfileBar from "./ProfileBar";
-import Background from '../images/back.jpg';
+import Background from '../images/bb.jpg';
 import InboxIcon from '@material-ui/icons/Inbox';
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItem from "@material-ui/core/ListItem";
@@ -209,14 +209,14 @@ class Home extends React.Component {
                                 (
                                     <div>
                                         <ListItem button
-                                                  component={props => <Link to="/home/salesIncomes" {...props} />}>
+                                                  component={props => <Link to="/home/buyincomes" {...props} />}>
                                             <ListItemIcon>
                                                 <InboxIcon/>
                                             </ListItemIcon>
                                             <Typography color="secondary"> Заявки на покупку </Typography>
                                         </ListItem>
                                         < ListItem button
-                                                   component={props => <Link to="/home/buyincomes" {...props} />}>
+                                                   component={props => <Link to="/home/salesincomes" {...props} />}>
                                             <ListItemIcon>
                                                 <DraftsIcon/>
                                             </ListItemIcon>

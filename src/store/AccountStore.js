@@ -7,7 +7,8 @@ class AccountStore {
     @observable token = "";
     @observable login = "";
     isAdmin = false;
-    @observable status = "authed";
+    @observable status = "unauthed";
+    userId = null;
     err_message = "";
 
     constructor() {

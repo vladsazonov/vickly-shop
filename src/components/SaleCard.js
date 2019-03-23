@@ -11,6 +11,9 @@ import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import ListItemText from "@material-ui/core/ListItemText";
 import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import Stepper from "@material-ui/core/Stepper";
+import StepLabel from "@material-ui/core/StepLabel";
+import Step from "@material-ui/core/Step";
 
 const styles = theme => ({
     root: {
@@ -44,21 +47,28 @@ const styles = theme => ({
 
     buttonOk: {
         borderColor: theme.palette.primary.confim,
-        color:  theme.palette.primary.confim,
+        color: theme.palette.primary.confim,
         marginRight: 10,
     },
     buttonNo: {
         borderColor: theme.palette.primary.decline,
-        color:  theme.palette.primary.decline,
+        color: theme.palette.primary.decline,
         marginRight: 10,
     },
     paper: {
         maxWidth: '50%',
+    },
+    listItem: {
+        backgroundColor: 'white',
+        '&:hover': {
+            backgroundColor: 'black',
+        },
+
     }
 });
 
 const lotName = 'Меч арзула';
-const description = 'Супер крутой мечь который я дропнул с Варизла 88 лвл с дополнительным бафом на +37 к друиду нахуй';
+const description = 'Супер крутой мечь который я дропнул с Варизла 88 лвл с дополнительным бафом на +37 к друиду';
 const price = '3000p';
 const game = 'Linage 2';
 const user = 'Nagibator322';
@@ -72,69 +82,152 @@ class SaleCard extends React.Component {
 
     state = {
         setOpen: false,
+        activeStep: 0
     };
 
     handleClickOpen = () => {
-      this.setState(state => ({setOpen: !state.setOpen}))
+        this.setState(state => ({setOpen: !state.setOpen}))
     };
 
     handleClose = () => {
         this.setState(state => ({setOpen: !state.setOpen}))
     };
 
+    handleFirstStep = (isSuccess) => () => {
+        if (isSuccess) {
+            this.setState({
+                activeStep: 1
+            })
+        } else {
+            this.setState({
+                setOpen: false
+            })
+        }
+    };
+
+    handleSecondStep = (isSuccess) => () => {
+        if (isSuccess) {
+            // TODO BL
+            this.setState({
+                setOpen: false
+            });
+        } else {
+            // TODO BL
+            this.setState({
+                setOpen: false
+            })
+        }
+    };
+
+    firstStepForm() {
+        const {classes, theme} = this.props;
+        return (
+            <div>
+                <DialogTitle id="simple-dialog-title">Лот на продажу</DialogTitle>
+                <div>
+                    <div className={classes.root}>
+                        <img alt="Remy Sharp" src={Img} className={classes.imgMod}/>
+                        <div className={classes.captionMod}>
+                            <Typography variant="title">{lotName}</Typography>
+                            <Typography variant="Subheading">{description}</Typography>
+                        </div>
+                        <div style={{marginRight: 10, width: '50%'}}>
+                            <Typography variant="button">{price}</Typography>
+                            <Typography variant="overline"> {game}</Typography>
+                        </div>
+                    </div>
+                    <div style={{margin: 10}}>
+                        <Button variant="outlined" onClick={this.handleFirstStep(true)}
+                                className={classes.buttonOk}>Принять</Button>
+                        <Button variant="outlined" onClick={this.handleFirstStep(false)}
+                                className={classes.buttonNo}>Отклонить</Button>
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
+    secondStepForm() {
+        const {classes, theme} = this.props;
+        return (
+            <div>
+                <DialogTitle id="simple-dialog-title">Подтвердите успешность сделки</DialogTitle>
+                <div>
+                    <div className={classes.root}>
+                        Ожидание подтверждения
+
+                    </div>
+                    <div style={{margin: 10}}>
+                        <Button variant="outlined" onClick={this.handleSecondStep(true)}
+                                className={classes.buttonOk}>Принять</Button>
+                        <Button variant="outlined" onClick={this.handleSecondStep(false)}
+                                className={classes.buttonNo}>Отклонить</Button>
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
+    getStepContent(step) {
+        switch (step) {
+            case 0:
+                return this.firstStepForm();
+            case 1:
+                return this.secondStepForm();
+            default:
+                return "";
+        }
+    }
+
 
     render() {
         const {classes, theme} = this.props;
-
+        const steps = ["Согласование", "Обработка"];
         return (
             <div>
-            <ListItem button onClick={this.handleClickOpen}>
-            <div className={classes.root}>
-                <div> <img alt="Remy Sharp" src={Img} className={classes.img}/></div>
-                <div className={classes.caption}>
-                    <Typography variant="title">{lotName}</Typography>
-                    <Typography variant="Subheading" className={classes.caption}>{description}</Typography>
-                </div>
-                <div style={{marginRight: 20}}>
-                    <Typography variant="button">{price}</Typography>
-                    <Typography variant="overline"> {type}</Typography>
-                </div>
-                <div style={{marginRight: 10, display: 'flex', alignItems: 'center'}}>
-                    <Avatar style={{marginRight: 5}}>NN</Avatar>
-                    <Typography variant="button">{user}</Typography>
-                    <Typography variant="overline" style={{marginLeft: 5}}> {game}</Typography>
-                </div>
-                <div>
-                    <Button variant="outlined" className={classes.buttonOk}>Принять</Button>
-                    <Button variant="outlined" className={classes.buttonNo}>Отклонить</Button>
-                </div>
-            </div>
-            </ListItem>
-
-                <Dialog onClose={this.handleClose} open={this.state.setOpen} aria-labelledby="simple-dialog-title" classes={{
-                    paper: classes.paper, // class name, e.g. `classes-nesting-root-x`
-                }} >
-                    <DialogTitle id="simple-dialog-title">Лот на продажу</DialogTitle>
-                    <div>
-                        <div className={classes.root}>
-                            <img alt="Remy Sharp" src={Img} className={classes.imgMod}/>
-                            <div className={classes.captionMod}>
-                                <Typography variant="title">{lotName}</Typography>
-                                <Typography variant="Subheading">{description}</Typography>
-                            </div>
-                            <div style={{marginRight: 10, width: '50%'}}>
-                                <Typography variant="button">{price}</Typography>
-                                <Typography variant="overline"> {game}</Typography>
-                            </div>
-
+                <ListItem className={classes.listItem} button onClick={this.handleClickOpen}>
+                    <div className={classes.root}>
+                        <div><img alt="Remy Sharp" src={Img} className={classes.img}/></div>
+                        <div className={classes.caption}>
+                            <Typography variant="title">{lotName}</Typography>
+                            <Typography variant="Subheading" className={classes.caption}>{description}</Typography>
                         </div>
-                        <div style={{margin: 10}}>
-                            <Button variant="outlined" className={classes.buttonOk}>Принять</Button>
-                            <Button variant="outlined" className={classes.buttonNo}>Отклонить</Button>
+                        <div style={{marginRight: 20}}>
+                            <Typography variant="button">{price}</Typography>
+                            <Typography variant="overline"> {type}</Typography>
                         </div>
+                        <div style={{marginRight: 10, display: 'flex', alignItems: 'center'}}>
+                            <Avatar style={{marginRight: 5}}>NN</Avatar>
+                            <Typography variant="button">{user}</Typography>
+                            <Typography variant="overline" style={{marginLeft: 5}}> {game}</Typography>
+                        </div>
+                        {/*<div>*/}
+                        {/*<Button variant="outlined" className={classes.buttonOk}>Принять</Button>*/}
+                        {/*<Button variant="outlined" className={classes.buttonNo}>Отклонить</Button>*/}
+                        {/*</div>*/}
                     </div>
-                </Dialog>
+                </ListItem>
 
+                <Dialog onClose={this.handleClose} open={this.state.setOpen} aria-labelledby="simple-dialog-title"
+                        classes={{
+                            paper: classes.paper, // class name, e.g. `classes-nesting-root-x`
+                        }}>
+                    <Stepper activeStep={this.state.activeStep}>
+                        {
+                            steps.map((label, index) => {
+                                const labelProps = {};
+                                return (
+                                    <Step key={label}>
+                                        <StepLabel>{label}</StepLabel>
+                                    </Step>
+                                );
+                            })
+                        }
+                    </Stepper>
+                    {
+                        this.getStepContent(this.state.activeStep)
+                    }
+                </Dialog>
             </div>
         );
     }
