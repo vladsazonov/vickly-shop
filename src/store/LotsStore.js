@@ -6,6 +6,8 @@ class LotsStore {
     @observable lots = [];
     @observable games = [];
     @observable fetchFail = false;
+    lotsFetched=false;
+    gamesFetched=false;
     err_message = "";
 
     async fetchLots() {
@@ -26,6 +28,7 @@ class LotsStore {
             const content = await lotsListResponse.json();
             runInAction("Update users info", () => {
                 this.lots = content.goods;
+                this.lotsFetched = true;
             });
         } catch (err) {
             console.log(err);
@@ -54,6 +57,7 @@ class LotsStore {
             const content = await gameListResponse.json();
             runInAction("Update users info", () => {
                 this.games = content.games;
+                this.gamesFetched = true;
             });
         } catch (err) {
             console.log(err);
@@ -100,6 +104,40 @@ class LotsStore {
             });
         }
     }
+
+    async postBuy(lotId) {
+        try {
+            const gameListResponse = await fetch(BACKEND_URL + "/wantbuy", {
+                method: 'POST',
+                headers: {
+                    'Authorization': accountStore.token,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    lotId:lotId
+                })
+            });
+            if (!gameListResponse.ok) {
+                alert("add lot failed");
+                runInAction("add lot", () => {
+                    this.fetchFail = true;
+                    this.err_message = gameListResponse.error();
+                });
+            }
+            // NO CONTENT
+            // const content = await gameListResponse.json();
+            // runInAction("Update users info", () => {
+            //     this.games = content;
+            // });
+        } catch (err) {
+            console.log(err);
+            runInAction("Failed fetch users info", () => {
+                this.fetchFail = true;
+                this.err_message = err;
+            });
+        }
+    }
+
 }
 
 const store = new LotsStore();

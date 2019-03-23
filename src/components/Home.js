@@ -99,7 +99,7 @@ const styles = theme => ({
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-      background: '#e8e8e8',
+        background: '#e8e8e8',
 
         boxShadow: '-2px 0px 20px 0px rgba(0,0,0,0.5)',
     },
@@ -177,35 +177,7 @@ class Home extends React.Component {
                     </Hidden>
                     <List className={classes.workG}>
                         {
-                            !this.accountStore.isAdmin ?
-                                (
-                                    <div>
-                                        <ListItem button component={props => <Link to="/home/buy" {...props} />}>
-                                            <ListItemIcon>
-                                                <AttachMoney />
-                                            </ListItemIcon>
-                                            <Typography color="secondary"> Купить </Typography>
-                                        </ListItem>
-                                        <ListItem button component={props => <Link to="/home/sale" {...props} />}>
-                                            <ListItemIcon>
-                                                <LocalAtm />
-                                            </ListItemIcon>
-                                            <Typography color="secondary"> Продать </Typography>
-                                        </ListItem>
-                                        <Divider/>
-                                        <ListItem button component={props => <Link to="/home/history" {...props} />}>
-                                            <Typography color="secondary"> История </Typography>
-                                        </ListItem>
-                                        <ListItem button
-                                                  component={props => <Link to="/home/salesincomes" {...props} />}>
-                                            <ListItemIcon>
-                                               < Beenhere />
-                                            </ListItemIcon>
-                                            <Typography color="secondary"> Заявки </Typography>
-                                        </ListItem>
-                                    </div>
-                                )
-                                :
+                            this.accountStore.isAdmin ?
                                 (
                                     <div>
                                         <ListItem button
@@ -221,6 +193,35 @@ class Home extends React.Component {
                                                 <DraftsIcon/>
                                             </ListItemIcon>
                                             <Typography color="secondary"> Заявки на продажу </Typography>
+                                        </ListItem>
+                                    </div>
+                                )
+                                :
+                                (
+
+                                    <div>
+                                        <ListItem button component={props => <Link to="/home/buy" {...props} />}>
+                                            <ListItemIcon>
+                                                <AttachMoney/>
+                                            </ListItemIcon>
+                                            <Typography color="secondary"> Купить </Typography>
+                                        </ListItem>
+                                        <ListItem button component={props => <Link to="/home/sale" {...props} />}>
+                                            <ListItemIcon>
+                                                <LocalAtm/>
+                                            </ListItemIcon>
+                                            <Typography color="secondary"> Продать </Typography>
+                                        </ListItem>
+                                        <Divider/>
+                                        <ListItem button component={props => <Link to="/home/history" {...props} />}>
+                                            <Typography color="secondary"> История </Typography>
+                                        </ListItem>
+                                        <ListItem button
+                                                  component={props => <Link to="/home/salesincomes" {...props} />}>
+                                            <ListItemIcon>
+                                                < Beenhere/>
+                                            </ListItemIcon>
+                                            <Typography color="secondary"> Заявки </Typography>
                                         </ListItem>
                                     </div>
                                 )

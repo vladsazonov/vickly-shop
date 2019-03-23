@@ -34,16 +34,26 @@ class BuyPage extends React.Component {
     };
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (!this.LotStore.lots.length) {
+        if (!this.LotStore.lots.length && !this.LotStore.lotsFetched) {
             this.LotStore.fetchLots();
         }
-        if (!this.LotStore.games.length) {
+        if (!this.LotStore.games.length && !this.LotStore.gamesFetched) {
             this.LotStore.fetchGames();
         }
     }
 
     handleChange = event => {
         this.setState({sum: event.target.value * 2})
+    };
+
+    handleBuyProccess = (stateOfProccess) => () => {
+        if (stateOfProccess) {
+            // TODO
+            // approve buy
+            // this.LotStore.postBuy(12);
+        }else{
+            //TODO JUST EXIT
+        }
     };
 
     render() {

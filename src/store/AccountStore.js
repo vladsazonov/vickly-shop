@@ -51,7 +51,7 @@ class AccountStore {
                 this.login = login;
                 this.status = "authed";
                 this.isAdmin = content.is_admin;
-                this.saveInLocalStorage(this.fullName, this.token, this.userId, this.groupId, this.login);
+                this.saveInLocalStorage(this.name, this.token,this.login,this.isAdmin);
             });
             //TODO LATER
             // WebSocketService.run(this.token)
@@ -76,6 +76,7 @@ class AccountStore {
         this.name = null;
         this.token = null;
         this.login = null;
+        this.isAdmin = null;
         this.status = "unauthed";
         sessionStorage.clear();
     }
