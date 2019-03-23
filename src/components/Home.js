@@ -93,10 +93,10 @@ const styles = theme => ({
     content: {
         flexGrow: 1,
         minHeight: '100vh',
-        [theme.breakpoints.down('xs')]: {
-            //minHeight: '100%',
-        },
-        backgroundImage: 'url(' + Background + ')',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      //  backgroundImage: 'url(' + Background + ')',
 
         boxShadow: '-2px 0px 20px 0px rgba(0,0,0,0.5)',
     },
