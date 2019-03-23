@@ -6,7 +6,7 @@ class AccountStore {
     @observable name = "";
     @observable token = "";
     @observable login = "";
-    isAdmin = false;
+    isAdmin = null;
     @observable status = "unauthed";
     userId = null;
     err_message = "";
@@ -14,7 +14,7 @@ class AccountStore {
     constructor() {
         this.name = sessionStorage.getItem("name");
         this.token = sessionStorage.getItem("token");
-        this.isAdmin = sessionStorage.getItem("isAdmin");
+        this.isAdmin = sessionStorage.getItem("isAdmin") === "true" ? true : false;
         this.login = sessionStorage.getItem("login");
         if (this.token) {
             this.status = "authed";
