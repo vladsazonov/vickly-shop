@@ -18,11 +18,11 @@ import TextArea from "semantic-ui-react/dist/commonjs/addons/TextArea";
 import Form from "semantic-ui-react/dist/commonjs/collections/Form";
 import Label from "semantic-ui-react/dist/commonjs/elements/Label";
 import LotsStore from "../store/LotsStore"
-import DialogTitle from "./SaleCard";
 import Img from "../images/mesB.jpg";
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
+import DialogTitle from "@material-ui/core/DialogTitle";
 
 const styles = theme => ({
     root: {
