@@ -58,11 +58,11 @@ class ProfileBar extends React.Component {
                     <ProfileIco handleLogout={this.accountStore.unauth.bind(accountStore)}
                                 name={this.accountStore.name}/>
 
-                <Typography variant="h6" color="secondary" className={classes.wrap}>{accountStore.name}</Typography>
+                <Typography variant="h6" color="secondary" className={classes.wrap}>@ngeLL_v_KeD@X</Typography>
 
 
-                <InviteIcon />
-                <IconButton >
+        {/*        <InviteIcon />*/}
+                <IconButton style={{marginLeft: 'auto'}} >
                     <ExitToApp color="secondary"  onClick={this.accountStore.unauth.bind(accountStore)}/>
                 </IconButton>
 

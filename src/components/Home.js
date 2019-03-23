@@ -12,13 +12,14 @@ import ProfileIco from "./ProfileIco";
 import InviteIcon from "./InviteIcon";
 import {observer} from "mobx-react";
 import ProfileBar from "./ProfileBar";
-import Background from '../images/mesB.jpg';
+import Background from '../images/back.jpg';
 import InboxIcon from '@material-ui/icons/Inbox';
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItem from "@material-ui/core/ListItem";
 import Divider from "@material-ui/core/Divider";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import DraftsIcon from '@material-ui/icons/Drafts';
+import AttachMoney from '@material-ui/icons/AttachMoney'
 import {Typography} from "@material-ui/core";
 import accountStore from "../store/AccountStore";
 import SalePage from "./SalePage";
@@ -29,6 +30,8 @@ import BuyPage from "./BuyPage";
 import SalesIncomes from "./SalesIncomes";
 import BuyIncomes from "./BuyIncomes";
 import HistoryPage from "./HistoryPage";
+import LocalAtm from "@material-ui/icons/LocalAtm"
+import Beenhere from "@material-ui/icons/Beenhere"
 
 const styles = theme => ({
 
@@ -87,7 +90,7 @@ const styles = theme => ({
         [theme.breakpoints.down('xs')]: {
             marginTop: 105,
         },
-        marginTop: 113,
+        marginTop: 64,
         padding: 0,
     },
     content: {
@@ -96,7 +99,7 @@ const styles = theme => ({
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-      //  backgroundImage: 'url(' + Background + ')',
+      background: '#e8e8e8',
 
         boxShadow: '-2px 0px 20px 0px rgba(0,0,0,0.5)',
     },
@@ -177,15 +180,15 @@ class Home extends React.Component {
                             !this.accountStore.isAdmin ?
                                 (
                                     <div>
-                                        <ListItem button component={props => <Link to="/home/sale" {...props} />}>
+                                        <ListItem button component={props => <Link to="/home/buy" {...props} />}>
                                             <ListItemIcon>
-                                                <InboxIcon/>
+                                                <AttachMoney />
                                             </ListItemIcon>
                                             <Typography color="secondary"> Купить </Typography>
                                         </ListItem>
-                                        <ListItem button component={props => <Link to="/home/buy" {...props} />}>
+                                        <ListItem button component={props => <Link to="/home/sale" {...props} />}>
                                             <ListItemIcon>
-                                                <DraftsIcon/>
+                                                <LocalAtm />
                                             </ListItemIcon>
                                             <Typography color="secondary"> Продать </Typography>
                                         </ListItem>
@@ -193,13 +196,20 @@ class Home extends React.Component {
                                         <ListItem button component={props => <Link to="/home/history" {...props} />}>
                                             <Typography color="secondary"> История </Typography>
                                         </ListItem>
+                                        <ListItem button
+                                                  component={props => <Link to="/home/salesincomes" {...props} />}>
+                                            <ListItemIcon>
+                                               < Beenhere />
+                                            </ListItemIcon>
+                                            <Typography color="secondary"> Заявки </Typography>
+                                        </ListItem>
                                     </div>
                                 )
                                 :
                                 (
                                     <div>
                                         <ListItem button
-                                                  component={props => <Link to="/home/salesincomes" {...props} />}>
+                                                  component={props => <Link to="/home/salesIncomes" {...props} />}>
                                             <ListItemIcon>
                                                 <InboxIcon/>
                                             </ListItemIcon>
@@ -286,6 +296,8 @@ class Home extends React.Component {
                                            component={BuyPage}/>
                                     <Route exact path="/home/history"
                                            component={HistoryPage}/>
+                                    <Route path="/home/salesincomes"
+                                           component={SalesIncomes}/>
                                     <Route exact path="/home" render={() => <div>LOL</div>}/>
                                     <Route render={() => <Redirect to={"/home"}/>}/>
                                 </Switch>

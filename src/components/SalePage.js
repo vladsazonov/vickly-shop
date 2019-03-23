@@ -6,23 +6,28 @@ import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import MenuItem from "@material-ui/core/MenuItem";
-import Select from "@material-ui/core/Select";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import CardContent from "@material-ui/core/CardContent";
 import Card from "@material-ui/core/Card";
 import CardMedia from "@material-ui/core/CardMedia";
-import Image from '../images/bb.jpg'
+import Image from '../images/back.jpg'
 import {Avatar} from "@material-ui/core";
+import {Dropdown, Input, Select} from 'semantic-ui-react'
+import TextArea from "semantic-ui-react/dist/commonjs/addons/TextArea";
+import Form from "semantic-ui-react/dist/commonjs/collections/Form";
+import Label from "semantic-ui-react/dist/commonjs/elements/Label";
 
 const styles = theme => ({
     root: {
         backgroundColor: '#fff',
-        width: '50%',
+        width: '65%',
         margin: '10px 0 0 10px',
         display: 'flex',
         justifyContent: 'center',
         alignContent: 'center',
+        padding: 20,
+        boxShadow: theme.shadows[10],
     },
 
     ard: {
@@ -38,7 +43,7 @@ const styles = theme => ({
     cover: {
         width: 151,
         borderRadius: '50%',
-        backgroundImage: 'url(' +Image + ')',
+       // backgroundImage: 'url(' + Image + ')',
     },
     controls: {
         display: 'flex',
@@ -58,8 +63,28 @@ class SalePage extends React.Component {
         super(props);
     }
 
+    state = {
+        value: '',
+        sum: 0,
+    };
+
+    handleChange = event => {
+        this.setState({sum: event.target.value * 2})
+    };
+
+    options = [
+        {key: 'page', text: 'Название игры', value: 'page'},
+        {key: 'org', text: 'DayZ', value: 'DayZ'},
+        {key: 'site', text: 'Doka 2', value: 'Doka2'},
+    ];
+
+    sellOptions = [
+        {key: 'deal', text: 'Страндартная продажа', value: '1'},
+        {key: 'auction', text: 'Аукцион', value: '2'},
+    ];
+
     render() {
-        const {classes, theme} = this.props;
+        const {classes, theme, options} = this.props;
 
         return (
             <div className={classes.root}>
@@ -71,112 +96,65 @@ class SalePage extends React.Component {
                     </Typography>
                     <Grid container spacing={24}>
                         <Grid item xs={12} sm={6}>
-                            <TextField
-                                required
-                                id="firstName"
-                                name="firstName"
-                                label="Ваш ник в игре"
-                                fullWidth
-                                autoComplete="fname"
+                            <Input
+                                action={<Dropdown button basic floating options={this.options} defaultValue='page'/>}
+                                icon='search'
+                                iconPosition='left'
+                                placeholder='Ваш ник в игре'
                             />
                         </Grid>
                         <Grid item xs={12} sm={6}>
-                            <Select
-                                label="dfd"
-                                // value={state.age}
-                                value="Выберите игру"
-                                // onChange={handleChange}
-                                inputProps={{
-                                    name: 'age',
-                                    id: 'age-simple',
-                                }}
-                            >
-                                <MenuItem value="">
-                                    <em>None</em>
-                                </MenuItem>
-                                <MenuItem value={10}>Ten</MenuItem>
-                                <MenuItem value={20}>Twenty</MenuItem>
-                                <MenuItem value={30}>Thirty</MenuItem>
-                            </Select>
+                            <Input fluid placeholder='Название предмета'/>
                         </Grid>
                         <Grid item xs={12}>
-                            <TextField
-                                id="outlined-full-width"
-                                //label="Label"
-                                // style={{ margin: 8 }}
-                                placeholder="Название предмета"
-                                // helperText="Full width!"
-                                //    fullWidth
-                                margin="normal"
-                                variant="outlined"
-                                InputLabelProps={{
-                                    shrink: true,
-                                }}
-                            />
-
-                        </Grid><Grid item xs={12}>
-                        <TextField
-                            id="outlined-full-width"
-                            //label="Label"
-                            // style={{ margin: 8 }}
-                            placeholder="Описание предмета"
-                            // helperText="Full width!"
-                               fullWidth
-                            margin="normal"
-                            variant="outlined"
-                            InputLabelProps={{
-                                shrink: true,
-                            }}
-                        />
-                    </Grid>
+                            <Form>
+                                <TextArea placeholder='Описание предмета'/>
+                            </Form>
+                        </Grid>
 
                         <Grid item xs={12}>
-                            <div style={{display: 'flex', alignItems: 'center'}}>
-                            <div >
-                                <Typography>Загрузите изображение</Typography>
+                            <div style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                border: '2px dashed rgba(239, 212, 212, 0.52)',
+                                justifyContent: 'center',
+                                borderRadius: 10
+                            }}>
+                                <div style={{padding: 10, display: 'inline-flex', alignItems: 'center'}}>
 
-                            <Avatar style={{width: 80, height: 80}}>?</Avatar>
+                                    <div><Typography variant="display1" style={{marginRight: 10}}>Загрузите изображение
+                                        предмета</Typography></div>
+
+                                    <div>
+                                        <Button variant="outlined" component="label">
+                                            Upload File
+                                            <input type="file" style={{display: "none"}}/>
+                                        </Button>
+                                    </div>
+                                </div>
+                            </div>
+                        </Grid>
+
+                        <Grid item xs={12} sm={6}>
+                            <Input labelPosition='right' type='text' placeholder='Цена' value={this.state.value}
+                                   onChange={this.handleChange}>
+                                <Label basic>₽</Label>
+                                <input/>
+                                <Label>Вы получите: {this.state.sum} </Label>
+                            </Input>
+                        </Grid>
+
+                        <Grid item xs={12} sm={6}>
+                            <Select placeholder='Тип продажи' fluid options={this.sellOptions}/>
+                        </Grid>
+
+
+                            <div style={{width: '100%', display: 'flex', justifyContent: 'center', margin: 10}}>
+                                <Button variant="outlined" style={{width: 200}}>Продать</Button>
                             </div>
 
-                            <Button
-                                variant="contained"
-                                component="label"
-                            >
-                                Upload File
-                                <input
-                                    type="file"
-                                    style={{ display: "none" }}
-                                />
-                            </Button>
-                               </div>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                id="address2"
-                                name="address2"
-                                label="Цена"
-                                fullWidth
-                                autoComplete="billing address-line2"
-                            />
-                            <Select
-                                label="dfd"
-                                // value={state.age}
-                                value="Выберите игру"
-                                // onChange={handleChange}
-                                inputProps={{
-                                    name: 'age',
-                                    id: 'age-simple',
-                                }}
-                            >
-                                <MenuItem value="">
-                                    <em>None</em>
-                                </MenuItem>
-                                <MenuItem value={10}>Ten</MenuItem>
-                                <MenuItem value={20}>Twenty</MenuItem>
-                                <MenuItem value={30}>Thirty</MenuItem>
-                            </Select>
-                        </Grid>
-                        <Button>Продать</Button>
+
+
                     </Grid>
                 </div>
             </div>
