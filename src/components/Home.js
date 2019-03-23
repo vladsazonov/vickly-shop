@@ -186,19 +186,26 @@ class Home extends React.Component {
                             this.accountStore.isAdmin ?
                                 (
                                     <div>
-                                        <ListItem button
-                                                  component={props => <Link to="/home/buyincomes" {...props} />}>
-                                            <ListItemIcon>
-                                                <InboxIcon/>
-                                            </ListItemIcon>
-                                            <Typography color="secondary"> Заявки на покупку </Typography>
-                                        </ListItem>
                                         < ListItem button
                                                    component={props => <Link to="/home/salesincomes" {...props} />}>
                                             <ListItemIcon>
                                                 <DraftsIcon/>
                                             </ListItemIcon>
-                                            <Typography color="secondary"> Заявки на продажу </Typography>
+                                            <Typography color="secondary"> Заявки</Typography>
+                                        </ListItem>
+                                        <Divider/>
+
+                                        <ListItem button component={props => <Link to="/home/buy" {...props} />}>
+                                            <ListItemIcon>
+                                                <AttachMoney/>
+                                            </ListItemIcon>
+                                            <Typography color="secondary"> Купить </Typography>
+                                        </ListItem>
+                                        <ListItem button component={props => <Link to="/home/sale" {...props} />}>
+                                            <ListItemIcon>
+                                                <LocalAtm/>
+                                            </ListItemIcon>
+                                            <Typography color="secondary"> Продать </Typography>
                                         </ListItem>
                                     </div>
                                 )
@@ -221,13 +228,6 @@ class Home extends React.Component {
                                         <Divider/>
                                         <ListItem button component={props => <Link to="/home/history" {...props} />}>
                                             <Typography color="secondary"> История </Typography>
-                                        </ListItem>
-                                        <ListItem button
-                                                  component={props => <Link to="/home/salesincomes" {...props} />}>
-                                            <ListItemIcon>
-                                                < Beenhere/>
-                                            </ListItemIcon>
-                                            <Typography color="secondary"> Заявки </Typography>
                                         </ListItem>
                                     </div>
                                 )
@@ -310,15 +310,13 @@ class Home extends React.Component {
                     <div className={classes.toolbar}/>
 
                     {
-                        !this.accountStore.isAdmin ?
+                        this.accountStore.isAdmin ?
                             (
                                 <Switch>
                                     <Route path="/home/sale"
                                            component={SalePage}/>
                                     <Route exact path="/home/buy"
                                            component={BuyPage}/>
-                                    <Route exact path="/home/history"
-                                           component={HistoryPage}/>
                                     <Route path="/home/salesincomes"
                                            component={SalesIncomes}/>
                                     <Route exact path="/home" render={() => <div>LOL</div>}/>
@@ -328,10 +326,12 @@ class Home extends React.Component {
                             :
                             (
                                 <Switch>
-                                    <Route path="/home/salesincomes"
-                                           component={SalesIncomes}/>
-                                    <Route exact path="/home/buyincomes"
-                                           component={BuyIncomes}/>
+                                    <Route path="/home/sale"
+                                           component={SalePage}/>
+                                    <Route exact path="/home/buy"
+                                           component={BuyPage}/>
+                                    <Route exact path="/home/history"
+                                           component={HistoryPage}/>
                                     <Route exact path="/home" render={() => <div>LOL</div>}/>
                                     <Route render={() => <Redirect to={"/home"}/>}/>
                                 </Switch>

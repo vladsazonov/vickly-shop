@@ -57,7 +57,7 @@ if (module.hot) {
     module.hot.accept('./App', () => {
         ReactDOM.render(
             <MuiThemeProvider theme={theme}>
-                <App/>
+                <App style={{left: 100}}/>
             </MuiThemeProvider>,
             document.getElementById('root')
         );

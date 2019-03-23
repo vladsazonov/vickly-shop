@@ -10,6 +10,7 @@ import {observer} from "mobx-react";
 import Image from "semantic-ui-react/dist/commonjs/elements/Image";
 import Emp from '../images/epm.jpg'
 import Button from "semantic-ui-react/dist/commonjs/elements/Button";
+import AccountStore from '../store/AccountStore'
 
 const styles = theme => ({
     root: {
@@ -31,6 +32,7 @@ class userBuyCard extends React.Component {
     constructor(props) {
         super(props);
         this.LotStore = LotStore;
+        this.AccountStore = AccountStore;
     }
 
     state = {
@@ -66,7 +68,12 @@ class userBuyCard extends React.Component {
                     <Card.Content extra>
                         <a>
                             <Icon name='user' />
-                           10000р
+                           {this.AccountStore.name}
+                        </a>
+                    </Card.Content>
+                    <Card.Content extra>
+                        <a>
+                            10000р
                         </a>
                     </Card.Content>
                     <Card.Content extra style={{display: 'flex', justifyContent: 'center'}}>
