@@ -101,7 +101,7 @@ class BuyPage extends React.Component {
                     </Form>
                     <div style={{display: 'flex',}}>
                         {
-                            this.LotStore.lots.map(elem => <UserBuyCard/>)
+                            this.LotStore.lots.map(elem => <UserBuyCard summary={elem.summary} text={elem.text} />)
                         }
                     </div>
                 </div>

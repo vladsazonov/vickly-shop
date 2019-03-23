@@ -57,11 +57,11 @@ class userBuyCard extends React.Component {
                 <Card>
                     <Image src={Emp} />
                     <Card.Content>
-                        <Card.Header>Меч Арзула{this.props.summary}</Card.Header>
+                        <Card.Header>{this.props.summary}</Card.Header>
                         <Card.Meta>
-                            <span className='date'>Doka 2{this.props.summary}</span>
+                            <span className='date'>{this.props.summary}</span>
                         </Card.Meta>
-                        <Card.Description>очень крутой меч всех убивает ваще</Card.Description>
+                        <Card.Description>{this.props.text}</Card.Description>
                     </Card.Content>
                     <Card.Content extra>
                         <a>
