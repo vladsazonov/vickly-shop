@@ -35,10 +35,8 @@ class userBuyCard extends React.Component {
         this.AccountStore = AccountStore;
     }
 
-    state = {
-
-    };
-    handleChange = (e, { value }) => this.setState({ value })
+    state = {};
+    handleChange = (e, {value}) => this.setState({value})
 
 
     handleBuyProccess = (stateOfProccess) => () => {
@@ -46,7 +44,7 @@ class userBuyCard extends React.Component {
             // TODO
             // approve buy
             // this.LotStore.postBuy(12);
-        }else{
+        } else {
             //TODO JUST EXIT
         }
     };
@@ -57,7 +55,7 @@ class userBuyCard extends React.Component {
         return (
             <div style={{margin: '0px 10px 20px 10px'}}>
                 <Card>
-                    <Image src={Emp} />
+                    <Image src={Emp}/>
                     <Card.Content>
                         <Card.Header>{this.props.summary}</Card.Header>
                         <Card.Meta>
@@ -77,13 +75,13 @@ class userBuyCard extends React.Component {
                         </a>
                     </Card.Content>
                     <Card.Content extra style={{display: 'flex', justifyContent: 'center'}}>
-                    <a>
-                        <Button color="primary">Купить</Button>
-                    </a>
-                </Card.Content>
+                        <a>
+                            <Button color="primary">Купить</Button>
+                        </a>
+                    </Card.Content>
 
                 </Card>
-                </div>
+            </div>
         );
     }
 }

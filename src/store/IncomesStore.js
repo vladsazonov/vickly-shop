@@ -28,8 +28,8 @@ class IncomesStore {
             const content = await lotsListResponse.json();
             runInAction("Update users info", () => {
                 let lots = content.goods;
-                this.saleLots = lots.filter(elem => elem.status === 1 || elem.status === 2);
-                this.buyLots = lots.filter(elem => elem.status === 4 || elem.status === 5);
+                this.saleLots = lots.filter(elem => elem.status === 0);
+                this.buyLots = lots.filter(elem => elem.status === 5);
                 this.lotsFetched = true;
             });
         } catch (err) {
