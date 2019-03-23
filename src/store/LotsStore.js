@@ -27,7 +27,7 @@ class LotsStore {
             }
             const content = await lotsListResponse.json();
             runInAction("Update users info", () => {
-                this.lots = content.goods;
+                this.lots = content.goods.filter(elem=>elem.status===3);
                 this.lotsFetched = true;
             });
         } catch (err) {

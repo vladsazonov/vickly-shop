@@ -67,9 +67,6 @@ const styles = theme => ({
     }
 });
 
-const lotName = 'Меч арзула';
-const description = 'Супер крутой мечь который я дропнул с Варизла 88 лвл с дополнительным бафом на +37 к друиду';
-const price = '3000p';
 const game = 'Linage 2';
 const user = 'Nagibator322';
 const type = 'Обычная продажа';
@@ -128,10 +125,10 @@ class SaleCard extends React.Component {
                     <div className={classes.root}>
                         <img alt="Remy Sharp" src={Img} className={classes.imgMod}/>
                         <div className={classes.captionMod}>
-                            <Typography variant="h4">{lotName}</Typography>
-                            <Typography variant="Subheading">{description}</Typography>
+                            <Typography variant="h4">{this.props.summary}</Typography>
+                            <Typography variant="Subheading">{this.props.text}</Typography>
                             <div style={{marginRight: 10, width: '50%', marginTop: 10,}}>
-                                <Typography variant="h6"  style={{color: 'red'}} >{price}</Typography>
+                                <Typography variant="h6"  style={{color: 'red'}} >{this.props.price}  руб.</Typography>
                                 <Typography variant="overline"> {game}</Typography>
                             </div>
                         </div>
@@ -190,16 +187,16 @@ class SaleCard extends React.Component {
                     <div className={classes.root}>
                         <div><img alt="Remy Sharp" src={Img} className={classes.img}/></div>
                         <div className={classes.caption}>
-                            <Typography variant="title">{lotName}</Typography>
-                            <Typography variant="Subheading" className={classes.caption}>{description}</Typography>
+                            <Typography variant="title">{this.props.summary}</Typography>
+                            <Typography variant="Subheading" className={classes.caption}>{this.props.text}</Typography>
                         </div>
                         <div style={{marginRight: 20}}>
-                            <Typography variant="button">{price}</Typography>
+                            <Typography variant="button">{this.props.price} руб.</Typography>
                             <Typography variant="overline"> {type}</Typography>
                         </div>
                         <div style={{marginRight: 10, display: 'flex', alignItems: 'center'}}>
                             <Avatar style={{marginRight: 5}}>NN</Avatar>
-                            <Typography variant="button">{user}</Typography>
+                            <Typography variant="button">{this.props.name}</Typography>
                             <Typography variant="overline" style={{marginLeft: 5}}> {game}</Typography>
                         </div>
                         {/*<div>*/}

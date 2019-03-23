@@ -71,7 +71,7 @@ class userBuyCard extends React.Component {
                     </Card.Content>
                     <Card.Content extra>
                         <a>
-                            10000р
+                            {this.props.price} руб.
                         </a>
                     </Card.Content>
                     <Card.Content extra style={{display: 'flex', justifyContent: 'center'}}>
