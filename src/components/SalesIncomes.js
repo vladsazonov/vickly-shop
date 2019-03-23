@@ -6,6 +6,7 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import BuyCard from "./BuyCard";
 import IncomesStore from "../store/IncomesStore"
+import LotsStore from "../store/LotsStore"
 import {observer} from "mobx-react";
 
 const styles = theme => ({
@@ -47,14 +48,14 @@ class SalesIncomes extends React.Component {
         value: 0,
     };
 
-    // componentDidUpdate(prevProps, prevState, snapshot) {
-    //     if (!this.IncomesStore.buyLots && !this.IncomesStore.lotsFetched) {
-    //         this.LotStore.fetchLots();
-    //     }
-    //     if (!this.LotStore.games.length && !this.LotStore.gamesFetched) {
-    //         this.LotStore.fetchGames();
-    //     }
-    // }
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (!this.IncomesStore.buyLots.length && !this.IncomesStore.lotsFetched) {
+            this.IncomesStore.fetchLots();
+        }
+        // if (!this.LotStore.games.length && !this.LotStore.gamesFetched) {
+        //     this.LotStore.fetchGames();
+        // }
+    }
 
     handleChange = (event, newValue) => {
       this.setState(state => ({value: newValue}))
