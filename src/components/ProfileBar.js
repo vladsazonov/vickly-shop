@@ -17,7 +17,7 @@ const styles = theme => ({
         display: 'inline-flex',
         width: 300,
         alignItems: 'center',
-        top: 0,
+        top: 60,
     },
     userDisplay: {},
     bage: {
@@ -58,7 +58,11 @@ class ProfileBar extends React.Component {
                 <ProfileIco handleLogout={this.accountStore.unauth.bind(accountStore)}
                             name={this.accountStore.name}/>
 
-                <Typography variant="h6" color="secondary" className={classes.wrap}>@ngeLL_v_KeD@X</Typography>
+                            <div>
+
+                <Typography variant="h6" color="secondary" className={classes.wrap}>{this.accountStore.name}</Typography>
+                <Typography variant="button" color="secondary" className={classes.wrap}>1000р</Typography>
+                            </div>
 
 
                 {/*        <InviteIcon />*/}
@@ -66,8 +70,7 @@ class ProfileBar extends React.Component {
                     <ExitToApp color="secondary" onClick={this.accountStore.unauth.bind(accountStore)}/>
                 </IconButton>
                 {/*TODO new line for balance*/}
-                <br/>
-                <Typography variant="h6" color="secondary" className={classes.wrap}>1000р</Typography>
+
             </div>
         );
     }

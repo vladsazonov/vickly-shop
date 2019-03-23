@@ -18,7 +18,7 @@ import Step from "@material-ui/core/Step";
 const styles = theme => ({
     root: {
         display: 'flex',
-        alignItems: 'center',
+        alignItems: 'start',
         borderBottom: '1px solid #ececec',
         padding: '5px 10px 5px 10px',
         justifyContent: 'space-between',
@@ -30,8 +30,8 @@ const styles = theme => ({
         marginRight: 10,
     },
     imgMod: {
-        width: 400,
-        height: 400,
+        width: 200,
+        height: 200,
         marginRight: 10,
     },
     caption: {
@@ -61,7 +61,7 @@ const styles = theme => ({
     listItem: {
         backgroundColor: 'white',
         '&:hover': {
-            backgroundColor: 'black',
+            backgroundColor: '#7183dc',
         },
 
     }
@@ -128,18 +128,19 @@ class SaleCard extends React.Component {
                     <div className={classes.root}>
                         <img alt="Remy Sharp" src={Img} className={classes.imgMod}/>
                         <div className={classes.captionMod}>
-                            <Typography variant="title">{lotName}</Typography>
+                            <Typography variant="h4">{lotName}</Typography>
                             <Typography variant="Subheading">{description}</Typography>
+                            <div style={{marginRight: 10, width: '50%', marginTop: 10,}}>
+                                <Typography variant="h6"  style={{color: 'red'}} >{price}</Typography>
+                                <Typography variant="overline"> {game}</Typography>
+                            </div>
                         </div>
-                        <div style={{marginRight: 10, width: '50%'}}>
-                            <Typography variant="button">{price}</Typography>
-                            <Typography variant="overline"> {game}</Typography>
-                        </div>
+
                     </div>
                     <div style={{margin: 10}}>
-                        <Button variant="outlined" onClick={this.handleFirstStep(true)}
+                        <Button  onClick={this.handleFirstStep(true)}
                                 className={classes.buttonOk}>Принять</Button>
-                        <Button variant="outlined" onClick={this.handleFirstStep(false)}
+                        <Button onClick={this.handleFirstStep(false)}
                                 className={classes.buttonNo}>Отклонить</Button>
                     </div>
                 </div>

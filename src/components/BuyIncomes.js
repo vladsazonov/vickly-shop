@@ -14,8 +14,8 @@ class BuyIncomes extends React.Component {
         const {classes, theme} = this.props;
 
         return (
-            <div>
-                <BuyCard/><BuyCard/><BuyCard/><BuyCard/><BuyCard/><BuyCard/><BuyCard/><BuyCard/><BuyCard/><BuyCard/><BuyCard/><BuyCard/><BuyCard/><BuyCard/><BuyCard/><BuyCard/>}
+            <div style={{marginTop: 100}}>
+                <BuyCard/><BuyCard/><BuyCard/><BuyCard/><BuyCard/><BuyCard/><BuyCard/><BuyCard/><BuyCard/><BuyCard/><BuyCard/><BuyCard/><BuyCard/><BuyCard/><BuyCard/><BuyCard/>
             </div>
         );
     }

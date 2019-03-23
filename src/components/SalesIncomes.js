@@ -9,7 +9,7 @@ import BuyCard from "./BuyCard";
 const styles = theme => ({
     root: {
 
-      top: 0,
+      top: 55,
       left: 300,
       right: 0,
         [theme.breakpoints.down('xs')]: {
@@ -18,6 +18,7 @@ const styles = theme => ({
         width: '100%',
     },
     tabs: {
+        top: 55,
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center'
@@ -27,6 +28,7 @@ const styles = theme => ({
         boxShadow: theme.shadows[0],
         left: 300,
         right: 0,
+        top: 55,
         position: 'fixed',
     },
 });
@@ -57,8 +59,8 @@ class SalesIncomes extends React.Component {
                             <Tab label="Лоты на покупку" />
                         </Tabs>
                     </AppBar>
-                    {this.state.value === 0 &&  <div style={{margin: '48px 30px 30px 30px'}}><SaleCard/><SaleCard/><SaleCard/><SaleCard/><SaleCard/><SaleCard/><SaleCard/><SaleCard/><SaleCard/><SaleCard/><SaleCard/><SaleCard/><SaleCard/><SaleCard/><SaleCard/><SaleCard/><SaleCard/><SaleCard/><SaleCard/><SaleCard/><SaleCard/></div>}
-                    {this.state.value === 1 && <div style={{margin: '48px 30px 30px 30px'}}><BuyCard /><BuyCard /><BuyCard /><BuyCard /><BuyCard /><BuyCard /><BuyCard /><BuyCard /><BuyCard /><BuyCard /><BuyCard /><BuyCard /><BuyCard /><BuyCard /><BuyCard /><BuyCard /></div>}
+                    {this.state.value === 0 &&  <div style={{margin: '150px 30px 30px 30px'}}><SaleCard/><SaleCard/><SaleCard/><SaleCard/><SaleCard/><SaleCard/><SaleCard/><SaleCard/><SaleCard/><SaleCard/><SaleCard/><SaleCard/><SaleCard/><SaleCard/><SaleCard/><SaleCard/><SaleCard/><SaleCard/><SaleCard/><SaleCard/><SaleCard/></div>}
+                    {this.state.value === 1 && <div style={{margin: '150px 30px 30px 30px'}}><BuyCard /><BuyCard /><BuyCard /><BuyCard /><BuyCard /><BuyCard /><BuyCard /><BuyCard /><BuyCard /><BuyCard /><BuyCard /><BuyCard /><BuyCard /><BuyCard /><BuyCard /><BuyCard /></div>}
                 </div>
 
 

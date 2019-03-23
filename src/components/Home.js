@@ -32,6 +32,7 @@ import BuyIncomes from "./BuyIncomes";
 import HistoryPage from "./HistoryPage";
 import LocalAtm from "@material-ui/icons/LocalAtm"
 import Beenhere from "@material-ui/icons/Beenhere"
+import Shop from "@material-ui/icons/Shop"
 
 const styles = theme => ({
 
@@ -65,7 +66,10 @@ const styles = theme => ({
         zIndex: 1501,
         height: 55,
         boxShadow: theme.shadows[0],
+        //display: 'flex',
+        //alignItems: 'center',
         width: '100%',
+        backgroundColor: theme.palette.primary.main2,
     },
     menuButton: {
         marginRight: 20,
@@ -90,7 +94,7 @@ const styles = theme => ({
         [theme.breakpoints.down('xs')]: {
             marginTop: 105,
         },
-        marginTop: 64,
+        marginTop: 120,
         padding: 0,
     },
     content: {
@@ -108,7 +112,9 @@ const styles = theme => ({
         marginRight: 'auto',
     },
     logoDiv: {
-        flexGrow: 1
+        flexGrow: 1,
+        display: 'flex',
+        alignItems: 'center',
     },
     container: {
         display: 'flex',
@@ -236,6 +242,22 @@ class Home extends React.Component {
         return (
             <div className={classes.root}>
                 <nav className={classes.drawer}>
+                    <AppBar position="fixed" className={classes.appBar}>
+                        <Toolbar>
+                            <IconButton
+                                color="inherit"
+                                aria-label="Open drawer"
+                                onClick={this.handleDrawerToggle}
+                                className={classes.menuButton}>
+                                <MenuIcon/>
+                            </IconButton>
+                            <div className={classes.logoDiv}><Typography variant="h4">ViclyShop</Typography><Shop style={{color: '#ef2600'}} /></div>
+                            <div className={classes.userBar}>
+                                {/* <InviteIcon />
+                                <ProfileIco />*/}
+                            </div>
+                        </Toolbar>
+                    </AppBar>
                     {/* The implementation can be swap with js to avoid SEO duplication of links. */}
                     <Hidden smUp implementation="css">
                         <AppBar position="fixed" className={classes.appBar}>

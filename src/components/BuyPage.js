@@ -1,20 +1,23 @@
 import React from 'react';
 import {withStyles} from '@material-ui/core/styles';
 import SaleCard from "./SalesIncomes";
-import {Input} from "semantic-ui-react";
+import {Card, Icon, Input} from "semantic-ui-react";
 import {List, Typography} from "@material-ui/core";
-import Form from "semantic-ui-react/dist/commonjs/collections/Form";
-import Radio from "@material-ui/core/Radio";
+import { Form, Radio } from 'semantic-ui-react'
 import Lot from "./Lot";
 import LotStore from "../store/LotsStore"
 import {observer} from "mobx-react";
-
+import Image from "semantic-ui-react/dist/commonjs/elements/Image";
+import Emp from '../images/epm.jpg'
+import UserBuyCard from './UserBuyCard'
 const styles = theme => ({
     root: {
-        top: 0,
+        top: 55,
         position: 'fixed',
-        backgroundColor: '#fff',
+        backgroundColor: '#61c9d8',
         left: 300,
+        display: 'inline-flex',
+        alignItems: 'center',
         right: 0,
         height: 100,
 
@@ -30,8 +33,10 @@ class BuyPage extends React.Component {
     }
 
     state = {
-        val: 1,
+
     };
+    handleChange = (e, { value }) => this.setState({ value })
+
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (!this.LotStore.lots.length && !this.LotStore.lotsFetched) {
@@ -42,9 +47,7 @@ class BuyPage extends React.Component {
         }
     }
 
-    handleChange = event => {
-        this.setState({sum: event.target.value * 2})
-    };
+
 
     handleBuyProccess = (stateOfProccess) => () => {
         if (stateOfProccess) {
@@ -62,47 +65,57 @@ class BuyPage extends React.Component {
         return (
             <div>
                 <div className={classes.root}>
-                    <div>
-                        <div>
-                            <Typography>Цена</Typography>
+
+                        <div style={{marginRight: 30, marginLeft: 20}} >
+                            <Typography variant="h5" color="secondary">Цена</Typography>
                             <Input placeholder='От' style={{marginRight: 7}}/>
                             <Input placeholder='До'/>
                         </div>
-                        <div>
-                            <Form>
-                                <Form.Field>
-                                    Selected value: <b>{this.state.value}</b>
-                                </Form.Field>
-                                <Form.Field>
-                                    <Radio
-                                        label='Choose this'
-                                        name='radioGroup'
-                                        value="1"
-                                        checked={this.state.value === '1'}
-                                        onChange={this.handleChange}
-                                    />
-                                </Form.Field>
-                                <Form.Field>
-                                    <Radio
-                                        label='Or that'
-                                        name='radioGroup'
-                                        value="2"
-                                        checked={this.state.value === '2'}
-                                        onChange={this.handleChange}
-                                    />
-                                </Form.Field>
-                            </Form>
+
+                    <Form>
+                        <Form.Field>
+                            <Typography variant="h6" color="secondary"> Тип продажи: </Typography> <b>{this.state.value}</b>
+                        </Form.Field>
+
+                        <div style={{display: 'flex'}}>
+                        <Form.Field>
+                            <Radio
+                                label='Обычная продажа'
+                                name='radioGroup'
+                                value='this'
+                                checked={this.state.value === 'this'}
+                                onChange={this.handleChange}
+                            />
+                        </Form.Field>
+                        <Form.Field>
+                            <Radio
+                                style={{color: '#fff', marginLeft: 10}}
+                                label='Аукцион'
+                                name='radioGroup'
+                                value='that'
+                                checked={this.state.value === 'that'}
+                                onChange={this.handleChange}
+                            />
+                        </Form.Field>
+                        </div>
+                    </Form>
+
                             <List>
                                 {
                                     this.LotStore.lots.map(elem => <Lot/>)
                                 }
                             </List>
+
                         </div>
-                    </div>
+
+                <div style={{display: 'flex',}}>
+                <UserBuyCard />
+                    <UserBuyCard />
+                    <UserBuyCard />
+                    <UserBuyCard />
+                <UserBuyCard />
                 </div>
-
-
-            </div>
+                </div>
         );
     }
 }
