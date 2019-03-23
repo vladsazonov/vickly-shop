@@ -2,7 +2,7 @@ import React from 'react';
 import {withStyles} from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import 'typeface-roboto';
-import chatsStore from "../store/ChatsStore";
+import chatsStore from "../store/LotsStore";
 import messagesStore from "../store/MessagesStore"
 import {observer} from "mobx-react";
 import accountStore from "../store/AccountStore";

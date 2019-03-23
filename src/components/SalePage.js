@@ -16,7 +16,7 @@ class SalePage extends React.Component {
 
         return (
             <div>
-
+                SALE
             </div>
         );
     }

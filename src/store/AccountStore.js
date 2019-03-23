@@ -3,26 +3,24 @@ import {BACKEND_URL} from "../common";
 import WebSocketService from "../services/websocketService";
 
 class AccountStore {
-    @observable fullName = "";
+    @observable name = "";
     @observable token = "";
     @observable login = "";
     isAdmin = false;
-    userId = null;
-    groupId = null;
-    @observable status = "authed";
+    @observable status = "unauthed";
     err_message = "";
 
     constructor() {
-        this.fullName = sessionStorage.getItem("fullName");
+        this.name = sessionStorage.getItem("name");
         this.token = sessionStorage.getItem("token");
-        this.userId = sessionStorage.getItem("userId");
-        this.groupId = sessionStorage.getItem("groupId");
+        this.isAdmin = sessionStorage.getItem("isAdmin");
         this.login = sessionStorage.getItem("login");
         if (this.token) {
             this.status = "authed";
         }
-        if(this.token)
-            WebSocketService.run(this.token)
+        //TODO LATER
+        // if(this.token)
+        //     WebSocketService.run(this.token)
     }
 
     async loginUser(login, password) {
@@ -35,7 +33,7 @@ class AccountStore {
                 },
                 body: JSON.stringify({
                     "login": login,
-                    "password": password
+                    "pass": password
                 })
             });
             if (!response.ok) {
@@ -47,15 +45,15 @@ class AccountStore {
             const content = await response.json();
 
             runInAction("Auth success", () => {
-                this.fullName = content.first_name + " " + content.last_name;
+                this.name = content.name;
                 this.token = content.token;
                 this.login = login;
                 this.status = "authed";
-                this.userId = content.id;
-                this.groupId = content.group_id;
+                this.isAdmin = content.is_admin;
                 this.saveInLocalStorage(this.fullName, this.token, this.userId, this.groupId, this.login);
             });
-            WebSocketService.run(this.token)
+            //TODO LATER
+            // WebSocketService.run(this.token)
         } catch (err) {
             console.log(err);
             runInAction("Auth failed", () => {
@@ -65,17 +63,16 @@ class AccountStore {
         }
     };
 
-    saveInLocalStorage(fullName, token, userId, groupId, login) {
-        sessionStorage.setItem("fullName", fullName);
+    saveInLocalStorage(name, token, login, isAdmin) {
+        sessionStorage.setItem("name", name);
         sessionStorage.setItem("token", token);
-        sessionStorage.setItem("userId", userId);
-        sessionStorage.setItem("groupId",groupId);
-        sessionStorage.setItem("login",login);
+        sessionStorage.setItem("login", login);
+        sessionStorage.setItem("isAdmin",isAdmin);
     }
 
     @action
     unauth() {
-        this.fullName = null;
+        this.name = null;
         this.token = null;
         this.login = null;
         this.status = "unauthed";

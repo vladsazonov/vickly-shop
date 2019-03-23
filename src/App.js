@@ -36,7 +36,7 @@ class App extends Component {
     //
     // componentDidUpdate(prevProps, prevState, snapshot) {
     //     if (accountStore.status === "authed") {
-    //         chatsStore.fetchChats()
+    //         chatsStore.fetchLots()
     //     }
     // }
 

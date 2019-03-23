@@ -1,5 +1,3 @@
-import {getAllMessages} from "../store/actions/messageActions";
-import {fetchChats} from "../store/actions/mainActions";
 import messageStore from "../store/MessagesStore";
 import {IP} from "../common";
 
@@ -77,14 +75,6 @@ class WebsocketService{
 
     onError = (error) => {
         console.log(error);
-    };
-
-    updateMessageInChat = (chatId) => {
-        getAllMessages(chatId);
-    };
-
-    updateUserList= () => {
-        fetchChats();
     };
 
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import {Badge, Hidden, IconButton, withStyles} from "@material-ui/core";
 import accountStore from "../store/AccountStore";
 import ProfileIco from "./ProfileIco";
-import chatsStore from "../store/ChatsStore";
+import chatsStore from "../store/LotsStore";
 import Typography from "@material-ui/core/es/Typography/Typography";
 import messagesStore from "../store/MessagesStore";
 import InviteIcon from "./InviteIcon";
@@ -56,9 +56,9 @@ class ProfileBar extends React.Component {
 
 
                     <ProfileIco handleLogout={this.accountStore.unauth.bind(accountStore)}
-                                name={this.accountStore.fullName}/>
+                                name={this.accountStore.name}/>
 
-                <Typography variant="h6" color="secondary" className={classes.wrap}>{accountStore.fullName}</Typography>
+                <Typography variant="h6" color="secondary" className={classes.wrap}>{accountStore.name}</Typography>
 
 
                 <InviteIcon />
