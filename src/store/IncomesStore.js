@@ -2,14 +2,16 @@ import {observable, reaction, runInAction} from "mobx";
 import {BACKEND_URL} from "../common";
 import accountStore from "./AccountStore";
 
-class SaleIncomesStore {
+class IncomesStore {
+    @observable buyLots = [];
     @observable saleLots = [];
     @observable fetchFail = false;
+    lotsFetched = false;
     err_message = "";
 
-    async fetchSalesIncomes() {
+    async fetchLots() {
         try {
-            const lotsListResponse = await fetch(BACKEND_URL + "/sales/list", {
+            const lotsListResponse = await fetch(BACKEND_URL + "/goods ", {
                 method: 'GET',
                 headers: {
                     'Authorization': accountStore.token,
@@ -18,13 +20,17 @@ class SaleIncomesStore {
             if (!lotsListResponse.ok) {
                 alert("fetch chats failed");
                 runInAction("Failed fetch users info", () => {
+
                     this.fetchFail = true;
                     this.err_message = lotsListResponse.error();
                 });
             }
             const content = await lotsListResponse.json();
             runInAction("Update users info", () => {
-                this.saleLots = content;
+                let lots = content.goods;
+                this.saleLots = lots.filter(elem => elem.status === 1 || elem.status === 2);
+                this.buyLots = lots.filter(elem => elem.status === 4 || elem.status === 5);
+                this.lotsFetched = true;
             });
         } catch (err) {
             console.log(err);
@@ -35,9 +41,9 @@ class SaleIncomesStore {
         }
     }
 
-    async confirmSaleIncomeStatus(isSuccess) {
+    async confirmBuyIncomeStatus(isSuccess) {
         try {
-            const response = await fetch(BACKEND_URL + `/sale/${"ID"}/status`, {
+            const response = await fetch(BACKEND_URL + `/buy/${"ID"}/status`, {
                 method: 'POST',
                 headers: {
                     'Authorization': accountStore.token,
@@ -64,6 +70,6 @@ class SaleIncomesStore {
     }
 }
 
-const store = new SaleIncomesStore();
+const store = new IncomesStore();
 
 export default store;

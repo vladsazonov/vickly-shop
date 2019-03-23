@@ -1,13 +1,17 @@
 import React from 'react';
 import {withStyles} from '@material-ui/core/styles';
 import BuyCard from "./BuyCard";
+import IncomesStore from "../store/IncomesStore"
+import {observer} from "mobx-react";
 
 const styles = theme => ({});
 
+@observer
 class BuyIncomes extends React.Component {
 
     constructor(props) {
         super(props);
+        this.IncomesStore = IncomesStore;
     }
 
     render() {
@@ -15,7 +19,9 @@ class BuyIncomes extends React.Component {
 
         return (
             <div>
-                <BuyCard/><BuyCard/><BuyCard/><BuyCard/><BuyCard/><BuyCard/><BuyCard/><BuyCard/><BuyCard/><BuyCard/><BuyCard/><BuyCard/><BuyCard/><BuyCard/><BuyCard/><BuyCard/>}
+                {
+                    this.IncomesStore.buyLots.map(elem => <BuyCard/>)
+                }
             </div>
         );
     }
