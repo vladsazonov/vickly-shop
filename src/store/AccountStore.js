@@ -1,5 +1,6 @@
 import {computed, observable, action, runInAction} from "mobx";
 import {BACKEND_URL} from "../common";
+import IncomesStore from "./IncomesStore"
 import WebSocketService from "../services/websocketService";
 
 class AccountStore {
@@ -14,7 +15,7 @@ class AccountStore {
     constructor() {
         this.name = sessionStorage.getItem("name");
         this.token = sessionStorage.getItem("token");
-        this.isAdmin = sessionStorage.getItem("isAdmin") === "true" ? true : false;
+        this.isAdmin = sessionStorage.getItem("isAdmin") === "true";
         this.login = sessionStorage.getItem("login");
         if (this.token) {
             this.status = "authed";
@@ -51,6 +52,8 @@ class AccountStore {
                 this.login = login;
                 this.status = "authed";
                 this.isAdmin = content.is_admin;
+                if (this.isAdmin)
+                    IncomesStore.fetchLots();
                 this.saveInLocalStorage(this.name, this.token,this.login,this.isAdmin);
             });
             //TODO LATER
