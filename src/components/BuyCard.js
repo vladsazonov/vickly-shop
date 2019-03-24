@@ -70,7 +70,6 @@ alignItems: 'center',
     },
 });
 
-const lotName = 'Меч арзула';
 const description = 'Супер крутой мечь который я дропнул с Варизла 88 лвл с дополнительным бафом на +37 к друиду нахуй';
 const price = '3000p';
 const game = 'Linage 2';
@@ -114,17 +113,17 @@ class BuyCard extends React.Component {
                 <div className={classes.root}>
                     <div style={{marginRight: 10, display: 'flex', alignItems: 'center'}}>
                         <Avatar style={{marginRight: 5}}>NN</Avatar>
-                        <Typography variant="button">{user}</Typography>
+                        <Typography variant="button">{this.props.name}</Typography>
                     </div>
                     <div style={{marginRight: 20}}>
-                        <Typography variant="button">{price}</Typography>
+                        <Typography variant="button">{this.props.price} руб.</Typography>
                         <Typography variant="overline"> {type}</Typography>
                     </div>
                     <div onClick={this.handleClickOpen} className={classes.butt}>
 
                         <div><img alt="Remy Sharp" src={Img} className={classes.img}/></div>
                         <div className={classes.caption}>
-                            <Typography variant="title">{lotName}</Typography>
+                            <Typography variant="title">{this.props.summary}</Typography>
                             <Typography variant="overline" style={{marginLeft: 5}}> {game}</Typography>
                         </div>
                     </div>

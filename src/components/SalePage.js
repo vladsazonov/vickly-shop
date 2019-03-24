@@ -73,7 +73,12 @@ class SalePage extends React.Component {
     state = {
         value: '',
         sum: 0,
-        activeStep: 0
+        activeStep: 0,
+        name: "",
+        summary:"",
+        text:"",
+        type:"0",
+        game:""
     };
 
     handleChange = event => {
@@ -92,7 +97,7 @@ class SalePage extends React.Component {
     ];
 
     handleAddLot() {
-        this.LotsStore.postLot("sdfsdbfshdfs", "Меч Квазимара", 10000, "0");
+        this.LotsStore.postLot(this.state.name, this.state.summary, this.state.text, this.state.price,"0",this.state.game);
         this.setState({
             activeStep:1
         });

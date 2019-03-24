@@ -68,7 +68,7 @@ class LotsStore {
         }
     }
 
-    async postLot(summary, text, price, type) {
+    async postLot(name, summary, text, price, type, game) {
         try {
             const gameListResponse = await fetch(BACKEND_URL + "/goods", {
                 method: 'POST',
@@ -81,7 +81,9 @@ class LotsStore {
                     text: text,
                     price: price,
                     typed: type,
-                    status: 0
+                    status: 0,
+                    game: game,
+                    name: name
                 })
             });
             if (!gameListResponse.ok) {
