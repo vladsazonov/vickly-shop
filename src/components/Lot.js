@@ -11,6 +11,7 @@ import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import ListItemText from "@material-ui/core/ListItemText";
 import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import UserBuyCard2 from "./UserBuyCard2";
 
 const styles = theme => ({
     root: {
@@ -83,24 +84,7 @@ class Lot extends React.Component {
 
         return (
             <div className={classes.root}>
-                <div><img alt="Remy Sharp" src={Img} className={classes.img}/></div>
-
-                <div className={classes.caption}>
-                    <Typography variant="title">{lotName}</Typography>
-                    <Typography variant="Subheading">{description}</Typography>
-                </div>
-
-                <div style={{marginRight: 10,}}>
-                    <Typography variant="overline" style={{marginLeft: 5}}> {game}</Typography>
-                </div>
-
-                <div style={{marginRight: 20}}>
-                    <Typography variant="button">{price}</Typography>
-                </div>
-
-                <div style={{marginRight: 20}}>
-                    <Typography variant="button">Продавец: {user}</Typography>
-                </div>
+               <UserBuyCard2  {...this.props} />
             </div>
         );
     }

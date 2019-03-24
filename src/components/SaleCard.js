@@ -21,7 +21,7 @@ const styles = theme => ({
         display: 'flex',
         alignItems: 'start',
         borderBottom: '1px solid #ececec',
-        padding: '5px 10px 5px 10px',
+        padding: 10,
         justifyContent: 'space-between',
         backgroundColor: '#fff','&:hover': {
             backgroundColor: '#dfe0ea',
@@ -201,7 +201,7 @@ class SaleCard extends React.Component {
                 <ListItem  button onClick={this.handleClickOpen}>
                     <div className={classes.root}>
 
-                        <div  style={{display: 'flex', alignItems: 'center' }}>
+                        <div  style={{display: 'flex', alignItems: 'center', minWidth: '33%' }}>
 
                            <div><img alt="Remy Sharp" src={Img} className={classes.img}/></div>
 
@@ -210,12 +210,12 @@ class SaleCard extends React.Component {
                             <Typography variant="Subheading" className={classes.caption}>Описание:  {this.props.text}</Typography>
                         </div>
                         </div>
-                        <div style={{marginRight: 20}}>
+                        <div style={{marginRight: 20, minWidth: '33%'}}>
 
                             <Typography variant="button">  Цена: {this.props.price} руб.</Typography>
                             <Typography variant="overline">Вид продажи:  {type}</Typography>
                         </div>
-                        <div style={{marginRight: 10, display: 'inline-flex', alignItems: 'center'}}>
+                        <div style={{marginRight: 10, display: 'inline-flex', alignItems: 'center', minWidth: '33%'}}>
                             <Avatar style={{marginRight: 5}}>NN</Avatar>
                             <div>
                             <Typography variant="button">Продавец: {this.props.name}</Typography>

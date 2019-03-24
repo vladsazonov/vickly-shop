@@ -86,7 +86,7 @@ class SalePage extends React.Component {
     handleChange = event => {
         this.setState({
             sum: event.target.value,
-            sumAll: Math.ceil((event.target.value * 0.85) * 100) / 100
+            sumAll: Math.ceil((event.target.value * 0.92) * 100) / 100
         })
     };
 

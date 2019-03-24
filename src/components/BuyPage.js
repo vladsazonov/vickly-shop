@@ -94,7 +94,6 @@ class BuyPage extends React.Component {
                     <Form>
                         <Form.Field>
                             <Typography variant="h6" color="secondary"> Тип продажи: </Typography>
-                            <b>{this.state.value}</b>
                         </Form.Field>
 
                         <div style={{display: 'flex'}}>

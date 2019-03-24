@@ -17,7 +17,7 @@ import IncomesStore from "../store/IncomesStore"
 
 const styles = theme => ({
     root: {
-        padding: 10,
+        padding: 4,
         display: 'flex',
         alignItems: 'center',
         borderBottom: '1px solid #ececec',
@@ -25,8 +25,8 @@ const styles = theme => ({
         backgroundColor: '#fff',
     },
     img: {
-        width: 55,
-        height: 55,
+        width: 40,
+        height: 40,
         borderRadius: 50,
         marginRight: 10,
     },
@@ -49,7 +49,7 @@ alignItems: 'center',
     buttonOk: {
         borderColor: theme.palette.primary.confim,
         color: theme.palette.primary.confim,
-        marginRight: 10,
+        marginRight: 60,
     },
     buttonNo: {
         borderColor: theme.palette.primary.decline,
@@ -65,8 +65,9 @@ alignItems: 'center',
         alignItems: 'center',
         borderRadius: 6,
         padding: 4,
+        minWidth: '25%',
         '&:hover': {
-            backgroundColor: '#cacaca',
+            backgroundColor: '#dfe0ea',
         },
     },
     progress: {
@@ -128,11 +129,11 @@ class BuyCard extends React.Component {
         return (
             <div>
                 <div className={classes.root}>
-                    <div style={{marginRight: 10, display: 'flex', alignItems: 'center'}}>
+                    <div style={{marginRight: 10, display: 'flex', alignItems: 'center', minWidth: '25%',}}>
 
                         <Typography variant="button">   Покупатель: {this.props.name}</Typography>
                     </div>
-                    <div style={{marginRight: 20}}>
+                    <div style={{marginRight: 20, minWidth: '25%'}}>
                         <Typography variant="button">Цена: {this.props.price} руб.</Typography>
                         <Typography variant="overline">Вид продажи:  {type}</Typography>
                     </div>
@@ -145,7 +146,7 @@ class BuyCard extends React.Component {
                     </div>
 
 
-                    <div>
+                    <div style={{minWidth: '25%', textAlign: 'end',}}>
                         <Button variant="outlined" onClick={this.handleClickOpenProcessing} className={classes.buttonOk}>Взять в работу</Button>
                     </div>
                 </div>
@@ -155,7 +156,7 @@ class BuyCard extends React.Component {
                             paper: classes.paper, // class name, e.g. `classes-nesting-root-x`
                         }}>
                     <DialogTitle id="simple-dialog-title">Продаваемый лот</DialogTitle>
-                    <Lot/>
+                    <Lot {...this.props}/>
                 </Dialog>
 
                 <Dialog onClose={this.handleCloseProcessing} open={this.state.setOpenProcessing}
@@ -163,12 +164,12 @@ class BuyCard extends React.Component {
                         classes={{
                             paper: classes.paper, // class name, e.g. `classes-nesting-root-x`
                         }}>
-                    <DialogTitle id="simple-dialog-title">Обменяйте лот с игроком</DialogTitle>
+                    <DialogTitle id="simple-dialog-title">Обменяйте лот с игроком: SuperHot228</DialogTitle>
                     <CircularProgress className={classes.progress}/>
-                    <div>
-                        <Button variant="outlined" onClick={this.handleChangeIncomeStatus(true)}
+                    <div style={{margin: 5}}>
+                        <Button onClick={this.handleChangeIncomeStatus(true)}
                                 className={classes.buttonOk}>Сделка совершилась</Button>
-                        <Button variant="outlined" onClick={this.handleChangeIncomeStatus(false)} className={classes.buttonNo}>Сделка сорвалась</Button>
+                        <Button  onClick={this.handleChangeIncomeStatus(false)} className={classes.buttonNo}>Сделка сорвалась</Button>
                     </div>
                 </Dialog>
 
