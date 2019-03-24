@@ -125,7 +125,7 @@ class BuyPage extends React.Component {
                         flexWrap: 'wrap', justifyContent: 'flex-start' }}>
 
                         {
-                            this.LotStore.lots.map(elem => <UserBuyCard admin_name={elem.admin_name} summary={elem.summary} text={elem.text} price={elem.price}  />)
+                            this.LotStore.lots.map(elem => <UserBuyCard id={elem._id} admin_name={elem.admin_name} summary={elem.summary} text={elem.text} price={elem.price}  />)
                         }
 
                     </div>

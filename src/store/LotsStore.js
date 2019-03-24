@@ -117,18 +117,15 @@ class LotsStore {
 
     async postBuy(lotId) {
         try {
-            const gameListResponse = await fetch(BACKEND_URL + "/wantbuy", {
-                method: 'POST',
+            const gameListResponse = await fetch(BACKEND_URL + `/goods/${lotId}`, {
+                method: 'GET',
                 headers: {
                     'Authorization': accountStore.token,
                     'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    lotId:lotId
-                })
+                }
             });
             if (!gameListResponse.ok) {
-                alert("add lot failed");
+                alert("buy lot failed");
                 runInAction("add lot", () => {
                     this.fetchFail = true;
                     this.err_message = gameListResponse.error();
@@ -141,7 +138,7 @@ class LotsStore {
             // });
         } catch (err) {
             console.log(err);
-            runInAction("Failed fetch users info", () => {
+            runInAction("buy lot failed", () => {
                 this.fetchFail = true;
                 this.err_message = err;
             });

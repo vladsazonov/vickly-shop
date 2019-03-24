@@ -49,6 +49,10 @@ class userBuyCard extends React.Component {
         }
     };
 
+    handleBuyLOL(){
+        this.LotStore.postBuy(this.props.id);
+    };
+
     render() {
         const {classes, theme} = this.props;
 
@@ -76,7 +80,7 @@ class userBuyCard extends React.Component {
                     </Card.Content>
                     <Card.Content extra style={{display: 'flex', justifyContent: 'center'}}>
                         <a>
-                            <Button color="primary">Купить</Button>
+                            <Button onClick={this.handleBuyLOL.bind(this)} color="primary">Купить</Button>
                         </a>
                     </Card.Content>
 
