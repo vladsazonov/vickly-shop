@@ -53,7 +53,7 @@ class userBuyCard extends React.Component {
         const {classes, theme} = this.props;
 
         return (
-            <div style={{margin: '0px 10px 20px 10px', overflow: 'hidden'}}>
+            <div style={{margin: '6px 6px 6px 6px', overflow: 'hidden'}}>
                 <Card style={{width: 300}}>
                     <Image src={Emp} style={{width: 300,}}/>
                     <Card.Content>

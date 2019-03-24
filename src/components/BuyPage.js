@@ -14,14 +14,24 @@ import UserBuyCard from './UserBuyCard'
 const styles = theme => ({
     root: {
         top: 55,
-        position: 'fixed',
+       position: 'sticky',
         margin: 26,
         backgroundColor: '#61c9d8',
-        left: 300,
+        width:' -webkit-fill-available',
         display: 'inline-flex',
         alignItems: 'center',
-        right: 0,
         height: 100,
+        zIndex: 5000,
+
+    },
+    root1: {
+        top: 0,
+       // position: 'fixed',
+        backgroundColor: '#ececec',
+        left: 300,
+        zIndex: 500,
+        right: 0,
+        height:200,
 
     }
 });
@@ -63,9 +73,9 @@ class BuyPage extends React.Component {
         const {classes, theme} = this.props;
 
         return (
-            <div>
+            <div >
+                <div >
                 <div className={classes.root}>
-
                     <div style={{marginRight: 30, marginLeft: 20}}>
                         <Typography variant="h5" color="secondary">Цена</Typography>
                         <Input placeholder='От' style={{marginRight: 7}}/>
@@ -101,15 +111,16 @@ class BuyPage extends React.Component {
                         </div>
                     </Form>
                 </div>
-                    <div style={{margin: '150px 20px 0 20px', maxWidth: '100%', display: 'flex', minWidth: 0, overflow: 'hidden', flexDirection: 'row',
-                        flexWrap: 'wrap', justifyContent: 'space-evenly'}}>
+
+                    <div style={{margin: '0px 20px 0px 20px', maxWidth: '100%', display: 'flex', minWidth: 0, overflow: 'hidden', flexDirection: 'row',
+                        flexWrap: 'wrap', justifyContent: 'flex-start' }}>
 
                         {
                             this.LotStore.lots.map(elem => <UserBuyCard admin_name={elem.admin_name} summary={elem.summary} text={elem.text} price={elem.price}  />)
                         }
 
                     </div>
-
+            </div>
             </div>
         );
     }

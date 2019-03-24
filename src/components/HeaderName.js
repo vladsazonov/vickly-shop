@@ -72,7 +72,7 @@ const game = 'Linage 2';
 const user = 'Nagibator322';
 const type = 'Обычная продажа';
 
-class SaleCard extends React.Component {
+class HeaderName extends React.Component {
 
     constructor(props) {
         super(props);
@@ -124,7 +124,7 @@ class SaleCard extends React.Component {
                 <DialogTitle id="simple-dialog-title">Лот на продажу</DialogTitle>
                 <div>
                     <div className={classes.root}>
-                        <img alt="Remy Sharp" src={Img} className={classes.imgMod}/>
+                        <Typography variant="h4">Имя лота</Typography>
                         <div className={classes.captionMod}>
                             <Typography variant="h4">{this.props.summary}</Typography>
                             <Typography variant="Subheading">{this.props.text}</Typography>
@@ -186,14 +186,10 @@ class SaleCard extends React.Component {
             <div>
                 <ListItem className={classes.listItem} button onClick={this.handleClickOpen}>
                     <div className={classes.root}>
-
-                        <div style={{display: 'flex'}}>
-                            <Typography>Лот: </Typography>
-                        <div><img alt="Remy Sharp" src={Img} className={classes.img}/></div>
+                        <Typography variant="h4">Имя лота</Typography>
                         <div className={classes.caption}>
                             <Typography variant="title">{this.props.summary}</Typography>
                             <Typography variant="Subheading" className={classes.caption}>{this.props.text}</Typography>
-                        </div>
                         </div>
                         <div style={{marginRight: 20}}>
                             <Typography variant="button">{this.props.price} руб.</Typography>
@@ -236,4 +232,4 @@ class SaleCard extends React.Component {
     }
 }
 
-export default withStyles(styles)(SaleCard);
+export default withStyles(styles)(HeaderName);

@@ -8,6 +8,7 @@ import BuyCard from "./BuyCard";
 import IncomesStore from "../store/IncomesStore"
 import LotsStore from "../store/LotsStore"
 import {observer} from "mobx-react";
+import HeaderName from './HeaderName'
 
 const styles = theme => ({
     root: {
@@ -74,6 +75,7 @@ class SalesIncomes extends React.Component {
                     </Tabs>
                 </AppBar>
                 <div style={{margin: '0'}}>
+                    <HeaderName/>
                     {this.state.value === 0 ?
                         this.IncomesStore.saleLots.map(elem => <SaleCard name={elem.name} price={elem.price} summary={elem.summary} text={elem.text} />)
                         :
