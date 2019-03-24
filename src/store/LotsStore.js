@@ -5,6 +5,7 @@ import accountStore from "./AccountStore";
 class LotsStore {
     @observable lots = [];
     @observable games = [];
+    gamesOptions = [];
     @observable fetchFail = false;
     lotsFetched=false;
     gamesFetched=false;
@@ -57,6 +58,13 @@ class LotsStore {
             const content = await gameListResponse.json();
             runInAction("Update users info", () => {
                 this.games = content.games;
+                this.gamesOptions = this.games.map(elem => {
+                    return {
+                        key:elem.name,
+                        text:elem.name,
+                        value:elem.name
+                    }
+                });
                 this.gamesFetched = true;
             });
         } catch (err) {
@@ -79,7 +87,7 @@ class LotsStore {
                 body: JSON.stringify({
                     summary: summary,
                     text: text,
-                    price: price,
+                    price: parseInt(price,10),
                     typed: type,
                     status: 0,
                     game: game,

@@ -74,10 +74,10 @@ class SalePage extends React.Component {
     state = {
         value: '',
         name: "",
-        summary:"",
-        text:"",
-        type:"0",
-        game:"",
+        summary: "",
+        text: "",
+        type: "0",
+        game: "",
         sum: null,
         sumAll: null,
         activeStep: 0
@@ -90,19 +90,13 @@ class SalePage extends React.Component {
         })
     };
 
-    options = [
-        {key: 'page', text: 'Название игры', value: 'page'},
-        {key: 'org', text: 'DayZ', value: 'DayZ'},
-        {key: 'site', text: 'Doka 2', value: 'Doka2'},
-    ];
-
     sellOptions = [
         {key: 'deal', text: 'Страндартная продажа', value: '1'},
         {key: 'auction', text: 'Аукцион', value: '2'},
     ];
 
     handleAddLot() {
-        this.LotsStore.postLot(this.state.name, this.state.summary, this.state.text, this.state.price,"0",this.state.game);
+        this.LotsStore.postLot(this.state.name, this.state.summary, this.state.text, this.state.sum, "0", this.state.game);
         this.setState({
             activeStep: 1
         });
@@ -125,6 +119,23 @@ class SalePage extends React.Component {
             activeStep: 0
         })
     };
+
+    handleNameChange(event) {
+        this.setState({name: event.target.value})
+    };
+
+    handleTextChange(event) {
+        this.setState({text: event.target.value})
+    };
+
+    handleSummaryChange(event) {
+        this.setState({summary: event.target.value})
+    };
+
+    handleGameChange(event, data) {
+        this.setState({game: data.value})
+    };
+
 
     handleSecondStep = (isSuccess) => () => {
         if (isSuccess) {
@@ -151,19 +162,24 @@ class SalePage extends React.Component {
                     <Grid item xs={12} sm={6}>
                         <Input
                             action={
-                                <Dropdown button basic floating options={this.options} defaultValue='page'/>
+                                <Dropdown onChange={this.handleGameChange.bind(this)} button basic floating
+                                          options={this.LotsStore.gamesOptions} defaultValue='page'/>
                             }
                             icon='search'
+                            value={this.state.name}
+                            onChange={this.handleNameChange.bind(this)}
                             iconPosition='left'
                             placeholder='Ваш ник в игре'
                         />
                     </Grid>
                     <Grid item xs={12} sm={6}>
-                        <Input fluid placeholder='Название предмета'/>
+                        <Input value={this.state.summary} onChange={this.handleSummaryChange.bind(this)} fluid
+                               placeholder='Название предмета'/>
                     </Grid>
                     <Grid item xs={12}>
                         <Form>
-                            <TextArea placeholder='Описание предмета'/>
+                            <TextArea value={this.state.text} onChange={this.handleTextChange.bind(this)}
+                                      placeholder='Описание предмета'/>
                         </Form>
                     </Grid>
 
@@ -220,7 +236,7 @@ class SalePage extends React.Component {
 
                 <div>
                     <Typography variant="h6"> Ваша заявка будет рассмотрена админом BLESSEDging </Typography>
-                   <div> <Button variant="outlined" onClick={this.handleReset}>Новый лот</Button></div>
+                    <div><Button variant="outlined" onClick={this.handleReset}>Новый лот</Button></div>
                 </div>
             </div>
         )
@@ -242,25 +258,25 @@ class SalePage extends React.Component {
         const steps = ["Согласование", "Обработка"];
         return (
             <div style={{display: 'flex', justifyContent: 'center'}}>
-            <div className={classes.root}>
-                <Stepper activeStep={this.state.activeStep}>
-                    {
-                        steps.map((label, index) => {
-                            const labelProps = {};
-                            return (
-                                <Step key={label}>
-                                    <StepLabel>{label}</StepLabel>
-                                </Step>
-                            );
-                        })
-                    }
-                </Stepper>
-                <div>
-                    {
-                        this.getStepContent(this.state.activeStep)
-                    }
+                <div className={classes.root}>
+                    <Stepper activeStep={this.state.activeStep}>
+                        {
+                            steps.map((label, index) => {
+                                const labelProps = {};
+                                return (
+                                    <Step key={label}>
+                                        <StepLabel>{label}</StepLabel>
+                                    </Step>
+                                );
+                            })
+                        }
+                    </Stepper>
+                    <div>
+                        {
+                            this.getStepContent(this.state.activeStep)
+                        }
+                    </div>
                 </div>
-            </div>
             </div>
         );
     }
