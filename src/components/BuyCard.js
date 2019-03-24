@@ -39,8 +39,8 @@ const styles = theme => ({
         marginRight: 50,
         overflow: 'hidden',
         whiteSpace: 'nowrap', /* Отменяем перенос текста */
-textOverflow: 'ellipsis',
-alignItems: 'center',
+        textOverflow: 'ellipsis',
+        alignItems: 'center',
     },
     captionMod: {
         marginRight: 50,
@@ -49,7 +49,7 @@ alignItems: 'center',
     buttonOk: {
         borderColor: theme.palette.primary.confim,
         color: theme.palette.primary.confim,
-        marginRight: 60,
+
     },
     buttonNo: {
         borderColor: theme.palette.primary.decline,
@@ -131,23 +131,24 @@ class BuyCard extends React.Component {
                 <div className={classes.root}>
                     <div style={{marginRight: 10, display: 'flex', alignItems: 'center', minWidth: '25%',}}>
 
-                        <Typography variant="button">   Покупатель: {this.props.name}</Typography>
+                        <Typography variant="button"> Покупатель: {this.props.name}</Typography>
                     </div>
                     <div style={{marginRight: 20, minWidth: '25%'}}>
                         <Typography variant="button">Цена: {this.props.price} руб.</Typography>
-                        <Typography variant="overline">Вид продажи:  {type}</Typography>
+                        <Typography variant="overline">Вид продажи: {type}</Typography>
                     </div>
                     <div onClick={this.handleClickOpen} className={classes.butt}>
-                       <img alt="Remy Sharp" src={Img} className={classes.img}/>
+                        <img alt="Remy Sharp" src={Img} className={classes.img}/>
                         <div className={classes.caption}>
                             <Typography variant="title">Название: {this.props.summary}</Typography>
-                            <Typography variant="overline" style={{marginLeft: 5}}>ИГра:  {game}</Typography>
+                            <Typography variant="overline" style={{marginLeft: 5}}>ИГра: {game}</Typography>
                         </div>
                     </div>
 
 
                     <div style={{minWidth: '25%', textAlign: 'end',}}>
-                        <Button variant="outlined" onClick={this.handleClickOpenProcessing} className={classes.buttonOk}>Взять в работу</Button>
+                        <Button variant="outlined" onClick={this.handleClickOpenProcessing}
+                                className={classes.buttonOk}>Взять в работу</Button>
                     </div>
                 </div>
 
@@ -164,12 +165,12 @@ class BuyCard extends React.Component {
                         classes={{
                             paper: classes.paper, // class name, e.g. `classes-nesting-root-x`
                         }}>
-                    <DialogTitle id="simple-dialog-title">Обменяйте лот с игроком: SuperHot228</DialogTitle>
-                    <CircularProgress className={classes.progress}/>
-                    <div style={{margin: 5}}>
+                    <DialogTitle id="simple-dialog-title">Подтвердите передачу лота игроку: SuperHot228</DialogTitle>
+                   {/* <CircularProgress className={classes.progress}/>*/}
+                    <div style={{marginLeft: 23, marginBottom: 8,}}>
                         <Button onClick={this.handleChangeIncomeStatus(true)}
-                                className={classes.buttonOk}>Сделка совершилась</Button>
-                        <Button  onClick={this.handleChangeIncomeStatus(false)} className={classes.buttonNo}>Сделка сорвалась</Button>
+                                className={classes.buttonOk}>Передано</Button>
+                        <Button onClick={this.handleChangeIncomeStatus(false)} className={classes.buttonNo}>Не передано</Button>
                     </div>
                 </Dialog>
 

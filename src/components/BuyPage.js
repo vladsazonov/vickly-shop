@@ -120,7 +120,7 @@ class BuyPage extends React.Component {
                     </Form>
                 </div>
 
-                    <div style={{margin: '0px 20px 0px 20px', maxWidth: '100%', display: 'flex', minWidth: 0, overflow: 'hidden', flexDirection: 'row',
+                    <div style={{margin: '0px 20px 50px 20px', maxWidth: '100%', display: 'flex', minWidth: 0, overflow: 'hidden', flexDirection: 'row',
                         flexWrap: 'wrap', justifyContent: 'flex-start' }}>
 
                         {

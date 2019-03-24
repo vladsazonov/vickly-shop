@@ -34,6 +34,9 @@ import LocalAtm from "@material-ui/icons/LocalAtm"
 import Beenhere from "@material-ui/icons/Beenhere"
 import Shop from "@material-ui/icons/Shop"
 import ProfileBarApp from "./ProfileBarApp";
+import Twitter from '../images/twitter.svg'
+import InputBase from '@material-ui/core/InputBase';
+import TextField from '@material-ui/icons/TextFields'
 
 const styles = theme => ({
 
@@ -47,6 +50,24 @@ const styles = theme => ({
         left: 100,
         right: 100,
         flexGrow: 1,
+    },
+    margin: {
+      backgroundColor: '#f1f1f1',
+      borderRadius: 6,
+      width: '20%',
+        height: 40,
+        margin: 10
+
+    },
+    inputRoot: {
+        color: '#000',
+    },
+    inputInput: {
+        width: '100%',
+        [theme.breakpoints.up('md')]: {
+            width: 200,
+        },
+        backgroundColor: '#000',
     },
     drawer: {
         [theme.breakpoints.up('lg')]: {
@@ -177,7 +198,6 @@ class Home extends React.Component {
 
 
         drawer = (
-            <Scrollbars autoHide>
                 <div>
                     <Hidden xsDown implementation="css">
                     </Hidden>
@@ -234,8 +254,9 @@ class Home extends React.Component {
                         }
 
                     </List>
+
+
                 </div>
-            </Scrollbars>
         );
 
 
@@ -252,7 +273,7 @@ class Home extends React.Component {
                                 <MenuIcon/>
                             </IconButton>
                             <div className={classes.logoDiv}><Typography variant="h4">ViclyShop</Typography><Shop style={{color: '#ef2600'}} /></div>
-
+                            <TextField className={classes.margin} label="njjjj" />
                             <div className={classes.userBar}>
                                 {/* <InviteIcon />
                                 <ProfileIco />*/}

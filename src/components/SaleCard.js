@@ -201,7 +201,7 @@ class SaleCard extends React.Component {
                 <ListItem  button onClick={this.handleClickOpen}>
                     <div className={classes.root}>
 
-                        <div  style={{display: 'flex', alignItems: 'center', minWidth: '33%' }}>
+                        <div  style={{display: 'flex', alignItems: 'center', minWidth: '33%', maxWidth: 93 }}>
 
                            <div><img alt="Remy Sharp" src={Img} className={classes.img}/></div>
 
