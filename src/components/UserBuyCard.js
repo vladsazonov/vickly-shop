@@ -59,11 +59,12 @@ class userBuyCard extends React.Component {
         return (
             <div style={{margin: '6px 6px 6px 6px', overflow: 'hidden'}}>
                 <Card style={{width: 300}}>
-                    <Image src={Emp} style={{width: 300,}}/>
+                    <Image src={this.props.photo || Emp} style={{width: 300,height: 200,backgroundSize: "cover", backgroundRepeat: "no-repeat",backgroundPosition: "50% 50%",
+                        objectFit: "cover"}}/>
                     <Card.Content>
                         <Card.Header>{this.props.summary}</Card.Header>
                         <Card.Meta>
-                            <span className='date'>{this.props.summary}</span>
+                            <span className='date'>{this.props.game}</span>
                         </Card.Meta>
                         <Card.Description style={{overflow: 'hidden',
                             whiteSpace: 'nowrap', /* Отменяем перенос текста */
@@ -72,7 +73,7 @@ class userBuyCard extends React.Component {
                     <Card.Content extra>
                         <a>
                             <Icon name='user' />
-                           {this.AccountStore.name}
+                           {this.props.name}
                         </a>
                     </Card.Content>
                     <Card.Content extra>

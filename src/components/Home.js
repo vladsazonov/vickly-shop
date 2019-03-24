@@ -34,7 +34,6 @@ import LocalAtm from "@material-ui/icons/LocalAtm"
 import Beenhere from "@material-ui/icons/Beenhere"
 import Shop from "@material-ui/icons/Shop"
 import ProfileBarApp from "./ProfileBarApp";
-import Twitter from '../images/twitter.svg'
 import InputBase from '@material-ui/core/InputBase';
 import TextField from '@material-ui/icons/TextFields'
 

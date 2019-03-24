@@ -130,7 +130,7 @@ class HeaderName extends React.Component {
                             <Typography variant="Subheading">{this.props.text}</Typography>
                             <div style={{marginRight: 10, width: '50%', marginTop: 10,}}>
                                 <Typography variant="h6"  style={{color: 'red'}} >{this.props.price}  руб.</Typography>
-                                <Typography variant="overline"> {game}</Typography>
+                                <Typography variant="overline"> {this.props.game}</Typography>
                             </div>
                         </div>
 
@@ -198,7 +198,7 @@ class HeaderName extends React.Component {
                         <div style={{marginRight: 10, display: 'flex', alignItems: 'center'}}>
                             <Avatar style={{marginRight: 5}}>NN</Avatar>
                             <Typography variant="button">{this.props.name}</Typography>
-                            <Typography variant="overline" style={{marginLeft: 5}}> {game}</Typography>
+                            <Typography variant="overline" style={{marginLeft: 5}}> {this.props.game}</Typography>
                         </div>
                         {/*<div>*/}
                         {/*<Button variant="outlined" className={classes.buttonOk}>Принять</Button>*/}

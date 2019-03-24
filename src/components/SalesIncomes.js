@@ -76,16 +76,16 @@ class SalesIncomes extends React.Component {
             <div className={classes.root}>
                 <AppBar position="static" className={classes.appbar}>
                     <Tabs value={this.state.value} onChange={this.handleChange} className={classes.tabs}>
-                        <Tab label="Лоты на продажу"/>
-                        <Tab label="Лоты на покупку"/>
+                        <Tab label="Заявки на продажу"/>
+                        <Tab label="Заявки на покупку"/>
                     </Tabs>
                 </AppBar>
                 <div style={{margin: '0'}}>
                   {/*  <HeaderName/>*/}
                     {this.state.value === 0 ?
-                        this.IncomesStore.saleLots.map(elem => <SaleCard id={elem._id} name={elem.name} price={elem.price} summary={elem.summary} text={elem.text} />)
+                        this.IncomesStore.saleLots.map(elem => <SaleCard photo={elem.photo} id={elem._id} name={elem.name} price={elem.price} summary={elem.summary} text={elem.text} game={elem.game} />)
                         :
-                        this.IncomesStore.buyLots.map(elem => <BuyCard id={elem._id}  name={elem.name} price={elem.price} summary={elem.summary} text={elem.text}/>)
+                        this.IncomesStore.buyLots.map(elem => <BuyCard photo={elem.photo} id={elem._id}  name={elem.name} price={elem.price} summary={elem.summary} text={elem.text} game={elem.game}/>)
                     }
                 </div>
             </div>

@@ -145,6 +145,36 @@ class LotsStore {
         }
     }
 
+    // async postImage(imageBytes, id) {
+    //     try {
+    //         const gameListResponse = await fetch(BACKEND_URL + `/goods/${lotId}`, {
+    //             method: 'GET',
+    //             headers: {
+    //                 'Authorization': accountStore.token,
+    //                 'Content-Type': 'application/json'
+    //             }
+    //         });
+    //         if (!gameListResponse.ok) {
+    //             alert("buy lot failed");
+    //             runInAction("add lot", () => {
+    //                 this.fetchFail = true;
+    //                 this.err_message = gameListResponse.error();
+    //             });
+    //         }
+    //         // NO CONTENT
+    //         // const content = await gameListResponse.json();
+    //         // runInAction("Update users info", () => {
+    //         //     this.games = content;
+    //         // });
+    //     } catch (err) {
+    //         console.log(err);
+    //         runInAction("buy lot failed", () => {
+    //             this.fetchFail = true;
+    //             this.err_message = err;
+    //         });
+    //     }
+    // }
+
 }
 
 const store = new LotsStore();

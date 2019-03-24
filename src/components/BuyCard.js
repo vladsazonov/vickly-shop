@@ -40,8 +40,7 @@ const styles = theme => ({
         overflow: 'hidden',
         whiteSpace: 'nowrap', /* Отменяем перенос текста */
         textOverflow: 'ellipsis',
-        alignItems: 'center',
-        minHeight: 96,
+        alignItems: 'center'
     },
     captionMod: {
         marginRight: 50,
@@ -130,7 +129,7 @@ class BuyCard extends React.Component {
         return (
             <div>
                 <div className={classes.root}>
-                    <div style={{marginRight: 10, display: 'flex', alignItems: 'center', minWidth: '25%',}}>
+                    <div style={{marginRight: 10, display: 'flex', alignItems: 'center', minWidth: '20%',}}>
 
                         <Typography variant="button"> Покупатель: {this.props.name}</Typography>
                     </div>
@@ -139,10 +138,10 @@ class BuyCard extends React.Component {
                         <Typography variant="overline">Вид продажи: {type}</Typography>
                     </div>
                     <div onClick={this.handleClickOpen} className={classes.butt}>
-                        <img alt="Remy Sharp" src={Img} className={classes.img}/>
+                        <img alt="Remy Sharp" src={this.props.photo || Img} className={classes.img}/>
                         <div className={classes.caption}>
                             <Typography variant="title">Название: {this.props.summary}</Typography>
-                            <Typography variant="overline" style={{marginLeft: 5}}>ИГра: {game}</Typography>
+                            <Typography variant="overline" style={{marginLeft: 5}}>Игра: {this.props.game}</Typography>
                         </div>
                     </div>
 

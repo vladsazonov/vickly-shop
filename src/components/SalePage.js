@@ -18,12 +18,12 @@ import TextArea from "semantic-ui-react/dist/commonjs/addons/TextArea";
 import Form from "semantic-ui-react/dist/commonjs/collections/Form";
 import Label from "semantic-ui-react/dist/commonjs/elements/Label";
 import LotsStore from "../store/LotsStore"
-import Img from "../images/mesB.jpg";
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import BuyCard from "./BuyCard";
+import MyPic from '../images/ava.jpg'
 
 const styles = theme => ({
     root: {
@@ -80,7 +80,10 @@ class SalePage extends React.Component {
         game: "",
         sum: null,
         sumAll: null,
-        activeStep: 0
+        activeStep: 0,
+
+        file: null,
+        imagePreviewUrl: null
     };
 
     handleChange = event => {
@@ -151,135 +154,179 @@ class SalePage extends React.Component {
         }
     };
 
+    _handleSubmitFile(e) {
+        e.preventDefault();
+        // TODO: do something with -> this.state.file
+        console.log('handle uploading-', this.state.file);
+    }
+
+    _handleImageChange(e) {
+        e.preventDefault();
+
+        let reader = new FileReader();
+        let file = e.target.files[0];
+
+        reader.onloadend = () => {
+            this.setState({
+                file: file,
+                imagePreviewUrl: reader.result
+            });
+        };
+
+        reader.readAsDataURL(file)
+    }
+
     firstStepForm() {
         const {classes, theme} = this.props;
-        return (
-            <div>
-                <Typography variant="h6" gutterBottom>
-                    Продажа
-                </Typography>
-                <Grid container spacing={24}>
-                    <Grid item xs={12} sm={6}>
-                        <Input
-                            action={
-                                <Dropdown onChange={this.handleGameChange.bind(this)} button basic floating
-                                          options={this.LotsStore.gamesOptions} defaultValue='page'/>
-                            }
-                            icon='search'
-                            value={this.state.name}
-                            onChange={this.handleNameChange.bind(this)}
-                            iconPosition='left'
-                            placeholder='Ваш ник в игре'
-                        />
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                        <Input value={this.state.summary} onChange={this.handleSummaryChange.bind(this)} fluid
-                               placeholder='Название предмета'/>
-                    </Grid>
-                    <Grid item xs={12}>
-                        <Form>
+        let imagePreview;
+        if (this.state.imagePreviewUrl) {
+            imagePreview = (<Avatar src={this.state.imagePreviewUrl}/>);
+        } else {
+            imagePreview = ("");
+        }
+            return (
+                <div>
+                    <Typography variant="h6" gutterBottom>
+                        Продажа
+                    </Typography>
+                    <Grid container spacing={24}>
+                        <Grid item xs={12} sm={6}>
+                            <Input
+                                action={
+                                    <Dropdown onChange={this.handleGameChange.bind(this)} button basic floating
+                                              options={this.LotsStore.gamesOptions} defaultValue='page'/>
+                                }
+                                icon='search'
+                                value={this.state.name}
+                                onChange={this.handleNameChange.bind(this)}
+                                iconPosition='left'
+                                placeholder='Ваш ник в игре'
+                            />
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                            <Input value={this.state.summary} onChange={this.handleSummaryChange.bind(this)} fluid
+                                   placeholder='Название предмета'/>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Form>
                             <TextArea value={this.state.text} onChange={this.handleTextChange.bind(this)}
                                       placeholder='Описание предмета'/>
-                        </Form>
-                    </Grid>
+                            </Form>
+                        </Grid>
 
 
-                    <Grid item xs={12} sm={6}>
-                        <Input labelPosition='right' type='text' placeholder='Цена' value={this.state.sum}
-                               onChange={this.handleChange}>
-                            <Label basic>₽</Label>
-                            <input/>
-                            <Label>Вы получите: {this.state.sumAll} </Label>
-                        </Input>
-                    </Grid>
+                        <Grid item xs={12} sm={6}>
+                            <Input labelPosition='right' type='text' placeholder='Цена' value={this.state.sum}
+                                   onChange={this.handleChange}>
+                                <Label basic>₽</Label>
+                                <input/>
+                                <Label>Вы получите: {this.state.sumAll} </Label>
+                            </Input>
+                        </Grid>
 
-                    <Grid item xs={12} sm={6}>
-                        <Select placeholder='Тип продажи' fluid options={this.sellOptions}/>
-                    </Grid>
+                        <Grid item xs={12} sm={6}>
+                            <Select placeholder='Тип продажи' fluid options={this.sellOptions}/>
+                        </Grid>
 
-                    <Grid item xs={12}>
-                        <div style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            border: '2px dashed rgba(239, 212, 212, 0.52)',
-                            justifyContent: 'center',
-                            borderRadius: 10
-                        }}>
-                            <div style={{padding: 10, display: 'inline-flex', alignItems: 'center'}}>
+                        <Grid item xs={12}>
+                            <div style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                border: '2px dashed rgba(239, 212, 212, 0.52)',
+                                justifyContent: 'center',
+                                borderRadius: 10
+                            }}>
+                                <div style={{padding: 10, display: 'inline-flex', alignItems: 'center'}}>
 
-                                <div><Typography variant="display1" style={{marginRight: 10}}>Загрузите изображение
-                                    предмета</Typography></div>
+                                    <div><Typography variant="display1" style={{marginRight: 10}}>Загрузите изображение
+                                        предмета</Typography></div>
 
-                                <div>
-                                    <Button variant="outlined" component="label">
-                                        Upload File
-                                        <input type="file" style={{display: "none"}}/>
-                                    </Button>
+                                    <div>
+                                        <Button variant="outlined" component="label">
+                                            Upload File
+                                            <input type="file" onChange={(e) => this._handleImageChange(e)}
+                                                   style={{display: "none"}}/>
+                                        </Button>
+                                    </div>
+
+                                    <div>
+                                        {imagePreview}
+                                    </div>
                                 </div>
                             </div>
+                        </Grid>
+
+                        <div style={{width: '100%', display: 'flex', justifyContent: 'center', margin: 10}}>
+                            <Button variant="outlined" onClick={this.handleAddLot.bind(this)}
+                                    style={{width: 200}}>Продать</Button>
                         </div>
                     </Grid>
-
-                    <div style={{width: '100%', display: 'flex', justifyContent: 'center', margin: 10}}>
-                        <Button variant="outlined" onClick={this.handleAddLot.bind(this)}
-                                style={{width: 200}}>Продать</Button>
-                    </div>
-                </Grid>
-            </div>
-        )
-    }
-
-    secondStepForm() {
-        const {classes, theme} = this.props;
-        return (
-            <div style={{display: 'flex', justifyContent: 'center'}}>
-
-                <div>
-                    <Typography variant="h6"> Ваша заявка будет рассмотрена админом BLESSEDging </Typography>
-                    <div><Button variant="outlined" onClick={this.handleReset}>Новый лот</Button></div>
                 </div>
-            </div>
-        )
-    }
+            )
+        }
 
-    getStepContent(step) {
-        switch (step) {
-            case 0:
-                return this.firstStepForm();
-            case 1:
-                return this.secondStepForm();
-            default:
-                return "";
+        secondStepForm()
+        {
+            const {classes, theme} = this.props;
+            return (
+                <div style={{display: 'flex', justifyContent: 'center'}}>
+
+                    <div>
+                        <Typography variant="h6"> Ваша заявка будет рассмотрена админом</Typography>
+                        <div><Button variant="outlined" onClick={this.handleReset}>Новый лот</Button></div>
+                    </div>
+                </div>
+            )
+        }
+
+        getStepContent(step)
+        {
+            switch (step) {
+                case 0:
+                    return this.firstStepForm();
+                case 1:
+                    return this.secondStepForm();
+                default:
+                    return "";
+            }
+        }
+
+        render()
+        {
+            const {classes, theme, options} = this.props;
+            const steps = ["Согласование", "Обработка"];
+            return (
+                <div style={{display: 'flex', justifyContent: 'center'}}>
+                    <div className={classes.root}>
+                        <Stepper activeStep={this.state.activeStep}>
+                            {
+                                steps.map((label, index) => {
+                                    const labelProps = {};
+                                    return (
+                                        <Step key={label}>
+                                            <StepLabel>{label}</StepLabel>
+                                        </Step>
+                                    );
+                                })
+                            }
+                        </Stepper>
+                        <div>
+                            {
+                                this.getStepContent(this.state.activeStep)
+                            }
+                        </div>
+                    </div>
+                </div>
+            );
         }
     }
 
-    render() {
-        const {classes, theme, options} = this.props;
-        const steps = ["Согласование", "Обработка"];
-        return (
-            <div style={{display: 'flex', justifyContent: 'center'}}>
-                <div className={classes.root}>
-                    <Stepper activeStep={this.state.activeStep}>
-                        {
-                            steps.map((label, index) => {
-                                const labelProps = {};
-                                return (
-                                    <Step key={label}>
-                                        <StepLabel>{label}</StepLabel>
-                                    </Step>
-                                );
-                            })
-                        }
-                    </Stepper>
-                    <div>
-                        {
-                            this.getStepContent(this.state.activeStep)
-                        }
-                    </div>
-                </div>
-            </div>
-        );
-    }
-}
+    export
+    default
 
-export default withStyles(styles)(SalePage);
+    withStyles(styles)
+
+(
+    SalePage
+)
+    ;

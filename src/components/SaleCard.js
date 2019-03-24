@@ -15,6 +15,7 @@ import Stepper from "@material-ui/core/Stepper";
 import StepLabel from "@material-ui/core/StepLabel";
 import Step from "@material-ui/core/Step";
 import IncomesStore from "../store/IncomesStore";
+import Emp from "../images/epm.jpg";
 
 const styles = theme => ({
     root: {
@@ -138,13 +139,13 @@ class SaleCard extends React.Component {
                 <DialogTitle id="simple-dialog-title">Лот на продажу</DialogTitle>
                 <div>
                     <div className={classes.root}>
-                        <img alt="Remy Sharp" src={Img} className={classes.imgMod}/>
+                        <img alt="Remy Sharp" src={this.props.photo || Img} className={classes.imgMod}/>
                         <div className={classes.captionMod}>
                             <Typography variant="h4">{this.props.summary}</Typography>
                             <Typography variant="Subheading">{this.props.text}</Typography>
                             <div style={{marginRight: 10, width: '50%', marginTop: 10,}}>
                                 <Typography variant="h6"  style={{color: 'red'}} >{this.props.price}  руб.</Typography>
-                                <Typography variant="overline"> {game}</Typography>
+                                <Typography variant="overline">{this.props.game}</Typography>
                             </div>
                         </div>
 
@@ -203,7 +204,7 @@ class SaleCard extends React.Component {
 
                         <div  style={{display: 'flex', alignItems: 'center', minWidth: '33%', maxWidth: 93 }}>
 
-                           <div><img alt="Remy Sharp" src={Img} className={classes.img}/></div>
+                           <div><img alt="Remy Sharp" src={this.props.photo || Img} className={classes.img}/></div>
 
                         <div className={classes.caption}>
                             <Typography variant="title">Название: {this.props.summary}</Typography>
@@ -219,7 +220,7 @@ class SaleCard extends React.Component {
                             <Avatar style={{marginRight: 5}}>NN</Avatar>
                             <div>
                             <Typography variant="button">Продавец: {this.props.name}</Typography>
-                            <Typography variant="overline" style={{marginLeft: 5}}>Игра:  {game}</Typography>
+                            <Typography variant="overline" style={{marginLeft: 5}}>Игра: {this.props.game}</Typography>
                             </div>
                         </div>
                         {/*<div>*/}

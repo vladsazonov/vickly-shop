@@ -11,6 +11,7 @@ import Image from "semantic-ui-react/dist/commonjs/elements/Image";
 import Emp from '../images/epm.jpg'
 import Button from "semantic-ui-react/dist/commonjs/elements/Button";
 import AccountStore from '../store/AccountStore'
+import Img from "../images/mesB.jpg";
 
 const styles = theme => ({
     root: {
@@ -55,7 +56,7 @@ class UserBuyCard2 extends React.Component {
         return (
             <div style={{margin: '6px 6px 6px 6px', overflow: 'hidden'}}>
                 <Card style={{width: 300}}>
-                    <Image src={Emp} style={{width: 300,}}/>
+                    <Image src={this.props.photo || Img} style={{width: 300,}}/>
                     <Card.Content>
                         <Card.Header>{this.state.summary}</Card.Header>
                         <Card.Meta>
