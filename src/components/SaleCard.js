@@ -25,9 +25,10 @@ const styles = theme => ({
         backgroundColor: '#fff',
     },
     img: {
-        width: 55,
-        height: 55,
+        width: 40,
+        height: 40,
         marginRight: 10,
+        borderRadius: 50,
     },
     imgMod: {
         width: 200,

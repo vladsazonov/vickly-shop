@@ -53,9 +53,9 @@ class userBuyCard extends React.Component {
         const {classes, theme} = this.props;
 
         return (
-            <div style={{margin: '0px 10px 20px 10px'}}>
-                <Card>
-                    <Image src={Emp}/>
+            <div style={{margin: '0px 10px 20px 10px', overflow: 'hidden'}}>
+                <Card style={{width: 300}}>
+                    <Image src={Emp} style={{width: 300,}}/>
                     <Card.Content>
                         <Card.Header>{this.props.summary}</Card.Header>
                         <Card.Meta>

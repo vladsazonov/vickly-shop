@@ -100,10 +100,10 @@ const styles = theme => ({
     content: {
         flexGrow: 1,
         minHeight: '100vh',
-        display: 'flex',
+       // display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        background: '#e8e8e8',
+        background: '#ececec',
 
         boxShadow: '-2px 0px 20px 0px rgba(0,0,0,0.5)',
     },
@@ -243,7 +243,7 @@ class Home extends React.Component {
             <div className={classes.root}>
                 <nav className={classes.drawer}>
                     <AppBar position="fixed" className={classes.appBar}>
-                        <Toolbar>
+                        <Toolbar style={{minHeight: 55}}>
                             <IconButton
                                 color="inherit"
                                 aria-label="Open drawer"

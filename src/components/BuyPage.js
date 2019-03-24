@@ -15,6 +15,7 @@ const styles = theme => ({
     root: {
         top: 55,
         position: 'fixed',
+        margin: 26,
         backgroundColor: '#61c9d8',
         left: 300,
         display: 'inline-flex',
@@ -99,12 +100,16 @@ class BuyPage extends React.Component {
                             </Form.Field>
                         </div>
                     </Form>
-                    <div style={{display: 'flex',}}>
+                </div>
+                    <div style={{margin: '150px 20px 0 20px', maxWidth: '100%', display: 'flex', minWidth: 0, overflow: 'hidden', flexDirection: 'row',
+                        flexWrap: 'wrap', justifyContent: 'space-evenly'}}>
+
                         {
                             this.LotStore.lots.map(elem => <UserBuyCard admin_name={elem.admin_name} summary={elem.summary} text={elem.text} price={elem.price}  />)
                         }
+
                     </div>
-                </div>
+
             </div>
         );
     }

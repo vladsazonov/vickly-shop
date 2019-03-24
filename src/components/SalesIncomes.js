@@ -27,12 +27,12 @@ const styles = theme => ({
         alignItems: 'center'
     },
     appbar: {
-        backgroundColor: theme.palette.primary.dark,
+        backgroundColor: '#61c9d8',
         boxShadow: theme.shadows[0],
         left: 300,
         right: 0,
         top: 55,
-        position: 'fixed',
+       // position: 'fixed',
     },
 });
 
@@ -73,7 +73,7 @@ class SalesIncomes extends React.Component {
                         <Tab label="Лоты на покупку"/>
                     </Tabs>
                 </AppBar>
-                <div style={{margin: '150px 30px 30px 30px'}}>
+                <div style={{margin: '0'}}>
                     {this.state.value === 0 ?
                         this.IncomesStore.saleLots.map(elem => <SaleCard name={elem.name} price={elem.price} summary={elem.summary} text={elem.text} />)
                         :

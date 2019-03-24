@@ -12,7 +12,7 @@ import CardContent from "@material-ui/core/CardContent";
 import Card from "@material-ui/core/Card";
 import CardMedia from "@material-ui/core/CardMedia";
 import Image from '../images/bb.jpg'
-import {Avatar} from "@material-ui/core";
+import {Avatar, Divider} from "@material-ui/core";
 import {Dropdown, Input, Select} from 'semantic-ui-react'
 import TextArea from "semantic-ui-react/dist/commonjs/addons/TextArea";
 import Form from "semantic-ui-react/dist/commonjs/collections/Form";
@@ -23,17 +23,18 @@ import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import BuyCard from "./BuyCard";
 
 const styles = theme => ({
     root: {
         backgroundColor: '#fff',
-        width: '65%',
+        width: '50%',
         margin: '10px 0 0 10px',
-        display: 'flex',
+        //  display: 'flex',
         justifyContent: 'center',
         alignContent: 'center',
         padding: 20,
-        boxShadow: theme.shadows[10],
+        boxShadow: theme.shadows[0],
     },
 
     ard: {
@@ -72,17 +73,21 @@ class SalePage extends React.Component {
 
     state = {
         value: '',
-        sum: 0,
-        activeStep: 0,
         name: "",
         summary:"",
         text:"",
         type:"0",
-        game:""
+        game:"",
+        sum: null,
+        sumAll: null,
+        activeStep: 0
     };
 
     handleChange = event => {
-        this.setState({sum: event.target.value * 2})
+        this.setState({
+            sum: event.target.value,
+            sumAll: Math.ceil((event.target.value * 0.85) * 100) / 100
+        })
     };
 
     options = [
@@ -99,7 +104,7 @@ class SalePage extends React.Component {
     handleAddLot() {
         this.LotsStore.postLot(this.state.name, this.state.summary, this.state.text, this.state.price,"0",this.state.game);
         this.setState({
-            activeStep:1
+            activeStep: 1
         });
     }
 
@@ -113,6 +118,12 @@ class SalePage extends React.Component {
                 setOpen: false
             })
         }
+    };
+
+    handleReset = () => {
+        this.setState({
+            activeStep: 0
+        })
     };
 
     handleSecondStep = (isSuccess) => () => {
@@ -156,6 +167,20 @@ class SalePage extends React.Component {
                         </Form>
                     </Grid>
 
+
+                    <Grid item xs={12} sm={6}>
+                        <Input labelPosition='right' type='text' placeholder='Цена' value={this.state.sum}
+                               onChange={this.handleChange}>
+                            <Label basic>₽</Label>
+                            <input/>
+                            <Label>Вы получите: {this.state.sumAll} </Label>
+                        </Input>
+                    </Grid>
+
+                    <Grid item xs={12} sm={6}>
+                        <Select placeholder='Тип продажи' fluid options={this.sellOptions}/>
+                    </Grid>
+
                     <Grid item xs={12}>
                         <div style={{
                             display: 'flex',
@@ -179,25 +204,10 @@ class SalePage extends React.Component {
                         </div>
                     </Grid>
 
-                    <Grid item xs={12} sm={6}>
-                        <Input labelPosition='right' type='text' placeholder='Цена' value={this.state.value}
-                               onChange={this.handleChange}>
-                            <Label basic>₽</Label>
-                            <input/>
-                            <Label>Вы получите: {this.state.sum} </Label>
-                        </Input>
-                    </Grid>
-
-                    <Grid item xs={12} sm={6}>
-                        <Select placeholder='Тип продажи' fluid options={this.sellOptions}/>
-                    </Grid>
-
                     <div style={{width: '100%', display: 'flex', justifyContent: 'center', margin: 10}}>
                         <Button variant="outlined" onClick={this.handleAddLot.bind(this)}
                                 style={{width: 200}}>Продать</Button>
                     </div>
-
-
                 </Grid>
             </div>
         )
@@ -206,18 +216,11 @@ class SalePage extends React.Component {
     secondStepForm() {
         const {classes, theme} = this.props;
         return (
-            <div>
-                <DialogTitle id="simple-dialog-title">Подтвердите успешность сделки</DialogTitle>
+            <div style={{display: 'flex', justifyContent: 'center'}}>
+
                 <div>
-                    <div className={classes.root}>
-                        Ожидание подтверждения
-                    </div>
-                    <div style={{margin: 10}}>
-                        <Button variant="outlined" onClick={this.handleSecondStep(true)}
-                                className={classes.buttonOk}>Принять</Button>
-                        <Button variant="outlined" onClick={this.handleSecondStep(false)}
-                                className={classes.buttonNo}>Отклонить</Button>
-                    </div>
+                    <Typography variant="h6"> Ваша заявка будет рассмотрена админом BLESSEDging </Typography>
+                   <div> <Button variant="outlined" onClick={this.handleReset}>Новый лот</Button></div>
                 </div>
             </div>
         )
@@ -238,26 +241,26 @@ class SalePage extends React.Component {
         const {classes, theme, options} = this.props;
         const steps = ["Согласование", "Обработка"];
         return (
+            <div style={{display: 'flex', justifyContent: 'center'}}>
             <div className={classes.root}>
-                <Grid container spacing={24}>
-                    <Stepper activeStep={this.state.activeStep}>
-                        {
-                            steps.map((label, index) => {
-                                const labelProps = {};
-                                return (
-                                    <Step key={label}>
-                                        <StepLabel>{label}</StepLabel>
-                                    </Step>
-                                );
-                            })
-                        }
-                    </Stepper>
-                </Grid>
+                <Stepper activeStep={this.state.activeStep}>
+                    {
+                        steps.map((label, index) => {
+                            const labelProps = {};
+                            return (
+                                <Step key={label}>
+                                    <StepLabel>{label}</StepLabel>
+                                </Step>
+                            );
+                        })
+                    }
+                </Stepper>
+                <div>
                     {
                         this.getStepContent(this.state.activeStep)
                     }
-
-
+                </div>
+            </div>
             </div>
         );
     }
