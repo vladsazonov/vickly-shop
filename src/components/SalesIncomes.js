@@ -49,6 +49,12 @@ class SalesIncomes extends React.Component {
         value: 0,
     };
 
+    componentWillMount() {
+        if (!this.IncomesStore.buyLots.length && !this.IncomesStore.lotsFetched) {
+            this.IncomesStore.fetchLots();
+        }
+    }
+
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (!this.IncomesStore.buyLots.length && !this.IncomesStore.lotsFetched) {
             this.IncomesStore.fetchLots();

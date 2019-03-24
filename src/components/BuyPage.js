@@ -58,6 +58,15 @@ class BuyPage extends React.Component {
         }
     }
 
+    componentWillMount() {
+        if (!this.LotStore.lots.length && !this.LotStore.lotsFetched) {
+            this.LotStore.fetchLots();
+        }
+        if (!this.LotStore.games.length && !this.LotStore.gamesFetched) {
+            this.LotStore.fetchGames();
+        }
+    }
+
 
     handleBuyProccess = (stateOfProccess) => () => {
         if (stateOfProccess) {

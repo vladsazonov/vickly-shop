@@ -14,6 +14,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import Stepper from "@material-ui/core/Stepper";
 import StepLabel from "@material-ui/core/StepLabel";
 import Step from "@material-ui/core/Step";
+import IncomesStore from "../store/IncomesStore";
 
 const styles = theme => ({
     root: {
@@ -76,6 +77,7 @@ class SaleCard extends React.Component {
 
     constructor(props) {
         super(props);
+        this.IncomesStore = IncomesStore;
     }
 
     state = {
@@ -95,25 +97,27 @@ class SaleCard extends React.Component {
         if (isSuccess) {
             this.setState({
                 activeStep: 1
-            })
+            });
+            this.IncomesStore.confirmSaleIncomeStatus(isSuccess, this.props.id);
         } else {
             this.setState({
                 setOpen: false
-            })
+            });
+            this.IncomesStore.confirmSaleIncomeStatus(isSuccess, this.props.id);
         }
     };
 
     handleSecondStep = (isSuccess) => () => {
         if (isSuccess) {
-            // TODO BL
             this.setState({
                 setOpen: false
             });
+            this.IncomesStore.confirmSaleTransmissionIncomeStatus(isSuccess, this.props.id);
         } else {
-            // TODO BL
             this.setState({
                 setOpen: false
-            })
+            });
+            this.IncomesStore.confirmSaleTransmissionIncomeStatus(isSuccess, this.props.id);
         }
     };
 

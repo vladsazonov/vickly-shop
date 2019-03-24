@@ -41,7 +41,7 @@ class IncomesStore {
         }
     }
 
-    async confirmBuyIncomeStatus(isSuccess, id) {
+    async confirmBuyIncomeStatus(id) {
         try {
             const response = await fetch(BACKEND_URL + `/goods`, {
                 method: 'PATCH',
@@ -50,7 +50,7 @@ class IncomesStore {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    status:isSuccess ? 1 : 2,
+                    status: 6,
                     id:id
                 })
             });
@@ -83,7 +83,7 @@ class IncomesStore {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    status:isSuccess ? 3 : 4,
+                    status:isSuccess ? 7 : 8,
                     id:id
                 })
             });
@@ -107,7 +107,7 @@ class IncomesStore {
         }
     }
 
-    async confirmSaleIncomeStatus(id) {
+    async confirmSaleIncomeStatus(isSuccess, id) {
         try {
             const response = await fetch(BACKEND_URL + `/goods`, {
                 method: 'PATCH',
@@ -116,7 +116,7 @@ class IncomesStore {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    status:6,
+                    status:isSuccess ? 1:2,
                     id:id
                 })
             });
@@ -149,7 +149,7 @@ class IncomesStore {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    status:isSuccess ? 7 : 8,
+                    status:isSuccess ? 3 : 4,
                     id:id
                 })
             });

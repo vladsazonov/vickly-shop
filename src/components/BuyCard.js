@@ -13,6 +13,7 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Lot from './Lot'
 import CircularProgress from "@material-ui/core/CircularProgress";
+import IncomesStore from "../store/IncomesStore"
 
 const styles = theme => ({
     root: {
@@ -37,9 +38,9 @@ const styles = theme => ({
         marginRight: 50,
         overflow: 'hidden',
         whiteSpace: 'nowrap', /* Отменяем перенос текста */
-padding: 5,
-textOverflow: 'ellipsis',
-alignItems: 'center',
+        padding: 5,
+        textOverflow: 'ellipsis',
+        alignItems: 'center',
     },
     captionMod: {
         marginRight: 50,
@@ -80,7 +81,7 @@ class BuyCard extends React.Component {
 
     constructor(props) {
         super(props);
-
+        this.IncomesStore = IncomesStore;
     }
 
     state = {
@@ -98,10 +99,23 @@ class BuyCard extends React.Component {
 
     handleClickOpenProcessing = () => {
         this.setState(state => ({setOpenProcessing: !state.setOpenProcessing}))
+        // BL
+        this.IncomesStore.confirmBuyIncomeStatus(this.props.id);
     };
 
     handleCloseProcessing = () => {
         this.setState(state => ({setOpenProcessing: !state.setOpenProcessing}))
+    };
+
+    handleChangeIncomeStatus = (isSuccess) => () => {
+        if (isSuccess) {
+            this.IncomesStore.confirmBuyTransmissionIncomeStatus(isSuccess, this.props.id);
+        } else {
+            this.IncomesStore.confirmBuyTransmissionIncomeStatus(isSuccess, this.props.id);
+        }
+        this.setState({
+            setOpenProcessing: false
+        })
     };
 
 
@@ -130,7 +144,8 @@ class BuyCard extends React.Component {
 
 
                     <div>
-                        <Button variant="outlined" onClick={this.handleClickOpenProcessing} className={classes.buttonOk}>Взять в работу</Button>
+                        <Button variant="outlined" onClick={this.handleClickOpenProcessing}
+                                className={classes.buttonOk}>Взять в работу</Button>
                     </div>
                 </div>
 
@@ -142,15 +157,17 @@ class BuyCard extends React.Component {
                     <Lot/>
                 </Dialog>
 
-                <Dialog onClose={this.handleCloseProcessing} open={this.state.setOpenProcessing} aria-labelledby="simple-dialog-title"
+                <Dialog onClose={this.handleCloseProcessing} open={this.state.setOpenProcessing}
+                        aria-labelledby="simple-dialog-title"
                         classes={{
                             paper: classes.paper, // class name, e.g. `classes-nesting-root-x`
                         }}>
                     <DialogTitle id="simple-dialog-title">Обменяйте лот с игроком</DialogTitle>
-                    <CircularProgress className={classes.progress} />
+                    <CircularProgress className={classes.progress}/>
                     <div>
-                    <Button variant="outlined" className={classes.buttonOk}>Сделка совершилась</Button>
-                    <Button variant="outlined" className={classes.buttonNo}>Сделка сорвалась</Button>
+                        <Button variant="outlined" onClick={this.handleChangeIncomeStatus(true)}
+                                className={classes.buttonOk}>Сделка совершилась</Button>
+                        <Button variant="outlined" onClick={this.handleChangeIncomeStatus(false)} className={classes.buttonNo}>Сделка сорвалась</Button>
                     </div>
                 </Dialog>
 
