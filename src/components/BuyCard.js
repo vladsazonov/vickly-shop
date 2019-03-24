@@ -41,6 +41,7 @@ const styles = theme => ({
         whiteSpace: 'nowrap', /* Отменяем перенос текста */
         textOverflow: 'ellipsis',
         alignItems: 'center',
+        minHeight: 96,
     },
     captionMod: {
         marginRight: 50,

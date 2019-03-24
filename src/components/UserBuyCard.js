@@ -65,7 +65,9 @@ class userBuyCard extends React.Component {
                         <Card.Meta>
                             <span className='date'>{this.props.summary}</span>
                         </Card.Meta>
-                        <Card.Description>{this.props.text}</Card.Description>
+                        <Card.Description style={{overflow: 'hidden',
+                            whiteSpace: 'nowrap', /* Отменяем перенос текста */
+                            textOverflow: 'ellipsis',}}><div>{this.props.text}</div></Card.Description>
                     </Card.Content>
                     <Card.Content extra>
                         <a>
