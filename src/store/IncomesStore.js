@@ -41,13 +41,18 @@ class IncomesStore {
         }
     }
 
-    async confirmBuyIncomeStatus(isSuccess) {
+    async confirmBuyIncomeStatus(isSuccess, id) {
         try {
-            const response = await fetch(BACKEND_URL + `/buy/${"ID"}/status`, {
-                method: 'POST',
+            const response = await fetch(BACKEND_URL + `/goods`, {
+                method: 'PATCH',
                 headers: {
                     'Authorization': accountStore.token,
-                }
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    status:isSuccess ? 1 : 2,
+                    id:id
+                })
             });
             if (!response.ok) {
                 alert("fetch chats failed");
@@ -68,6 +73,106 @@ class IncomesStore {
             });
         }
     }
+
+    async confirmBuyTransmissionIncomeStatus(isSuccess, id) {
+        try {
+            const response = await fetch(BACKEND_URL + `/goods`, {
+                method: 'PATCH',
+                headers: {
+                    'Authorization': accountStore.token,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    status:isSuccess ? 3 : 4,
+                    id:id
+                })
+            });
+            if (!response.ok) {
+                alert("confirmBuyTransmissionIncomeStatus failed");
+                runInAction("Failed fetch users info", () => {
+                    this.fetchFail = true;
+                    this.err_message = response.error();
+                });
+            }
+            const content = await response.json();
+            runInAction("Update users info", () => {
+                this.games = content;
+            });
+        } catch (err) {
+            console.log(err);
+            runInAction("Failed fetch users info", () => {
+                this.fetchFail = true;
+                this.err_message = err;
+            });
+        }
+    }
+
+    async confirmSaleIncomeStatus(id) {
+        try {
+            const response = await fetch(BACKEND_URL + `/goods`, {
+                method: 'PATCH',
+                headers: {
+                    'Authorization': accountStore.token,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    status:6,
+                    id:id
+                })
+            });
+            if (!response.ok) {
+                alert("confirmSaleIncomeStatus");
+                runInAction("Failed fetch users info", () => {
+                    this.fetchFail = true;
+                    this.err_message = response.error();
+                });
+            }
+            const content = await response.json();
+            runInAction("Update users info", () => {
+                this.games = content;
+            });
+        } catch (err) {
+            console.log(err);
+            runInAction("Failed fetch users info", () => {
+                this.fetchFail = true;
+                this.err_message = err;
+            });
+        }
+    }
+
+    async confirmSaleTransmissionIncomeStatus(isSuccess, id) {
+        try {
+            const response = await fetch(BACKEND_URL + `/goods`, {
+                method: 'PATCH',
+                headers: {
+                    'Authorization': accountStore.token,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    status:isSuccess ? 7 : 8,
+                    id:id
+                })
+            });
+            if (!response.ok) {
+                alert("confirmSaleTransmissionIncomeStatus failed");
+                runInAction("Failed fetch users info", () => {
+                    this.fetchFail = true;
+                    this.err_message = response.error();
+                });
+            }
+            const content = await response.json();
+            runInAction("Update users info", () => {
+                this.games = content;
+            });
+        } catch (err) {
+            console.log(err);
+            runInAction("Failed fetch users info", () => {
+                this.fetchFail = true;
+                this.err_message = err;
+            });
+        }
+    }
+
 }
 
 const store = new IncomesStore();

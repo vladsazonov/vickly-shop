@@ -8,6 +8,7 @@ class AccountStore {
     @observable token = "";
     @observable login = "";
     isAdmin = null;
+    balance = null;
     @observable status = "unauthed";
     userId = null;
     err_message = "";
@@ -17,6 +18,7 @@ class AccountStore {
         this.token = sessionStorage.getItem("token");
         this.isAdmin = sessionStorage.getItem("isAdmin") === "true";
         this.login = sessionStorage.getItem("login");
+        this.balance = sessionStorage.getItem("balance");
         if (this.token) {
             this.status = "authed";
         }
@@ -52,9 +54,10 @@ class AccountStore {
                 this.login = login;
                 this.status = "authed";
                 this.isAdmin = content.is_admin;
+                this.balance = content.balance;
                 if (this.isAdmin)
                     IncomesStore.fetchLots();
-                this.saveInLocalStorage(this.name, this.token,this.login,this.isAdmin);
+                this.saveInLocalStorage(this.name, this.token,this.login,this.isAdmin, this.balance);
             });
             //TODO LATER
             // WebSocketService.run(this.token)
@@ -67,11 +70,12 @@ class AccountStore {
         }
     };
 
-    saveInLocalStorage(name, token, login, isAdmin) {
+    saveInLocalStorage(name, token, login, isAdmin, balance) {
         sessionStorage.setItem("name", name);
         sessionStorage.setItem("token", token);
         sessionStorage.setItem("login", login);
         sessionStorage.setItem("isAdmin",isAdmin);
+        sessionStorage.setItem("balance",balance);
     }
 
     @action
@@ -80,6 +84,7 @@ class AccountStore {
         this.token = null;
         this.login = null;
         this.isAdmin = null;
+        this.balance = null;
         this.status = "unauthed";
         sessionStorage.clear();
     }

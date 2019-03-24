@@ -77,9 +77,9 @@ class SalesIncomes extends React.Component {
                 <div style={{margin: '0'}}>
                     <HeaderName/>
                     {this.state.value === 0 ?
-                        this.IncomesStore.saleLots.map(elem => <SaleCard name={elem.name} price={elem.price} summary={elem.summary} text={elem.text} />)
+                        this.IncomesStore.saleLots.map(elem => <SaleCard id={elem._id} name={elem.name} price={elem.price} summary={elem.summary} text={elem.text} />)
                         :
-                        this.IncomesStore.buyLots.map(elem => <BuyCard name={elem.name} price={elem.price} summary={elem.summary} text={elem.text}/>)
+                        this.IncomesStore.buyLots.map(elem => <BuyCard id={elem._id}  name={elem.name} price={elem.price} summary={elem.summary} text={elem.text}/>)
                     }
                 </div>
             </div>
