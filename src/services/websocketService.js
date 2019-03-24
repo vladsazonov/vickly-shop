@@ -1,17 +1,21 @@
 import messageStore from "../store/MessagesStore";
 import {IP} from "../common";
+import LotsStore from "../store/LotsStore"
+import IncomesStore from "../store/IncomesStore"
+import Lot from "../components/Lot";
 
-const NEW_MESSAGE = 0;
+
+const LOT_UPD = 0;
 const USER_ACTIVITY = 10;
 
-let websocket_url =`ws://${IP}/ws/`;
+let websocket_url = `ws://${IP}/ws/`;
 
-class WebsocketService{
+class WebsocketService {
     socket;
     token;
     running = false;
 
-    run(token){
+    run(token) {
         if (this.running)
             return;
         websocket_url += token;
@@ -23,8 +27,8 @@ class WebsocketService{
 
         this.socket = new WebSocket(websocket_url);
         this.socket.onmessage = this.onMessage;
-        this.socket.onerror = (err)=> {
-            console.log("websocket error:"+err);
+        this.socket.onerror = (err) => {
+            console.log("websocket error:" + err);
         };
         this.socket.onopen = () => {
             let interval = setInterval(() => {
@@ -56,17 +60,21 @@ class WebsocketService{
     }
 
     onMessage = (message) => {
-        console.log("websocket message:"+message.data);
+        console.log("websocket message:" + message.data);
         const payload = JSON.parse(message.data);
-        if (payload === {}){
+        if (payload === {}) {
             console.log("ws pong");
             return;
         }
         console.log("ws message");
         switch (payload.event) {
-            case NEW_MESSAGE:
-                if(payload)
-                    messageStore.addMessageToEnd(payload.message.message);
+            case LOT_UPD:
+                if (payload){
+                    LotsStore.fetchLots();
+                    IncomesStore.fetchLots();
+                }
+                //messageStore.addMessageToEnd(payload.message.message);
+
                 break;
             default:
                 break;

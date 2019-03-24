@@ -23,8 +23,8 @@ class AccountStore {
             this.status = "authed";
         }
         //TODO LATER
-        // if(this.token)
-        //     WebSocketService.run(this.token)
+        if(this.token)
+            WebSocketService.run(this.token)
     }
 
     async loginUser(login, password) {
@@ -60,7 +60,7 @@ class AccountStore {
                 this.saveInLocalStorage(this.name, this.token,this.login,this.isAdmin, this.balance);
             });
             //TODO LATER
-            // WebSocketService.run(this.token)
+            WebSocketService.run(this.token)
         } catch (err) {
             console.log(err);
             runInAction("Auth failed", () => {
