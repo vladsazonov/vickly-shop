@@ -23,7 +23,11 @@ const styles = theme => ({
         borderBottom: '1px solid #ececec',
         padding: '5px 10px 5px 10px',
         justifyContent: 'space-between',
-        backgroundColor: '#fff',
+        backgroundColor: '#fff','&:hover': {
+            backgroundColor: '#dfe0ea',
+        },
+        cursor: 'pointer',
+
     },
     img: {
         width: 40,
@@ -32,8 +36,8 @@ const styles = theme => ({
         borderRadius: 50,
     },
     imgMod: {
-        width: 200,
-        height: 200,
+        width: 100,
+        height: 100,
         marginRight: 10,
     },
     caption: {
@@ -66,7 +70,13 @@ const styles = theme => ({
             backgroundColor: '#7183dc',
         },
 
-    }
+    },
+    hover: {
+        backgroundColor: '#000',
+      '&:hover': {
+          backgroundColor: '#7183dc',
+      }
+    },
 });
 
 const game = 'Linage 2';
@@ -188,25 +198,29 @@ class SaleCard extends React.Component {
         const steps = ["Согласование", "Обработка"];
         return (
             <div>
-                <ListItem className={classes.listItem} button onClick={this.handleClickOpen}>
+                <ListItem  button onClick={this.handleClickOpen}>
                     <div className={classes.root}>
 
-                        <div style={{display: 'flex'}}>
-                            <Typography>Лот: </Typography>
-                        <div><img alt="Remy Sharp" src={Img} className={classes.img}/></div>
+                        <div  style={{display: 'flex', alignItems: 'center' }}>
+
+                           <div><img alt="Remy Sharp" src={Img} className={classes.img}/></div>
+
                         <div className={classes.caption}>
-                            <Typography variant="title">{this.props.summary}</Typography>
-                            <Typography variant="Subheading" className={classes.caption}>{this.props.text}</Typography>
+                            <Typography variant="title">Название: {this.props.summary}</Typography>
+                            <Typography variant="Subheading" className={classes.caption}>Описание:  {this.props.text}</Typography>
                         </div>
                         </div>
                         <div style={{marginRight: 20}}>
-                            <Typography variant="button">{this.props.price} руб.</Typography>
-                            <Typography variant="overline"> {type}</Typography>
+
+                            <Typography variant="button">  Цена: {this.props.price} руб.</Typography>
+                            <Typography variant="overline">Вид продажи:  {type}</Typography>
                         </div>
-                        <div style={{marginRight: 10, display: 'flex', alignItems: 'center'}}>
+                        <div style={{marginRight: 10, display: 'inline-flex', alignItems: 'center'}}>
                             <Avatar style={{marginRight: 5}}>NN</Avatar>
-                            <Typography variant="button">{this.props.name}</Typography>
-                            <Typography variant="overline" style={{marginLeft: 5}}> {game}</Typography>
+                            <div>
+                            <Typography variant="button">Продавец: {this.props.name}</Typography>
+                            <Typography variant="overline" style={{marginLeft: 5}}>Игра:  {game}</Typography>
+                            </div>
                         </div>
                         {/*<div>*/}
                         {/*<Button variant="outlined" className={classes.buttonOk}>Принять</Button>*/}

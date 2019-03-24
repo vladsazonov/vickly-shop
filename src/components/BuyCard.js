@@ -27,6 +27,7 @@ const styles = theme => ({
     img: {
         width: 55,
         height: 55,
+        borderRadius: 50,
         marginRight: 10,
     },
     imgMod: {
@@ -38,9 +39,8 @@ const styles = theme => ({
         marginRight: 50,
         overflow: 'hidden',
         whiteSpace: 'nowrap', /* Отменяем перенос текста */
-        padding: 5,
-        textOverflow: 'ellipsis',
-        alignItems: 'center',
+textOverflow: 'ellipsis',
+alignItems: 'center',
     },
     captionMod: {
         marginRight: 50,
@@ -62,6 +62,9 @@ const styles = theme => ({
     butt: {
         cursor: 'pointer',
         display: 'flex',
+        alignItems: 'center',
+        borderRadius: 6,
+        padding: 4,
         '&:hover': {
             backgroundColor: '#cacaca',
         },
@@ -126,26 +129,24 @@ class BuyCard extends React.Component {
             <div>
                 <div className={classes.root}>
                     <div style={{marginRight: 10, display: 'flex', alignItems: 'center'}}>
-                        <Avatar style={{marginRight: 5}}>NN</Avatar>
-                        <Typography variant="button">{this.props.name}</Typography>
+
+                        <Typography variant="button">   Покупатель: {this.props.name}</Typography>
                     </div>
                     <div style={{marginRight: 20}}>
-                        <Typography variant="button">{this.props.price} руб.</Typography>
-                        <Typography variant="overline"> {type}</Typography>
+                        <Typography variant="button">Цена: {this.props.price} руб.</Typography>
+                        <Typography variant="overline">Вид продажи:  {type}</Typography>
                     </div>
                     <div onClick={this.handleClickOpen} className={classes.butt}>
-
-                        <div><img alt="Remy Sharp" src={Img} className={classes.img}/></div>
+                       <img alt="Remy Sharp" src={Img} className={classes.img}/>
                         <div className={classes.caption}>
-                            <Typography variant="title">{this.props.summary}</Typography>
-                            <Typography variant="overline" style={{marginLeft: 5}}> {game}</Typography>
+                            <Typography variant="title">Название: {this.props.summary}</Typography>
+                            <Typography variant="overline" style={{marginLeft: 5}}>ИГра:  {game}</Typography>
                         </div>
                     </div>
 
 
                     <div>
-                        <Button variant="outlined" onClick={this.handleClickOpenProcessing}
-                                className={classes.buttonOk}>Взять в работу</Button>
+                        <Button variant="outlined" onClick={this.handleClickOpenProcessing} className={classes.buttonOk}>Взять в работу</Button>
                     </div>
                 </div>
 

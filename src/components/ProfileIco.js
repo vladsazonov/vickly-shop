@@ -11,6 +11,7 @@ import PersonOutline from '@material-ui/icons/PersonOutline'
 import Settings from '@material-ui/icons/Settings'
 import Avatar from "@material-ui/core/es/Avatar/Avatar";
 import accountStore from "../store/AccountStore";
+import Ava from "../images/ava.jpg"
 
 
 const styles = theme => ({
@@ -66,11 +67,11 @@ class ProfileIco extends React.Component {
                                 onClick={this.handleMenu}
                                 color="secondary"
                             >
-                                <Avatar> {this.props.name} </Avatar>
+                                <Avatar src={Ava} />
                             </IconButton>
 
                             <Menu
-                                style={{zIndex: 2000}}
+                                style={{zIndex: 5001}}
                                 id="menu-appbar"
                                 anchorEl={anchorEl}
                                 anchorOrigin={{

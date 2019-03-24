@@ -33,6 +33,7 @@ import HistoryPage from "./HistoryPage";
 import LocalAtm from "@material-ui/icons/LocalAtm"
 import Beenhere from "@material-ui/icons/Beenhere"
 import Shop from "@material-ui/icons/Shop"
+import ProfileBarApp from "./ProfileBarApp";
 
 const styles = theme => ({
 
@@ -94,7 +95,7 @@ const styles = theme => ({
         [theme.breakpoints.down('xs')]: {
             marginTop: 105,
         },
-        marginTop: 120,
+        marginTop: 71,
         padding: 0,
     },
     content: {
@@ -179,7 +180,6 @@ class Home extends React.Component {
             <Scrollbars autoHide>
                 <div>
                     <Hidden xsDown implementation="css">
-                        <ProfileBar/>
                     </Hidden>
                     <List className={classes.workG}>
                         {
@@ -252,11 +252,14 @@ class Home extends React.Component {
                                 <MenuIcon/>
                             </IconButton>
                             <div className={classes.logoDiv}><Typography variant="h4">ViclyShop</Typography><Shop style={{color: '#ef2600'}} /></div>
+
                             <div className={classes.userBar}>
                                 {/* <InviteIcon />
                                 <ProfileIco />*/}
                             </div>
+                            <ProfileBarApp/>
                         </Toolbar>
+
                     </AppBar>
                     {/* The implementation can be swap with js to avoid SEO duplication of links. */}
                     <Hidden smUp implementation="css">
@@ -319,8 +322,8 @@ class Home extends React.Component {
                                            component={BuyPage}/>
                                     <Route path="/home/salesincomes"
                                            component={SalesIncomes}/>
-                                    <Route exact path="/home" render={() => <div>LOL</div>}/>
-                                    <Route render={() => <Redirect to={"/home"}/>}/>
+                                    <Route exact path="/home" render={() =><Redirect to={"/home/buy"}/>}/>
+                                    <Route render={() => <Redirect to={"/home/sale"}/>}/>
                                 </Switch>
                             )
                             :
@@ -332,7 +335,7 @@ class Home extends React.Component {
                                            component={BuyPage}/>
                                     <Route exact path="/home/history"
                                            component={HistoryPage}/>
-                                    <Route exact path="/home" render={() => <div>LOL</div>}/>
+                                    <Route exact path="/home" render={() =><Redirect to={"/home/buy"}/>}/>
                                     <Route render={() => <Redirect to={"/home"}/>}/>
                                 </Switch>
                             )
